@@ -439,7 +439,7 @@ function init() {
     var mt = new MatrixTable('#matrix-table');
     var mp = new MoviePlayer(mv, mt);
     var pc = new PlayerControls('#player-controls', mp);
-    var ec = new EditorControls('#player-controls', mp);
+    var ec = new EditorControls('#editor-controls', mp);
     var ed = new Editor(mt, pc);
 
     // Color picker change callback sets current_color of editor
