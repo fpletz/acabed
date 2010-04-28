@@ -1,0 +1,16 @@
+#matrix-table td, #matrix-table tr {
+    padding: 0px;
+    margin: 0px;
+}
+
+#matrix-table div {
+    background-color: #000000;
+    width: 15px;
+    height: 18px;
+    padding: 0px;
+    margin: 3px;
+}
+
+.widget {
+    display: inline-block;
+}
