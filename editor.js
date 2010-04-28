@@ -22,9 +22,10 @@ Movie.prototype = {
 
         // Build internal movie representation from xml
         this.data = new Array(this.frames);
+        var frames = this.movie_xml.find('frame')
         for (var i = 0; i < this.frames; ++i) {
             var f = new XmlFrame(this.rows, this.cols);
-            f.load_xml(this.movie_xml.find('frame')[i], this.depth, this.channels);
+            f.load_xml(frames[i], this.depth, this.channels);
             this.data[i] = xml_frame_to_frame(f);
         }
 
@@ -34,11 +35,16 @@ Movie.prototype = {
     frame: function(no) {
         return this.data[no];
     },
+    // TODO corner cases
     add_frame_at: function(at) {
+        ++this.frames;
         this.data.splice(at, 0, new Frame(this.rows, this.cols));
+        this.on_modify.call();
     },
     remove_frame_at: function(at) {
+        --this.frames;
         this.data.splice(at, 1);
+        this.on_modify.call();
     }
 };
 
@@ -469,6 +475,9 @@ function init() {
                                     }});
 
     mt.on_reset = function() {
+        pc.sl.slider("option", "max", mv.frames-1);
+    };
+    mv.on_modify = function() {
         pc.sl.slider("option", "max", mv.frames-1);
     };
 
