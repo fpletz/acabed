@@ -219,26 +219,22 @@ MoviePlayer.prototype = {
     load_file: function(file) {
         this.stop();
 
-        if (typeof FileReader === "undefined") {
-            alert("FileReader not supportet!");
-        } else {
-            var reader = new FileReader();
-            reader.readAsText(file);
+        var reader = new FileReader();
+        reader.readAsText(file);
 
-            var mov = this.movie;
-            var mat = this.matrix_table;
-            var mp = this;
+        var mov = this.movie;
+        var mat = this.matrix_table;
+        var mp = this;
 
-            reader.onloadend = function() {
-                mov.load_xml(reader.result);
-                mat.reset(mov.rows, mov.cols);
+        reader.onloadend = function() {
+            mov.load_xml(reader.result);
+            mat.reset(mov.rows, mov.cols);
 
-                f = mov.frame(0);
-                fr = xml_frame_to_frame(f);
+            f = mov.frame(0);
+            fr = xml_frame_to_frame(f);
 
-                mp.update();
-            };
-        }
+            mp.update();
+        };
     },
     play: function() {
         var duration = this.movie.frame(this.current_frame_no).duration;
@@ -458,6 +454,10 @@ Editor.prototype = {
 };
 
 function init() {
+    if (typeof FileReader === "undefined") {
+        alert("FileReader not supportet!");
+    }
+
     var mv = new Movie();
     var mt = new MatrixTable('#matrix-table');
     var mp = new MoviePlayer(mv, mt);
