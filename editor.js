@@ -1,3 +1,15 @@
+// Don't use firebug console if not installed
+if (typeof console === "undefined") {
+    console = {
+        log: function () {},
+        info: function () {},
+        group: function () {},
+        error: function () {},
+        warn: function () {},
+        groupEnd: function () {}
+    };
+}
+
 function Movie() {
     this.data = new Array();
 
@@ -500,18 +512,6 @@ function init() {
 
     mv.add_frame_at(0);
     mt.reset(4, 24);
-
-    // Don't use firebug console if not installed
-    if (typeof console === "undefined") {
-        console = {
-            log: function () {},
-            info: function () {},
-            group: function () {},
-            error: function () {},
-            warn: function () {},
-            groupEnd: function () {}
-        };
-    }
 }
 
 $(document).ready(init);
