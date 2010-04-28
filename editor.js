@@ -158,6 +158,7 @@ XmlFrame.prototype = {
 
 function MatrixTable(id) {
     this.id = id
+
     return this;
 }
 
@@ -181,6 +182,8 @@ MatrixTable.prototype = {
                 td.append(div).appendTo(row_element);
             }
         }
+
+        this.on_reset.call();
     },
     set_rgb_color: function(row, col, r, g, b) {
         color = 'rgb('+r+','+g+','+b+')';
@@ -276,12 +279,17 @@ MoviePlayer.prototype = {
                                   frame.color(row, col).to_string())
             }
         }
+        this.on_render.call(this.current_frame_no);
     },
     current_frame: function() {
         return this.movie.frame(this.current_frame_no);
     },
     update: function() {
         this.render(this.current_frame());
+    },
+    set_frame: function(no) {
+        this.current_frame_no = no;
+        this.update();
     }
 };
 
@@ -295,6 +303,7 @@ function PlayerControls(id, movie_player) {
     this.stop = $('<button>Stop</button>').attr('id', 'stop-button');
     this.last = $('<button>‹</button>').attr('id', 'last-button');
     this.next = $('<button>›</button>').attr('id', 'next-button');
+    this.sl = $('<div></div>').attr('id', 'slider');
     var br = $('<br/>');
     var file = $('<input />').attr('id', 'movie-file').attr('type', 'file');
     
@@ -305,6 +314,8 @@ function PlayerControls(id, movie_player) {
     fs.append(this.next);
     fs.append(br);
     fs.append(file);
+    fs.append(br);
+    fs.append(this.sl);
 
     fs.appendTo($(id));
 
@@ -313,15 +324,12 @@ function PlayerControls(id, movie_player) {
     this.play.bind('click', function() {
         pc.play_click();
     });
-
     this.stop.bind('click', function() {
         pc.stop_click();
     });
-    
     this.last.bind('click', function() {
         pc.last_click();
     });
-
     this.next.bind('click', function() {
         pc.next_click();
     });
@@ -329,6 +337,15 @@ function PlayerControls(id, movie_player) {
     // File stuff
     file.bind('change', function() {movie_player.load_file(this.files[0])});
 
+    // Setup slider
+    this.sl.slider({ stop: function(event, ui) {
+        movie_player.set_frame(ui.value);
+    }});
+    var captured_sl = this.sl;
+    this.movie_player.on_render = function() {
+        captured_sl.slider( "option", "value", this); 
+    };
+ 
     return this;
 }
 
@@ -450,6 +467,10 @@ function init() {
                                         c.set_from_string('#'+hex);
                                         ed.set_color(c);
                                     }});
+
+    mt.on_reset = function() {
+        pc.sl.slider("option", "max", mv.frames-1);
+    };
 
     // Don't use firebug console if not installed
     if (typeof console === "undefined") {

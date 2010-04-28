@@ -14,3 +14,7 @@
 .widget {
     display: inline-block;
 }
+
+#slider {
+    margin: 10px;
+}
