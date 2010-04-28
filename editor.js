@@ -1,4 +1,18 @@
 function Movie() {
+    this.data = new Array();
+
+    this.title = '';
+    this.description = '';
+    this.author = 'author';
+    this.email = 'email';
+    this.url = 'url';
+
+    this.rows = 4
+    this.cols = 24
+    this.depth = 8
+    this.channels = 3
+    this.frames = 0;
+
     return this;
 }
 
@@ -95,6 +109,8 @@ function Frame(rows, cols) {
     this.rows = rows;
     this.cols = cols;
 
+    this.duration = 40;
+
     this.data = new Array(rows);
 
     var color = new Color(0, 0, 0)
@@ -120,6 +136,7 @@ Frame.prototype = {
 
 function xml_frame_to_frame(xml_frame) {
     f = new Frame(xml_frame.rows, xml_frame.cols);
+    f.duration = xml_frame.duration;
 
     for (var row = 0; row < xml_frame.rows; ++row) {
         for (var col = 0; col < xml_frame.cols; ++col) {
@@ -480,6 +497,9 @@ function init() {
     mv.on_modify = function() {
         pc.sl.slider("option", "max", mv.frames-1);
     };
+
+    mv.add_frame_at(0);
+    mt.reset(4, 24);
 
     // Don't use firebug console if not installed
     if (typeof console === "undefined") {
