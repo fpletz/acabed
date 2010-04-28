@@ -1,15 +1,3 @@
-// Make console stuff usable even if no firebug installed
-if (typeof console === "undefined") {
-    console = {
-        log: function () {},
-        info: function () {},
-        group: function () {},
-        error: function () {},
-        warn: function () {},
-        groupEnd: function () {}
-    };
-}
-
 function Movie() {
     return this;
 }
@@ -45,6 +33,12 @@ Movie.prototype = {
     },
     frame: function(no) {
         return this.data[no];
+    },
+    add_frame_at: function(at) {
+        this.data.splice(at, 0, new Frame(this.rows, this.cols));
+    },
+    remove_frame_at: function(at) {
+        this.data.splice(at, 1);
     }
 };
 
@@ -97,8 +91,13 @@ function Frame(rows, cols) {
 
     this.data = new Array(rows);
 
+    var color = new Color(0, 0, 0)
+
     for (var row = 0; row < rows; ++row) {
         this.data[row] = new Array(cols);
+        for (var col = 0; col < cols; ++col) {
+            this.data[row][col] = color;
+        }
     }
 
     return this;
@@ -361,6 +360,49 @@ PlayerControls.prototype = {
     }
 };
 
+function EditorControls(id, movie_player) {
+    this.id = id;
+    this.movie_player = movie_player;
+
+    var fs = $('<fieldset></fieldset>');
+    var lg = $('<legend>Editor Control</legend>');
+    this.add = $('<button>+</button>').attr('id', 'last-button');
+    this.remove = $('<button>-</button>').attr('id', 'next-button');
+    var br = $('<br/>');
+    
+    fs.append(lg);
+    fs.append(this.add);
+    fs.append(this.remove);
+    fs.append(br);
+
+    fs.appendTo($(id));
+
+    // Click handlers
+    var pc = this;
+
+    this.add.bind('click', function() {
+        pc.add_click()
+    });
+    this.remove.bind('click', function() {
+        pc.remove_click();
+    });
+
+    return this;
+}
+
+EditorControls.prototype = {
+    add_click: function() {
+        console.info('add frame');
+        this.movie_player.movie.add_frame_at(this.movie_player.current_frame_no+1);
+        this.movie_player.forward(1);
+    },
+    remove_click: function() {
+        console.info('remove frame');
+        this.movie_player.movie.remove_frame_at(this.movie_player.current_frame_no);
+        this.movie_player.update();
+    }
+};
+
 function Editor(matrix_table, player_controls) {
     this.matrix_table = matrix_table;
     this.player_controls = player_controls;
@@ -397,6 +439,7 @@ function init() {
     var mt = new MatrixTable('#matrix-table');
     var mp = new MoviePlayer(mv, mt);
     var pc = new PlayerControls('#player-controls', mp);
+    var ec = new EditorControls('#player-controls', mp);
     var ed = new Editor(mt, pc);
 
     // Color picker change callback sets current_color of editor
@@ -407,6 +450,18 @@ function init() {
                                         c.set_from_string('#'+hex);
                                         ed.set_color(c);
                                     }});
+
+    // Don't use firebug console if not installed
+    if (typeof console === "undefined") {
+        console = {
+            log: function () {},
+            info: function () {},
+            group: function () {},
+            error: function () {},
+            warn: function () {},
+            groupEnd: function () {}
+        };
+    }
 }
 
 $(document).ready(init);
