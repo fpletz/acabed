@@ -18,6 +18,7 @@ function Movie() {
     this.author = 'author';
     this.email = 'email';
     this.url = 'url';
+    this.loop = 'no';
 
     this.rows = 4
     this.cols = 24
@@ -39,6 +40,7 @@ Movie.prototype = {
         this.author = header.find('author');
         this.email = header.find('email');
         this.url = header.find('url');
+        this.loop = header.find('loop');
 
         this.rows = this.movie_xml.find('blm').attr('height');
         this.cols = this.movie_xml.find('blm').attr('width');
@@ -71,8 +73,40 @@ Movie.prototype = {
         --this.frames;
         this.data.splice(at, 1);
         this.on_modify.call();
+    },
+    to_xml: function() {
+        var xml = $('<xml/>');
+
+        var blm = $('<blm/>');
+        blm.attr('width', this.width);
+        blm.attr('height', this.height);
+        blm.attr('bits', this.depth);
+        blm.attr('channels', this.channels);
+        blm.appendTo(xml);
+        
+        var header = $('<header/>');
+        header.append($('<title/>').text(this.title));
+        header.append($('<description/>').text(this.description));
+        header.append($('<creator/>').text('acabed'));
+        header.append($('<author/>').text(this.author));
+        header.append($('<email/>').text(this.email));
+        header.append($('<loop/>').text(this.loop));
+        // TODO duration
+        header.appendTo(blm);
+
+        for (var row = 0; row < this.data.length; ++row) {
+            blm.append(this.data[row].to_xml());
+        }
+
+        return xml;
     }
 };
+
+// Dirty hack
+function fix_frame(xml) {
+    var xml_string = xml.html().replace(/__frame/g, 'frame');
+    return xml_string;
+}
 
 function Color(r, g, b) {
     this.set_from_rgb(r, g, b);
@@ -143,6 +177,23 @@ Frame.prototype = {
     },
     set_color: function(row, col, color) {
         this.data[row][col] = color;
+    },
+    // TODO: Handle non 3 color values
+    to_xml: function() {
+        var frame = $('<__frame></__frame>');
+        frame.attr('duration', this.duration);
+        
+        for (var row = 0; row < this.rows; ++row) {
+            var line = '';
+            for (var col = 0; col < this.cols; ++col) {
+                var color = this.data[row][col].to_string();
+                line += color.substr(1, color.length-1);
+            }
+            line = '<row>'+line+'</row>';
+            frame.append(line);
+        }
+
+        return frame;
     }
 };
 
@@ -158,15 +209,6 @@ function xml_frame_to_frame(xml_frame) {
     }
     return f;
 }
-
-// // TODO Finish
-// function frame_to_xml_frame(frame) {
-//     f = new XmlFrame(frame.rows, frame.cols);
-//     for (var row = 0; row < xml_frame.rows; ++row) {
-//         ;
-//     }
-//     return f;
-// }
 
 // Concrete xml based frame implementation
 function XmlFrame(rows, cols) {
@@ -336,15 +378,12 @@ function PlayerControls(id, movie_player) {
     this.next = $('<button>›</button>').attr('id', 'next-button');
     this.sl = $('<div></div>').attr('id', 'slider');
     var br = $('<br/>');
-    var file = $('<input />').attr('id', 'movie-file').attr('type', 'file');
     
     fs.append(lg);
     fs.append(this.play);
     fs.append(this.stop);
     fs.append(this.last);
     fs.append(this.next);
-    fs.append(br);
-    fs.append(file);
     fs.append(br);
     fs.append(this.sl);
 
@@ -364,9 +403,6 @@ function PlayerControls(id, movie_player) {
     this.next.bind('click', function() {
         pc.next_click();
     });
-
-    // File stuff
-    file.bind('change', function() {movie_player.load_file(this.files[0])});
 
     // Setup slider
     this.sl.slider({ stop: function(event, ui) {
@@ -421,7 +457,6 @@ function EditorControls(id, movie_player) {
     fs.append(lg);
     fs.append(this.add);
     fs.append(this.remove);
-    fs.append(br);
 
     fs.appendTo($(id));
 
@@ -448,6 +483,47 @@ EditorControls.prototype = {
         console.info('remove frame');
         this.movie_player.movie.remove_frame_at(this.movie_player.current_frame_no);
         this.movie_player.update();
+    }
+};
+
+function FileControls(id, movie_player) {
+    this.id = id;
+    this.movie_player = movie_player;
+
+    var fs = $('<fieldset></fieldset>');
+    var lg = $('<legend>File Control</legend>');
+    var file = $('<input />').attr('id', 'movie-file').attr('type', 'file');
+    var download_button = $('<button>Download</button>').attr('id', 'download-button');
+    this.download_link = $('<a>Download</a>').attr('id', 'download-link');
+    var br = $('<br/>');
+    
+    fs.append(lg);
+    fs.append(file);
+    fs.append(br);
+    fs.append(download_button);
+    fs.append(br);
+    fs.append(this.download_link);
+
+    fs.appendTo($(id));
+
+    // Click stuff
+    var fc = this;
+
+    download_button.bind('click', function() {
+        fc.download_click();
+    });
+
+    // File stuff
+    file.bind('change', function() {movie_player.load_file(this.files[0])});
+
+    return this;
+}
+
+FileControls.prototype = {
+    download_click: function() {
+        var uri = 'data:text/xml;utf-8,';
+        uri += fix_frame(this.movie_player.movie.to_xml());
+        this.download_link.attr('href', uri);
     }
 };
 
@@ -492,6 +568,7 @@ function init() {
     var mp = new MoviePlayer(mv, mt);
     var pc = new PlayerControls('#player-controls', mp);
     var ec = new EditorControls('#editor-controls', mp);
+    var fc = new FileControls('#file-controls', mp);
     var ed = new Editor(mt, pc);
 
     // Color picker change callback sets current_color of editor
