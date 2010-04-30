@@ -236,6 +236,29 @@ XmlFrame.prototype = {
 function MatrixTable(id) {
     this.id = id
 
+    // register click callback
+    var mt = this;
+    $(this.id).bind('mousedown', function(ev) {
+        mt.clicked = true;
+    });
+    $(this.id).bind('mouseup', function(ev) {
+        mt.clicked = false;
+    });
+    $(this.id).bind('mouseover', function(ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+
+        var id = $(ev.target).attr('id');
+
+        if (id.split('-')[0] == 'element' && mt.clicked) {
+            var row = id.split('-')[1];
+            var col = id.split('-')[2];
+
+            // call user provided callback with row and col
+            mt.on_click.call(null, row, col);
+        }
+    });
+
     return this;
 }
 
@@ -534,20 +557,13 @@ function Editor(matrix_table, player_controls) {
 
     // initialize matrix click handler
     ed = this;
-    $(matrix_table.id).bind('click', function(ev) {
-        var id = $(ev.target).attr('id');
+    this.matrix_table.on_click = function(row, col) {
+        var current_frame = ed.player_controls.movie_player.current_frame();
+        current_frame.set_color(row, col, ed.current_color);
+        ed.player_controls.movie_player.render(current_frame);
 
-        if (id.split('-')[0] == 'element') {
-            var row = id.split('-')[1];
-            var col = id.split('-')[2];
-
-            var current_frame = ed.player_controls.movie_player.current_frame();
-            current_frame.set_color(row, col, ed.current_color);
-            ed.player_controls.movie_player.render(current_frame);
-
-            console.info('set color to %s', ed.current_color.to_string());
-        }
-    });
+        console.info('set color to %s', ed.current_color.to_string());
+    };
     
     return this;
 }
