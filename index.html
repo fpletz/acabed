@@ -28,27 +28,27 @@
     <script type="text/javascript" src="jquery-ui/jquery-ui-1.8.custom.min.js"></script>
   </head>
   <body>
-    <h1>acabed</h1>
-    <fieldset class="widget">
-      <legend>Matrix</legend>
-      <table id="matrix-table" cellspacing="0"></table>
+    <!-- <h1>acabed</h1> -->
+    <fieldset>
+      <legend>acabed</legend>
+      <div id="file-controls" class="widget"></div>
+      <fieldset id="matrix-container" class="widget">
+        <legend>Matrix</legend>
+        <table id="matrix-table" cellspacing="0"></table>
+        <div id="player-controls" class="widget"></div>
+      </fieldset>
+      <fieldset id="color-picker-container" class="widget">
+        <legend>Color Picker</legend>
+        <div id="color-picker"></div>
+      </fieldset>
+      <div id="editor-controls" class="widget"></div>
     </fieldset>
-    <br/>
-    <fieldset class="widget">
-      <legend>Color Picker</legend>
-      <div id="color-picker"></div>
-    </fieldset>
-    <div id="player-controls" class="widget"></div><br/>
-    <div id="editor-controls" class="widget"></div><br/>
-    <div id="file-controls" class="widget"></div><br/>
-    <hr/>
+
     <h2>git</h2>
     git clone http://hcl-club.lu/~enigma/files/code/acabed.git
-    <hr/>
     <h2>todo</h2>
     <ul>
       <li>Create new movie, load, save widget</li>
-      <li>Correctly handle frame delete and add corner cases</li>
       <li>Add status info like current frame number</li>
       <li>Make everything faster</li>
       <li>Create ajax backend</li>

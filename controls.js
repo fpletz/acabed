@@ -11,7 +11,7 @@ function PlayerControls(id, movie_player) {
     this.sl = $('<div></div>').attr('id', 'slider');
     var br = $('<br/>');
     
-    fs.append(lg);
+    // fs.append(lg);
     fs.append(this.play);
     fs.append(this.stop);
     fs.append(this.last);
@@ -116,10 +116,16 @@ EditorControls.prototype = {
     },
     remove_click: function() {
         console.info('remove frame');
-        this.movie_player.movie.remove_frame_at(this.movie_player.current_frame_no);
-        this.movie_player.update();
+        if (!this.movie_player.at_end()) {
+            this.movie_player.movie.remove_frame_at(this.movie_player.current_frame_no);
+            this.movie_player.update();
+        }
     }
 };
+
+function label_for(id, name) {
+    return $('<label for="'+id+'" >'+name+'</label>');
+}
 
 function FileControls(id, movie_player) {
     this.id = id;
@@ -128,16 +134,15 @@ function FileControls(id, movie_player) {
     var fs = $('<fieldset></fieldset>');
     var lg = $('<legend>File Control</legend>');
     var file = $('<input />').attr('id', 'movie-file').attr('type', 'file');
-    var download_button = $('<button>Download</button>').attr('id', 'download-button');
-    this.download_link = $('<a>Download</a>').attr('id', 'download-link');
+    var download_button = $('<button>Download xml</button>').attr('id', 'download-button');
     var br = $('<br/>');
     
     fs.append(lg);
+    fs.append(label_for('movie-file', 'Upload xml Blinkenlight movie'));
     fs.append(file);
     fs.append(br);
+    fs.append(label_for('download-button', 'Download current xml'));
     fs.append(download_button);
-    fs.append(br);
-    fs.append(this.download_link);
 
     fs.appendTo($(id));
 
@@ -158,7 +163,7 @@ FileControls.prototype = {
     download_click: function() {
         var uri = 'data:text/xml;utf-8,';
         uri += fix_frame(this.movie_player.movie.to_xml());
-        this.download_link.attr('href', uri);
+        document.location = uri;
     }
 };
 
