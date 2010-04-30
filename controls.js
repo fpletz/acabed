@@ -73,6 +73,9 @@ PlayerControls.prototype = {
         this.play.text('Play');
         
         this.movie_player.forward(1);
+    },
+    reset: function() {
+        this.play.text('Play');
     }
 };
 

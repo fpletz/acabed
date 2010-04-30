@@ -24,12 +24,12 @@ Movie.prototype = {
         this.movie_xml = $(movie_dom);
         header = this.movie_xml.find('header');
 
-        this.title = header.find('title');
-        this.description = header.find('description');
-        this.author = header.find('author');
-        this.email = header.find('email');
-        this.url = header.find('url');
-        this.loop = header.find('loop');
+        this.title = header.find('title').text();
+        this.description = header.find('description').text();
+        this.author = header.find('author').text();
+        this.email = header.find('email').text();
+        this.url = header.find('url').text();
+        this.loop = header.find('loop').text();;
 
         this.rows = this.movie_xml.find('blm').attr('height');
         this.cols = this.movie_xml.find('blm').attr('width');
@@ -46,7 +46,7 @@ Movie.prototype = {
             this.data[i] = xml_frame_to_frame(f);
         }
 
-        console.info("Movie: %s", this.title.text());
+        console.info("Movie: %s", this.title);
         console.info("size: %dx%d, depth: %d, channels: %d, frames: %d", this.rows, this.cols, this.depth, this.channels, this.frames);
     },
     frame: function(no) {

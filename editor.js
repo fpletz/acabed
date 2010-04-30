@@ -65,6 +65,11 @@ function init() {
         pc.sl.slider("option", "max", mv.frames-1);
     };
 
+    // Reset player controls on stop
+    mp.on_stop = function() {
+        pc.reset();
+    };
+
     // Set initial State
     mv.add_frame_at(0);
     mt.reset(4, 24);

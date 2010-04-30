@@ -30,6 +30,10 @@ MoviePlayer.prototype = {
     },
     play: function() {
         var duration = this.movie.frame(this.current_frame_no).duration;
+        if (this.at_end()) {
+            this.rewind();
+        }
+
         this.interval = setInterval(function(this_obj) {
             this_obj.next_frame()
         }, duration, this);
@@ -39,7 +43,8 @@ MoviePlayer.prototype = {
     },
     stop: function() {
         clearInterval(this.interval);
-        this.current_frame_no = 0;
+        this.rewind();
+        this.on_stop.call();
     },
     forward: function(no) {
         if (this.current_frame_no + no < this.movie.frames) {
@@ -57,11 +62,25 @@ MoviePlayer.prototype = {
         var frame = this.movie.frame(this.current_frame_no)
 
         if (this.current_frame_no >= this.movie.frames) {
-            clearInterval(this.interval);
-            // TODO reset player controls
+            if (this.movie.loop == 'no') {
+                this.stop();
+            } else {
+                this.rewind();
+            }
         } else {
             this.render(frame);
             ++this.current_frame_no;
+        }
+    },
+    rewind: function() {
+        this.current_frame_no = 0;
+        this.update();
+    },
+    at_end: function() {
+        if (this.current_frame_no >= this.movie.frames-1) {
+            return true;
+        } else {
+            return false;
         }
     },
     render: function(frame) {
