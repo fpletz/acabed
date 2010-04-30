@@ -3,13 +3,7 @@ function MatrixTable(id) {
 
     // register click callback
     var mt = this;
-    $(this.id).bind('mousedown', function(ev) {
-        mt.clicked = true;
-    });
-    $(this.id).bind('mouseup', function(ev) {
-        mt.clicked = false;
-    });
-    $(this.id).bind('mouseover', function(ev) {
+    function color_pixel(ev) {
         ev.stopPropagation();
         ev.preventDefault();
 
@@ -22,8 +16,16 @@ function MatrixTable(id) {
             // call user provided callback with row and col
             mt.on_click.call(null, row, col);
         }
-    });
+    };
 
+    $(this.id).bind('mousedown', function(ev) {
+        mt.clicked = true;
+        color_pixel(ev);
+    });
+    $(this.id).bind('mouseup', function(ev) {
+        mt.clicked = false;
+    });
+    $(this.id).bind('mouseover', color_pixel);
     return this;
 }
 
