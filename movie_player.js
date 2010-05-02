@@ -22,9 +22,6 @@ MoviePlayer.prototype = {
             mov.load_xml(reader.result);
             mat.reset(mov.rows, mov.cols);
 
-            f = mov.frame(0);
-            fr = xml_frame_to_frame(f);
-
             mp.update();
         };
     },
@@ -87,9 +84,8 @@ MoviePlayer.prototype = {
         for (var row = 0; row < this.movie.rows; ++row) {
             for (var col = 0; col < this.movie.cols; ++col) {
                 this.matrix_table.
-                    set_str_color(row,
-                                  col,
-                                  frame.color(row, col).to_string())
+                    set_str_color(row, col,
+                                  frame.data[row][col].to_string())
             }
         }
         this.on_render.call(this.current_frame_no);

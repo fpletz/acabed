@@ -31,21 +31,21 @@ Movie.prototype = {
         this.url = header.find('url').text();
         this.loop = header.find('loop').text();;
 
-        this.rows = this.movie_xml.find('blm').attr('height');
-        this.cols = this.movie_xml.find('blm').attr('width');
-        this.depth = this.movie_xml.find('blm').attr('bits');
-        this.channels = this.movie_xml.find('blm').attr('channels');
+        var blm = this.movie_xml.find('blm')
+        this.rows = parseInt(blm.attr('height'));
+        this.cols = parseInt(blm.attr('width'));
+        this.depth = parseInt(blm.attr('bits'));
+        this.channels = parseInt(blm.attr('channels'));
         this.frames = this.movie_xml.find('frame').length;
 
         // Build internal movie representation from xml
-        this.data = new Array(this.frames);
-        var frames = this.movie_xml.find('frame')
-        for (var i = 0; i < this.frames; ++i) {
-            var f = new XmlFrame(this.rows, this.cols);
-            f.load_xml(frames[i], this.depth, this.channels);
-            this.data[i] = xml_frame_to_frame(f);
-        }
-
+        var data = [];
+        var f = new XmlFrame(this.rows, this.cols, this.depth, this.channels);
+        this.movie_xml.find('frame').each(function(i) {
+            data.push(f.load_xml(this).to_frame());
+        });
+        this.data = data;
+        
         console.info("Movie: %s", this.title);
         console.info("size: %dx%d, depth: %d, channels: %d, frames: %d", this.rows, this.cols, this.depth, this.channels, this.frames);
     },
