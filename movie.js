@@ -55,7 +55,8 @@ Movie.prototype = {
     // TODO corner cases
     add_frame_at: function(at) {
         ++this.frames;
-        this.data.splice(at, 0, new Frame(this.rows, this.cols));
+        // TODO remove hardcoded fuck
+        this.data.splice(at, 0, new Frame(this.rows, this.cols, 40));
         this.on_modify.call();
     },
     remove_frame_at: function(at) {

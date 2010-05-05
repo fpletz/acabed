@@ -7,12 +7,11 @@ function Frame(rows, cols, duration) {
 
     var color = new Color(0, 0, 0);
     
-    t = new Array();
-    for (var col = 0; col < cols; ++col) {
-        t.push(color);
-    }
-
     for (var row = 0; row < rows; ++row) {
+        t = new Array();
+        for (var col = 0; col < cols; ++col) {
+            t.push(color);
+        }
         this.data.push(t);
     }
 
@@ -31,10 +30,10 @@ Frame.prototype = {
         var frame = $('<__frame></__frame>');
         frame.attr('duration', this.duration);
         
-        for(var row in this.data) {
+        for (var row = 0; row < this.rows; ++row) {
             var line = '';
-            for (var col in row) {
-                var color = col.to_string();
+            for (var col = 0; col < this.cols; ++col) {
+                var color = this.data[row][col].to_string();
                 line += color.substr(1, color.length-1);
             }
             line = '<row>'+line+'</row>';
@@ -45,13 +44,13 @@ Frame.prototype = {
     }
 };
 
-
 // Concrete xml based frame implementation
 function XmlFrame(rows, cols, depth, channels) {
-    this.row = rows;
+    this.rows = rows;
     this.cols = cols;
     this.depth = depth;
     this.channels = channels;
+
     return this;
 }
 
@@ -61,23 +60,24 @@ XmlFrame.prototype = {
         this.duration = parseInt(this.frame_xml.attr('duration'));
         return this;
     },
-    colorFromString: function(row, col) {
+    colorFromString: function(row_str, col) {
         var c = new Color(0, 0, 0);
-        c.set_from_string('#'+row.textContent.substr(this.depth*this.channels/4*col, this.depth*this.channels/4));
+        c.set_from_string('#'+row_str.textContent.substr(this.depth*this.channels/4*col, this.depth*this.channels/4));
         return c;
     },
     to_frame: function() {
-        frame = new Frame(this.rows, this.cols, this.duration);
+        fpletz = new Frame(this.rows, this.cols, this.duration);
         var xf = this;
 
+        fpletz.data = [];        // fpletz
         this.frame_xml.find('row').each(function(i) {
             var t = [];
             for(var col = 0; col < xf.cols; ++ col) {
                 t.push(xf.colorFromString(this, col));
             }
-            frame.data.push(t);
+            fpletz.data.push(t);
         });
 
-        return frame;
+        return fpletz;
     }
 };
