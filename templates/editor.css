@@ -1,3 +1,8 @@
+body {
+    background-color: black;
+    color: white;
+}
+
 #matrix-table td, #matrix-table tr {
     padding: 0px;
     margin: 0px;
