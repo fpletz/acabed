@@ -84,12 +84,15 @@ function EditorControls(id, movie_player) {
     var div = $(id);
     this.add = $('<img src="icons/48px-List-add.svg.png">').attr('id', 'add-button').attr('class', 'icon');
     this.remove = $('<img src="icons/48px-List-remove.svg.png">').attr('id', 'remove-button').attr('class', 'icon');
-    this.duplicate = $('<span></span>').attr('class', 'button').text('Duplicate');
+    this.duplicate = $('<span></span>').attr('class', 'button').text('Duplicate frame');
+    this.column = $('<span></span>').attr('class', 'button').text('Draw column');
     var br = $('<br/>');
     
     div.append(this.add);
     div.append(this.remove);
+    div.append(br);
     div.append(this.duplicate);
+    div.append(this.column);
 
     // Click handlers
     var pc = this;
