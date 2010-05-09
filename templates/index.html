@@ -24,34 +24,29 @@
     <script type="text/javascript" src="colorpicker/js/layout.js?ver=1.0.2"></script>
 
     <!-- slider -->
-    <link rel="stylesheet" type="text/css" href="jquery-ui/css/ui-lightness/jquery-ui-1.8.custom.css" />
+    <link rel="stylesheet" type="text/css" href="jquery-ui/css/ui-darkness/jquery-ui-1.8.1.custom.css" />
     <script type="text/javascript" src="jquery-ui/jquery-ui-1.8.custom.min.js"></script>
   </head>
   <body>
     <img src="icons/acabed-logo.png" />
-    <div id="file-controls" class="widget"></div>
-    <fieldset id="matrix-container" class="widget">
-      <legend>Matrix</legend>
-      <table id="matrix-table" cellspacing="0"></table>
-      <div id="player-controls" class="widget"></div>
-    </fieldset>
-    <fieldset id="color-picker-container" class="widget">
-      <legend>Color Picker</legend>
-      <div id="color-picker"></div>
-    </fieldset>
-    <div id="editor-controls" class="widget"></div>
 
-    <h2>git</h2>
-    git clone http://hcl-club.lu/~enigma/files/code/acabed.git
-    <h2>todo</h2>
-    <ul>
-      <li>Create new movie, load, save widget</li>
-      <li>Add status info like current frame number</li>
-      <li>Make everything faster (<span style="text-decoration: line-through;">XML parsing</span>, object interaction/design, ...)</li>
-      <li>Create ajax backend</li>
-      <li>Enhance visual design</li>
-      <li>Release under some GPL license</li>
-    </ul>
-    <a href="http://www.blinkenlights.net/downloads/stereoscope_paint/Animations.zip">Example files</a>
+    <div id="matrix-container" class="widget">
+      <table id="matrix-table" cellspacing="0"></table>
+      <div id="player-controls"></div>
+    </div>
+    <div id="editor-container" class="widget">
+      <div id="editor-controls-container" class="controls-container">
+        <div id="editor-controls"></div>
+      </div>
+      <div id="color-picker-container">
+        <div id="color-picker"></div>
+      </div>
+    </div>
+    <div style="clear: both;" />
+
+    <div id="file-controls" class="widget controls-container"></div>
+    <div style="clear: both;" />
+
+    <div id="footer">Project All Colors are Beautifull</div>
   </body>
 </html>

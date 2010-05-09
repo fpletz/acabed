@@ -5,11 +5,11 @@ function Frame(rows, cols, duration) {
     this.duration = duration;
     this.data = new Array();
 
-    var color = new Color(0, 0, 0);
     
     for (var row = 0; row < rows; ++row) {
         t = new Array();
         for (var col = 0; col < cols; ++col) {
+            var color = new Color(0, 0, 0);
             t.push(color);
         }
         this.data.push(t);
@@ -41,6 +41,17 @@ Frame.prototype = {
         }
 
         return frame;
+    },
+    copy: function() {
+        var f = new Frame(this.rows, this.cols, this.duration);
+        for (var row = 0; row < this.rows; ++row) {
+            t = new Array();
+            for (var col = 0; col < this.cols; ++col) {
+                t.push(this.color(col, row).copy());
+            }
+            f.data.push(t);
+        }
+        return f; 
     }
 };
 

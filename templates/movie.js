@@ -64,6 +64,12 @@ Movie.prototype = {
         this.data.splice(at, 1);
         this.on_modify.call();
     },
+    duplicate_frame_at: function(at) {
+        ++this.frames;
+        var frame_copy = this.frame(at).copy();
+        this.data.splice(at, 0, frame_copy);
+        this.on_modify.call();
+    },
     to_xml: function() {
         var xml = $('<xml/>');
 

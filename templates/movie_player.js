@@ -65,7 +65,7 @@ MoviePlayer.prototype = {
                 this.rewind();
             }
         } else {
-            this.render(frame);
+            this.update();
             ++this.current_frame_no;
         }
     },
@@ -95,9 +95,13 @@ MoviePlayer.prototype = {
     },
     update: function() {
         this.render(this.current_frame());
+        this.update_status();
     },
     set_frame: function(no) {
         this.current_frame_no = no;
         this.update();
+    },
+    update_status: function() {
+        $('#status-field').text((this.current_frame_no+1) + "/" + this.movie.frames);
     }
 };

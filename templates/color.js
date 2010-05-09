@@ -37,5 +37,8 @@ Color.prototype = {
         if (gs.length == 1) gs += '0';
         if (bs.length == 1) bs += '0';
         return '#'+rs+gs+bs;
+    },
+    copy: function() {
+        return new Color(this.r, this.g, this.b);
     }
 };

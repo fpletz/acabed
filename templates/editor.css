@@ -6,20 +6,60 @@ body {
 #matrix-table td, #matrix-table tr {
     padding: 0px;
     margin: 0px;
+    /* border: solid 1px #111; */
 }
 
 #matrix-table div {
-    background-color: #000000;
+    /* background-color: #111; */
     width: 15px;
     height: 18px;
     padding: 0px;
     margin: 3px;
 }
 
-.widget {
-    /* display: inline-block; */
-}
-
 #slider {
     margin: 10px;
+    display: inline-block;
+    width: 400px;
+    top: 5px;
+}
+
+#status-field {
+    top: 0px;
+}
+
+#matrix-table {
+    margin: 5px 0px;
+    border: solid 1px #333;
+}
+
+.widget img {
+    max-width: 24px;
+}
+
+#editor-controls-container {
+    float: left;
+}
+
+#color-picker-container {
+/* display: inline-block; */
+    float: left;
+}
+
+#footer {
+    font-size: xx-small;
+    color: #333
+}
+
+.button {
+    padding: 1px 3px;
+    border: solid 1px #333;    
+}
+
+.controls-container {
+    float: left;
+    margin: 4px 4px 4px 0px;
+    padding: 8px;
+    border: solid 1px #333;
+    background: #111111;
 }

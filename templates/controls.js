@@ -2,24 +2,22 @@ function PlayerControls(id, movie_player) {
     this.id = id;
     this.movie_player = movie_player;
 
-    var fs = $('<fieldset></fieldset>');
-    var lg = $('<legend>Video Control</legend>');
-    this.play = $('<button>Play</button>').attr('id', 'play-button');
-    this.stop = $('<button>Stop</button>').attr('id', 'stop-button');
-    this.last = $('<button>‹</button>').attr('id', 'last-button');
-    this.next = $('<button>›</button>').attr('id', 'next-button');
+    var div = $(id);
+    this.play = $('<img src="icons/48px-Media-playback-start.svg.png" />').attr('id', 'play-button');
+    this.stop = $('<img src="icons/48px-Media-playback-stop.svg.png" />').attr('id', 'stop-button');
+    this.last = $('<img src="icons/48px-Go-previous.svg.png" />').attr('id', 'last-button');
+    this.next = $('<img src="icons/48px-Go-next.svg.png" />').attr('id', 'next-button');
     this.sl = $('<div></div>').attr('id', 'slider');
-    var br = $('<br/>');
-    
-    // fs.append(lg);
-    fs.append(this.play);
-    fs.append(this.stop);
-    fs.append(this.last);
-    fs.append(this.next);
-    fs.append(br);
-    fs.append(this.sl);
+    this.status = $('<span>').attr('id', 'status-field');
 
-    fs.appendTo($(id));
+    div.append(this.play);
+    div.append(this.stop);
+    div.append(this.last);
+    div.append(this.next);
+
+    div.append(this.sl);
+
+    div.append(this.status);
 
     // Click handlers
     var pc = this;
@@ -83,17 +81,15 @@ function EditorControls(id, movie_player) {
     this.id = id;
     this.movie_player = movie_player;
 
-    var fs = $('<fieldset></fieldset>');
-    var lg = $('<legend>Editor Control</legend>');
-    this.add = $('<button>+</button>').attr('id', 'last-button');
-    this.remove = $('<button>-</button>').attr('id', 'next-button');
+    var div = $(id);
+    this.add = $('<img src="icons/48px-List-add.svg.png">').attr('id', 'add-button');
+    this.remove = $('<img src="icons/48px-List-remove.svg.png">').attr('id', 'remove-button');
+    this.duplicate = $('<span></span>').attr('class', 'button').text('Duplicate');
     var br = $('<br/>');
     
-    fs.append(lg);
-    fs.append(this.add);
-    fs.append(this.remove);
-
-    fs.appendTo($(id));
+    div.append(this.add);
+    div.append(this.remove);
+    div.append(this.duplicate);
 
     // Click handlers
     var pc = this;
@@ -103,6 +99,9 @@ function EditorControls(id, movie_player) {
     });
     this.remove.bind('click', function() {
         pc.remove_click();
+    });
+    this.duplicate.bind('click', function() {
+        pc.duplicate_click();
     });
 
     return this;
@@ -120,6 +119,12 @@ EditorControls.prototype = {
             this.movie_player.movie.remove_frame_at(this.movie_player.current_frame_no);
             this.movie_player.update();
         }
+    },
+    duplicate_click: function() {
+        console.info('duplicate frame');
+        this.movie_player.movie.duplicate_frame_at(this.movie_player.current_frame_no);
+        this.movie_player.forward(1);
+        this.movie_player.update();
     }
 };
 
@@ -131,20 +136,16 @@ function FileControls(id, movie_player) {
     this.id = id;
     this.movie_player = movie_player;
 
-    var fs = $('<fieldset></fieldset>');
-    var lg = $('<legend>File Control</legend>');
+    var div = $(id);
     var file = $('<input />').attr('id', 'movie-file').attr('type', 'file');
-    var download_button = $('<button>Download xml</button>').attr('id', 'download-button');
+    var download_button = $('<img src="icons/48px-Go-jump.svg.png" alt="download xml"/>').attr('id', 'download-button');
     var br = $('<br/>');
     
-    fs.append(lg);
-    fs.append(label_for('movie-file', 'Upload xml Blinkenlight movie'));
-    fs.append(file);
-    fs.append(br);
-    fs.append(label_for('download-button', 'Download current xml'));
-    fs.append(download_button);
-
-    fs.appendTo($(id));
+    div.append(label_for('movie-file', 'Upload '));
+    div.append(file);
+    div.append(br);
+    div.append(label_for('download-button', 'Download '));
+    div.append(download_button);
 
     // Click stuff
     var fc = this;

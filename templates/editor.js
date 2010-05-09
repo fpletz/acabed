@@ -63,6 +63,7 @@ function init() {
     // Update slider max on Movie resizing
     mv.on_modify = function() {
         pc.sl.slider("option", "max", mv.frames-1);
+        mp.update_status();
     };
 
     // Reset player controls on stop

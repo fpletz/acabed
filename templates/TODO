@@ -1,0 +1,6 @@
+Create new movie, load, save widget
+Add create line, row and fill buttons
+Add status info like current frame number
+Make everything faster (<span style="text-decoration: line-through;">XML parsing</span>, object interaction/design, ...)
+Create ajax backend
+Release under some GPL license
