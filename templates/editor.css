@@ -6,15 +6,13 @@ body {
 #matrix-table td, #matrix-table tr {
     padding: 0px;
     margin: 0px;
-    /* border: solid 1px #111; */
 }
 
 #matrix-table div {
-    /* background-color: #111; */
     width: 15px;
     height: 18px;
     padding: 0px;
-    margin: 3px;
+    margin: 5px;
 }
 
 #slider {
@@ -24,26 +22,17 @@ body {
     top: 5px;
 }
 
-#status-field {
-    top: 0px;
-}
-
 #matrix-table {
-    margin: 5px 0px;
+    margin: 0px;
     border: solid 1px #333;
 }
 
-.widget img {
+img.icon {
     max-width: 24px;
 }
 
-#editor-controls-container {
-    float: left;
-}
-
-#color-picker-container {
-/* display: inline-block; */
-    float: left;
+#editor-controls img {
+    vertical-align: middle;
 }
 
 #footer {
@@ -56,10 +45,36 @@ body {
     border: solid 1px #333;    
 }
 
-.controls-container {
+#player-controls {
+    padding-bottom: 10px;
+}
+
+#editor-container {
     float: left;
-    margin: 4px 4px 4px 0px;
-    padding: 8px;
     border: solid 1px #333;
-    background: #111111;
+    padding: 5px;
+    margin: 0px;
+}
+
+#color-picker-container {
+    position: relative;
+    left: -4px;
+    top: -4px;
+    float: left;
+    margin: 0px -3px -3px 0px;
+}
+
+#editor-controls-container {
+    float: left;
+    width: auto;
+}
+
+.boxxy {
+    border: solid 1px #333;
+    background-color: #111111;
+    padding: 5px;
+}
+
+#acabed-container {
+    padding-left: 4px;
 }
