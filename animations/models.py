@@ -6,7 +6,7 @@ class Frame(models.Model):
     data = models.TextField()
 
     def __unicode__(self):
-        return 'F<%i>' % (self.nr)
+        return '%i(%i): %s' % (self.nr, self.duration, self.data)
 
 class Animation(models.Model):
     name = models.CharField(max_length=128)
@@ -17,21 +17,19 @@ class Animation(models.Model):
     frames = models.ManyToManyField('Frame')
 
     def __unicode__(self):
-        return 'A<%i/%i,%i>' % (self.x, self.y, self.depth)
+        return '%s(%i,%i,%i)' % (self.name, self.x, self.y, self.depth)
 
     def get_frames(self):
         return self.frames.all().order_by('nr')
 
 class Playlist(models.Model):
+    name = models.CharField(max_length=128)
     animations = models.ManyToManyField('Animation')
 
     def __unicode__(self):
-        return 'P<%s>' % (self.__hash__())
+        return self.name
 
 class Spool(models.Model):
     playlists = models.ManyToManyField('Playlist')
     added = models.DateTimeField()
-
-    def __unicode__(self):
-        return 'S<%s>' % (self.__hash__())
 
