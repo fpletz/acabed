@@ -45,11 +45,10 @@ Frame.prototype = {
     copy: function() {
         var f = new Frame(this.rows, this.cols, this.duration);
         for (var row = 0; row < this.rows; ++row) {
-            t = new Array();
             for (var col = 0; col < this.cols; ++col) {
-                t.push(this.color(col, row).copy());
+                f.set_color(row, col,
+                            this.color(row, col).copy());
             }
-            f.data.push(t);
         }
         return f; 
     }

@@ -1,4 +1,3 @@
-
 function Movie() {
     this.data = new Array();
 
@@ -67,7 +66,9 @@ Movie.prototype = {
     duplicate_frame_at: function(at) {
         ++this.frames;
         var frame_copy = this.frame(at).copy();
-        this.data.splice(at, 0, frame_copy);
+        // Add after 'at'
+        this.data.splice(at+1, 0, frame_copy);
+        console.debug(this.data);
         this.on_modify.call();
     },
     to_xml: function() {
