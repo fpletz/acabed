@@ -3,10 +3,10 @@ function PlayerControls(id, movie_player) {
     this.movie_player = movie_player;
 
     var div = $(id);
-    this.play = $('<img src="icons/48px-Media-playback-start.svg.png" />').attr('id', 'play-button').attr('class', 'icon');
-    this.stop = $('<img src="icons/48px-Media-playback-stop.svg.png" />').attr('id', 'stop-button').attr('class', 'icon');
-    this.last = $('<img src="icons/48px-Go-previous.svg.png" />').attr('id', 'last-button').attr('class', 'icon');
-    this.next = $('<img src="icons/48px-Go-next.svg.png" />').attr('id', 'next-button').attr('class', 'icon');
+    this.play = $('<img src="/assets/icons/48px-Media-playback-start.svg.png" />').attr('id', 'play-button').attr('class', 'icon');
+    this.stop = $('<img src="/assets/icons/48px-Media-playback-stop.svg.png" />').attr('id', 'stop-button').attr('class', 'icon');
+    this.last = $('<img src="/assets/icons/48px-Go-previous.svg.png" />').attr('id', 'last-button').attr('class', 'icon');
+    this.next = $('<img src="/assets/icons/48px-Go-next.svg.png" />').attr('id', 'next-button').attr('class', 'icon');
     this.sl = $('<div></div>').attr('id', 'slider');
     this.status = $('<span>').attr('id', 'status-field');
 
@@ -82,8 +82,8 @@ function EditorControls(id, movie_player) {
     this.movie_player = movie_player;
 
     var div = $(id);
-    this.add = $('<img src="icons/48px-List-add.svg.png">').attr('id', 'add-button').attr('class', 'icon');
-    this.remove = $('<img src="icons/48px-List-remove.svg.png">').attr('id', 'remove-button').attr('class', 'icon');
+    this.add = $('<img src="/assets/icons/48px-List-add.svg.png">').attr('id', 'add-button').attr('class', 'icon');
+    this.remove = $('<img src="/assets/icons/48px-List-remove.svg.png">').attr('id', 'remove-button').attr('class', 'icon');
     this.duplicate = $('<span></span>').attr('class', 'button').text('Duplicate frame');
     this.column = $('<span></span>').attr('class', 'button').text('Draw column');
     var br = $('<br/>');
@@ -141,7 +141,7 @@ function FileControls(id, movie_player) {
 
     var div = $(id);
     var file = $('<input />').attr('id', 'movie-file').attr('type', 'file');
-    var download_button = $('<img src="icons/48px-Go-jump.svg.png" alt="download xml"/>').attr('id', 'download-button').attr('class', 'icon');
+    var download_button = $('<img src="/assets/icons/48px-Go-jump.svg.png" alt="download xml"/>').attr('id', 'download-button').attr('class', 'icon');
     var br = $('<br/>');
     
     div.append(label_for('movie-file', 'Upload '));
