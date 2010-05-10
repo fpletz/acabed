@@ -3,9 +3,9 @@ function Movie() {
 
     this.title = '';
     this.description = '';
-    this.author = 'author';
-    this.email = 'email';
-    this.url = 'url';
+    this.author = '';
+    this.email = '';
+    this.url = '';
     this.loop = 'no';
 
     this.rows = 4
@@ -68,7 +68,6 @@ Movie.prototype = {
         var frame_copy = this.frame(at).copy();
         // Add after 'at'
         this.data.splice(at+1, 0, frame_copy);
-        console.debug(this.data);
         this.on_modify.call();
     },
     to_xml: function() {

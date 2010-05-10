@@ -85,14 +85,14 @@ function EditorControls(id, movie_player) {
     this.add = $('<img src="/assets/icons/48px-List-add.svg.png">').attr('id', 'add-button').attr('class', 'icon');
     this.remove = $('<img src="/assets/icons/48px-List-remove.svg.png">').attr('id', 'remove-button').attr('class', 'icon');
     this.duplicate = $('<span></span>').attr('class', 'button').text('Duplicate frame');
-    this.column = $('<span></span>').attr('class', 'button').text('Draw column');
+    // this.column = $('<span></span>').attr('class', 'button').text('Draw column');
     var br = $('<br/>');
     
     div.append(this.add);
     div.append(this.remove);
     div.append(br);
     div.append(this.duplicate);
-    div.append(this.column);
+    // div.append(this.column);
 
     // Click handlers
     var pc = this;
@@ -158,7 +158,9 @@ function FileControls(id, movie_player) {
     });
 
     // File stuff
-    file.bind('change', function() {movie_player.load_file(this.files[0])});
+    file.bind('change', function() {
+        movie_player.load_file(this.files[0])
+    });
 
     return this;
 }
@@ -168,6 +170,29 @@ FileControls.prototype = {
         var uri = 'data:text/xml;utf-8,';
         uri += fix_frame(this.movie_player.movie.to_xml());
         document.location = uri;
+    }
+};
+
+function InfoWidget(id) {
+    this.id = $(id);
+    
+    return this;
+}
+
+InfoWidget.prototype = {
+    update_movie_info: function(movie) {
+        this.id.text('');
+
+        var table = $('<table/>');
+        $.each(['title', 'description', 'author', 'email', 'url', 'loop', 'rows', 'cols', 'depth', 'channels', 'frames'], function(i, attr) {
+            var row = $('<tr/>');
+            var title = $('<td/>').text(attr + ': ');
+            var name = $('<td/>').text(movie[attr]);
+            row.append(title); row.append(name);
+            table.append(row);
+        });
+
+        table.appendTo(this.id);
     }
 };
 
