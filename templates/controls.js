@@ -117,6 +117,7 @@ EditorControls.prototype = {
         this.movie_player.forward(1);
     },
     remove_click: function() {
+        // TODO: should also delete at end
         console.info('remove frame');
         if (!this.movie_player.at_end()) {
             this.movie_player.movie.remove_frame_at(this.movie_player.current_frame_no);
@@ -124,10 +125,9 @@ EditorControls.prototype = {
         }
     },
     duplicate_click: function() {
-        console.info('duplicate frame');
+        console.info('duplicate frame: %d', this.movie_player.current_frame_no);
         this.movie_player.movie.duplicate_frame_at(this.movie_player.current_frame_no);
         this.movie_player.forward(1);
-        this.movie_player.update();
     }
 };
 

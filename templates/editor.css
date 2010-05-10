@@ -9,10 +9,10 @@ body {
 }
 
 #matrix-table div {
-    width: 15px;
+    width: 8px;
     height: 18px;
     padding: 0px;
-    margin: 5px;
+    margin: 2px;
 }
 
 #slider {
