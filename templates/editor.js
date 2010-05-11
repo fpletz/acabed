@@ -45,6 +45,7 @@ function init() {
     var pc = new PlayerControls('#player-controls', mp);
     var ec = new EditorControls('#editor-controls', mp);
     var fc = new FileControls('#file-controls', mp);
+    var iw = new InfoWidget('#movie-info');
     var ed = new Editor(mt, pc);
 
     // Color picker change callback sets current_color of editor
@@ -71,9 +72,34 @@ function init() {
         pc.reset();
     };
 
+    // Register Movie info change callback
+    mp.on_file_change = function(movie) {
+        iw.update_movie_info(movie);
+    };
+    iw.update_movie_info(mv);
+
     // Set initial State
     mv.add_frame_at(0);
     mt.reset(4, 24);
+
+    // Load animootions
+    $.getJSON('animation/list', function(movies) {
+        var table = $('<table/>');
+        var head_line = $('<tr/>');
+        head_line.append($('<th/>').text('ID'));
+        head_line.append($('<th/>').text('Name'));        
+        table.append(head_line);
+
+        $.each(movies, function(i, movie) {
+            var row = $('<tr/>');
+            var id = $('<td/>').text(movie.pk);
+            var name = $('<td/>').text(movie.fields.name);
+            row.append(id);
+            row.append(name);
+            table.append(row);
+        });
+        $('#movie-list').append(table);
+    });
 }
 
 $(document).ready(init);
