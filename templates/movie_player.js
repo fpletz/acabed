@@ -23,9 +23,8 @@ MoviePlayer.prototype = {
             mat.reset(mov.rows, mov.cols);
 
             mp.update();
+            mp.on_file_change.call(null, mp.movie);
         };
-        
-        this.on_file_change.call(null, this.movie);
     },
     play: function() {
         var duration = this.movie.frame(this.current_frame_no).duration;
