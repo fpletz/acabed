@@ -175,20 +175,35 @@ FileControls.prototype = {
 
 function InfoWidget(id) {
     this.id = $(id);
-    
+    this.fields = ['title', 'description', 'author', 'email', 'url', 'loop', 'rows', 'cols', 'depth', 'channels', 'frames'];
+
     return this;
 }
 
 InfoWidget.prototype = {
+    field_html: function(field) {
+        var html = '';
+        switch (typeof field) {
+        case 'string':
+            html = $('<input/>').attr('type', 'text').attr('value', field);
+            break;
+        case 'number': 
+            html += field;
+            break;
+        }
+        return html;
+    },
     update_movie_info: function(movie) {
         this.id.text('');
 
         var table = $('<table/>');
-        $.each(['title', 'description', 'author', 'email', 'url', 'loop', 'rows', 'cols', 'depth', 'channels', 'frames'], function(i, attr) {
+        var iw = this;
+        $.each(this.fields, function(i, attr) {
             var row = $('<tr/>');
-            var title = $('<td/>').text(attr + ': ');
-            var name = $('<td/>').text(movie[attr]);
-            row.append(title); row.append(name);
+            var label = $('<td/>').text(attr + ': ');
+            var field_html = iw.field_html(movie[attr]);
+            var data = $('<td/>').append(field_html);
+            row.append(label); row.append(data);
             table.append(row);
         });
 
