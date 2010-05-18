@@ -87,13 +87,13 @@ function init() {
         var table = $('<table/>');
         var head_line = $('<tr/>');
         head_line.append($('<th/>').text('ID'));
-        head_line.append($('<th/>').text('Name'));        
+        head_line.append($('<th/>').text('Name'));  
         table.append(head_line);
 
         $.each(movies, function(i, movie) {
             var row = $('<tr/>');
             var id = $('<td/>').text(movie.pk);
-            var name = $('<td/>').text(movie.fields.name);
+            var name = $('<td/>').text(movie.fields.title);
             row.append(id);
             row.append(name);
             table.append(row);

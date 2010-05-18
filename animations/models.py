@@ -6,32 +6,49 @@ class Frame(models.Model):
     data = models.TextField()
 
     def __unicode__(self):
-        return 'F<%i>' % (self.nr)
+        return '%i(%i): %s' % (self.nr, self.duration, self.data)
+
+    def get_colors(self, rows, cols, depth, channels):
+        def nsplit(l, i):
+            return (l[:i], l[i:])
+
+        colors = []
+
+        i = j = 0
+        while self.data != '':
+            l,self.data = nsplit(self.data, depth/16*channels)
+            colors.append(((i, j), l))
+            i += 1
+            if i == rows:
+                j += 1
+                rows = 0
+
+        return colors
 
 class Animation(models.Model):
-    name = models.CharField(max_length=128)
+    title = models.CharField(max_length=128)
+    description = models.TextField()
     author = models.CharField(max_length=64)
-    x = models.IntegerField()
-    y = models.IntegerField()
+    rows = models.IntegerField()
+    cols = models.IntegerField()
     depth = models.IntegerField()
+    channels = models.IntegerField()
     frames = models.ManyToManyField('Frame')
 
     def __unicode__(self):
-        return 'A<%i/%i,%i>' % (self.x, self.y, self.depth)
+        return '%s(%i,%i,%i)' % (self.name, self.rows, self.cols, self.depth)
 
     def get_frames(self):
         return self.frames.all().order_by('nr')
 
 class Playlist(models.Model):
+    name = models.CharField(max_length=128)
     animations = models.ManyToManyField('Animation')
 
     def __unicode__(self):
-        return 'P<%s>' % (self.__hash__())
+        return self.name
 
 class Spool(models.Model):
     playlists = models.ManyToManyField('Playlist')
     added = models.DateTimeField()
-
-    def __unicode__(self):
-        return 'S<%s>' % (self.__hash__())
 
