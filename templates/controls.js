@@ -57,22 +57,34 @@ function PlayerControls(id, movie_player) {
     // Setup slider
     this.tim = new Element('img', {'src': '/assets/icons/tim.png', 'id': 'slider-tim'});
     this.sl.grab(this.tim);
-    /*this.sl.slider({ stop: function(event, ui) {
-        movie_player.set_frame(ui.value);
-    }});
-    var captured_sl = this.sl;
-    this.movie_player.on_render = function() {
-        captured_sl.slider( "option", "value", this); 
-    };*/
-    this.slider = new Slider(this.sl.get('id'), this.tim.get('id'), {
-        range: [0, movie_player.movie.frames-1],
-        steps: movie_player.movie.frames,
-        wheel: true,
-        snap: true,
-        onTick: function(pos) {
-            movie_player.set_frame(pos);
-        }
-    });
+
+    function createSlider() {
+        return new Slider(this.sl.get('id'), this.tim.get('id'), {
+            range: [0, movie_player.movie.frames-1],
+            steps: movie_player.movie.frames-1,
+            wheel: true,
+            snap: true,
+            onChange: function(pos) {
+                if(movie_player.matrix_table.rows === undefined)
+                    return;
+
+                movie_player.set_frame(pos);
+            }
+        });
+    }
+    createSlider = createSlider.bind(this)
+
+    // Update slider max on MatrixTable reset
+    movie_player.matrix_table.on_reset = (function() {
+        if(this.slider !== undefined)
+            this.slider.detach()
+
+        this.slider = createSlider();
+    }).bind(this);
+
+    movie_player.on_render = (function(frame_no) {
+        this.slider.set(frame_no);
+    }).bind(this);
 
     return this;
 }

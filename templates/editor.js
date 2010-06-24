@@ -70,18 +70,13 @@ function init() {
 	//'onColorHover': showColor
     });
 
-    // Update slider max on MatrixTable reset
-    mt.on_reset = function() {
-	// FIXME
-        //pc.sl.slider("option", "max", mv.frames-1);
-    };
-
     // Update slider max on Movie resizing
     mv.on_modify = function() {
-	// FIXME
-        //pc.sl.slider("option", "max", mv.frames-1);
+        mt.on_reset();
+        pc.slider.set(mp.current_frame_no);
         mp.update_status();
     };
+
 
     // Reset player controls on stop
     mp.on_stop = function() {
