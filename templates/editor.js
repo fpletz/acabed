@@ -56,6 +56,19 @@ function init() {
                                         c.set_from_string('#'+hex);
                                         ed.set_color(c);
                                     }});*/
+    var pallet = new Moopick({
+	palletParentElement: $('color-picker'),
+	palletID: 'colorfoo',
+	styles: { width: '15px', height: '15px' }
+    });
+    pallet.addEvents({
+	'onColorClick': function (s) {
+	    c = new Color();
+	    c.set_from_string(s);
+	    ed.set_color(c);
+	},
+	//'onColorHover': showColor
+    });
 
     // Update slider max on MatrixTable reset
     mt.on_reset = function() {
