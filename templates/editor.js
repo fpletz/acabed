@@ -75,6 +75,7 @@ function init() {
 	// FIXME
         //pc.sl.slider("option", "max", mv.frames-1);
     };
+
     // Update slider max on Movie resizing
     mv.on_modify = function() {
 	// FIXME

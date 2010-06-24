@@ -84,3 +84,9 @@ img.icon {
 #acabed-container {
     padding-left: 4px;
 }
+
+#slider {
+    width: 200px;
+    height: 10px;
+    background-color: #888888;
+}

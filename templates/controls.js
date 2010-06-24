@@ -55,6 +55,8 @@ function PlayerControls(id, movie_player) {
     });
 
     // Setup slider
+    this.tim = new Element('img', {'src': '/assets/icons/tim.png', 'id': 'slider-tim'});
+    this.sl.grab(this.tim);
     /*this.sl.slider({ stop: function(event, ui) {
         movie_player.set_frame(ui.value);
     }});
@@ -62,7 +64,16 @@ function PlayerControls(id, movie_player) {
     this.movie_player.on_render = function() {
         captured_sl.slider( "option", "value", this); 
     };*/
- 
+    this.slider = new Slider(this.sl.get('id'), this.tim.get('id'), {
+        range: [0, movie_player.movie.frames-1],
+        steps: movie_player.movie.frames,
+        wheel: true,
+        snap: true,
+        onTick: function(pos) {
+            movie_player.set_frame(pos);
+        }
+    });
+
     return this;
 }
 
