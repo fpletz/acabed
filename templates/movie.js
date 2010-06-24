@@ -20,28 +20,28 @@ function Movie() {
 Movie.prototype = {
     load_xml: function(movie_string) {
         var movie_dom = (new DOMParser()).parseFromString(movie_string, "text/xml");
-        this.movie_xml = $(movie_dom);
-        header = this.movie_xml.find('header');
+        this.movie_xml = movie_dom;
+        header = this.movie_xml.getElement('header');
 
-        this.title = header.find('title').text();
-        this.description = header.find('description').text();
-        this.author = header.find('author').text();
-        this.email = header.find('email').text();
-        this.url = header.find('url').text();
-        this.loop = header.find('loop').text();;
+        this.title = header.getElement('title').get('text');
+        this.description = header.getElement('description').get('text');
+        this.author = header.getElement('author').get('text');
+        this.email = header.getElement('email').get('text');
+        this.url = $try(function () {return header.getElement('url').get('text');}, $lambda(''));;
+        this.loop = header.getElement('loop').get('text');
 
-        var blm = this.movie_xml.find('blm')
-        this.rows = parseInt(blm.attr('height'));
-        this.cols = parseInt(blm.attr('width'));
-        this.depth = parseInt(blm.attr('bits'));
-        this.channels = parseInt(blm.attr('channels'));
-        this.frames = this.movie_xml.find('frame').length;
+        var blm = this.movie_xml.getElement('blm');
+        this.rows = parseInt(blm.get('height'));
+        this.cols = parseInt(blm.get('width'));
+        this.depth = parseInt(blm.get('bits'));
+        this.channels = parseInt(blm.get('channels'));
+        this.frames = this.movie_xml.getElements('frame').length;
 
         // Build internal movie representation from xml
         var data = [];
         var f = new XmlFrame(this.rows, this.cols, this.depth, this.channels);
-        this.movie_xml.find('frame').each(function(i) {
-            data.push(f.load_xml(this).to_frame());
+        this.movie_xml.getElements('frame').each(function(o) {
+            data.push(f.load_xml(o).to_frame());
         });
         this.data = data;
         
@@ -71,27 +71,27 @@ Movie.prototype = {
         this.on_modify.call();
     },
     to_xml: function() {
-        var xml = $('<xml/>');
+        var xml = new Element('xml');
 
-        var blm = $('<blm/>');
-        blm.attr('width', this.width);
-        blm.attr('height', this.height);
-        blm.attr('bits', this.depth);
-        blm.attr('channels', this.channels);
-        blm.appendTo(xml);
+        var blm = new Element('blm');
+        blm.set('width', this.width);
+        blm.set('height', this.height);
+        blm.set('bits', this.depth);
+        blm.set('channels', this.channels);
+        blm.inject(xml);
         
-        var header = $('<header/>');
-        header.append($('<title/>').text(this.title));
-        header.append($('<description/>').text(this.description));
-        header.append($('<creator/>').text('acabed'));
-        header.append($('<author/>').text(this.author));
-        header.append($('<email/>').text(this.email));
-        header.append($('<loop/>').text(this.loop));
+        var header = new Element('header');
+        header.grab(new Element('title').set('text', this.title));
+        header.grab(new Element('description').set('text', this.description));
+        header.grab(new Element('creator').set('text', 'acabed'));
+        header.grab(new Element('author').set('text', this.author));
+        header.grab(new Element('email').set('text', this.email));
+        header.grab(new Element('loop').set('text', this.loop));
         // TODO duration
-        header.appendTo(blm);
+        header.inject(blm);
 
         for (var row = 0; row < this.data.length; ++row) {
-            blm.append(this.data[row].to_xml());
+            blm.grab(this.data[row].to_xml());
         }
 
         return xml;

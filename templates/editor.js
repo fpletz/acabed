@@ -1,7 +1,7 @@
 function Editor(matrix_table, player_controls) {
     this.matrix_table = matrix_table;
     this.player_controls = player_controls;
-    this.current_color = new Color(0, 0, 0);
+    this.current_color = new Color(255, 0, 255);
 
     // initialize matrix click handler
     ed = this;
@@ -40,30 +40,32 @@ function init() {
     }
 
     var mv = new Movie();
-    var mt = new MatrixTable('#matrix-table');
+    var mt = new MatrixTable('matrix-table');
     var mp = new MoviePlayer(mv, mt);
-    var pc = new PlayerControls('#player-controls', mp);
-    var ec = new EditorControls('#editor-controls', mp);
-    var fc = new FileControls('#file-controls', mp);
-    var iw = new InfoWidget('#movie-info');
+    var pc = new PlayerControls('player-controls', mp);
+    var ec = new EditorControls('editor-controls', mp);
+    var fc = new FileControls('file-controls', mp);
+    var iw = new InfoWidget('movie-info');
     var ed = new Editor(mt, pc);
 
     // Color picker change callback sets current_color of editor
-    $('#color-picker').ColorPicker({flat: true,
+    /*$('color-picker').ColorPicker({flat: true,
                                     color: '#000000',
     	                            onChange: function(hsb, hex, rgb, el) {
                                         c = new Color(0, 0, 0);
                                         c.set_from_string('#'+hex);
                                         ed.set_color(c);
-                                    }});
+                                    }});*/
 
     // Update slider max on MatrixTable reset
     mt.on_reset = function() {
-        pc.sl.slider("option", "max", mv.frames-1);
+	// FIXME
+        //pc.sl.slider("option", "max", mv.frames-1);
     };
     // Update slider max on Movie resizing
     mv.on_modify = function() {
-        pc.sl.slider("option", "max", mv.frames-1);
+	// FIXME
+        //pc.sl.slider("option", "max", mv.frames-1);
         mp.update_status();
     };
 
@@ -83,23 +85,26 @@ function init() {
     mt.reset(4, 24);
 
     // Load animootions
-    $.getJSON('animation/list', function(movies) {
-        var table = $('<table/>');
-        var head_line = $('<tr/>');
-        head_line.append($('<th/>').text('ID'));
-        head_line.append($('<th/>').text('Name'));  
-        table.append(head_line);
+    var req = new Request.JSON({
+	url: 'animation/list',
+	onSuccess: function(movies) {
+		var table = new Element('table');
+		var head_line = new Element('tr');
+		head_line.grab(new Element('th', {'html': 'ID'}));
+		head_line.grab(new Element('th', {'html': 'Name'}));
+		table.grab(head_line);
 
-        $.each(movies, function(i, movie) {
-            var row = $('<tr/>');
-            var id = $('<td/>').text(movie.pk);
-            var name = $('<td/>').text(movie.fields.title);
-            row.append(id);
-            row.append(name);
-            table.append(row);
-        });
-        $('#movie-list').append(table);
-    });
+		movies.each(function(movie, i) {
+		    var row = new Element('tr');
+		    var id = new Element('td', {'html': movie.pk});
+		    var name = new Element('td', {'html': movie.fields.title});
+		    row.grab(id);
+		    row.grab(name);
+		    table.grab(row);
+		});
+		$('movie-list').grab(table);
+	}
+    }).get();
 }
 
-$(document).ready(init);
+window.addEvent('domready', init);

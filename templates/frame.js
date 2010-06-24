@@ -27,8 +27,8 @@ Frame.prototype = {
     },
     // TODO: Handle non 3 color values
     to_xml: function() {
-        var frame = $('<__frame></__frame>');
-        frame.attr('duration', this.duration);
+        var frame = new Element('__frame');
+        frame.get('duration', this.duration);
         
         for (var row = 0; row < this.rows; ++row) {
             var line = '';
@@ -36,8 +36,8 @@ Frame.prototype = {
                 var color = this.data[row][col].to_string();
                 line += color.substr(1, color.length-1);
             }
-            line = '<row>'+line+'</row>';
-            frame.append(line);
+            line = new Element('row', {'text': line});
+            frame.grab(line);
         }
 
         return frame;
@@ -66,8 +66,8 @@ function XmlFrame(rows, cols, depth, channels) {
 
 XmlFrame.prototype = {
     load_xml: function(f) {
-        this.frame_xml = $(f);
-        this.duration = parseInt(this.frame_xml.attr('duration'));
+        this.frame_xml = f;
+        this.duration = parseInt(this.frame_xml.get('duration'));
         return this;
     },
     colorFromString: function(row_str, col) {
@@ -80,10 +80,10 @@ XmlFrame.prototype = {
         var xf = this;
 
         fpletz.data = [];        // fpletz
-        this.frame_xml.find('row').each(function(i) {
+        this.frame_xml.getElements('row').each(function(o) {
             var t = [];
             for(var col = 0; col < xf.cols; ++ col) {
-                t.push(xf.colorFromString(this, col));
+                t.push(xf.colorFromString(o, col));
             }
             fpletz.data.push(t);
         });
