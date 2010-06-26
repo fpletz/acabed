@@ -1,23 +1,23 @@
-function Movie() {
-    this.data = new Array();
+var Movie = new Class({
+    initialize: function() {
+        this.data = new Array();
 
-    this.title = '';
-    this.description = '';
-    this.author = '';
-    this.email = '';
-    this.url = '';
-    this.loop = 'no';
+        this.title = '';
+        this.description = '';
+        this.author = '';
+        this.email = '';
+        this.url = '';
+        this.loop = 'no';
 
-    this.rows = 4
-    this.cols = 24
-    this.depth = 8
-    this.channels = 3
-    this.frames = 0;
+        this.rows = 4
+        this.cols = 24
+        this.depth = 8
+        this.channels = 3
+        this.frames = 0;
 
-    return this;
-}
+        return this;
+    },
 
-Movie.prototype = {
     load_xml: function(movie_string) {
         var movie_dom = (new DOMParser()).parseFromString(movie_string, "text/xml");
         this.movie_xml = movie_dom;
@@ -48,9 +48,11 @@ Movie.prototype = {
         console.info("Movie: %s", this.title);
         console.info("size: %dx%d, depth: %d, channels: %d, frames: %d", this.rows, this.cols, this.depth, this.channels, this.frames);
     },
+
     frame: function(no) {
         return this.data[no];
     },
+
     // TODO corner cases
     add_frame_at: function(at) {
         ++this.frames;
@@ -58,11 +60,13 @@ Movie.prototype = {
         this.data.splice(at, 0, new Frame(this.rows, this.cols, 40));
         this.on_modify.call();
     },
+
     remove_frame_at: function(at) {
         --this.frames;
         this.data.splice(at, 1);
         this.on_modify.call();
     },
+
     duplicate_frame_at: function(at) {
         ++this.frames;
         var frame_copy = this.frame(at).copy();
@@ -70,6 +74,7 @@ Movie.prototype = {
         this.data.splice(at+1, 0, frame_copy);
         this.on_modify.call();
     },
+
     to_xml: function() {
         var xml = new Element('xml');
 
@@ -96,4 +101,4 @@ Movie.prototype = {
 
         return xml;
     }
-};
+});

@@ -1,30 +1,32 @@
 // Internal Frame type
-function Frame(rows, cols, duration) {
-    this.rows = rows;
-    this.cols = cols;
-    this.duration = duration;
-    this.data = new Array();
+var Frame = new Class({
+    initialize: function(rows, cols, duration) {
+        this.rows = rows;
+        this.cols = cols;
+        this.duration = duration;
+        this.data = new Array();
 
-    
-    for (var row = 0; row < rows; ++row) {
-        t = new Array();
-        for (var col = 0; col < cols; ++col) {
-            var color = new Color(0, 0, 0);
-            t.push(color);
+        
+        for (var row = 0; row < rows; ++row) {
+            t = new Array();
+            for (var col = 0; col < cols; ++col) {
+                var color = new Color(0, 0, 0);
+                t.push(color);
+            }
+            this.data.push(t);
         }
-        this.data.push(t);
-    }
 
-    return this;
-}
+        return this;
+    },
 
-Frame.prototype = {
     color: function(row, col) {
         return this.data[row][col];
     },
+
     set_color: function(row, col, color) {
         this.data[row][col] = color;
     },
+
     // TODO: Handle non 3 color values
     to_xml: function() {
         var frame = new Element('__frame');
@@ -42,6 +44,7 @@ Frame.prototype = {
 
         return frame;
     },
+
     copy: function() {
         var f = new Frame(this.rows, this.cols, this.duration);
         for (var row = 0; row < this.rows; ++row) {
@@ -52,29 +55,31 @@ Frame.prototype = {
         }
         return f; 
     }
-};
+});
 
 // Concrete xml based frame implementation
-function XmlFrame(rows, cols, depth, channels) {
-    this.rows = rows;
-    this.cols = cols;
-    this.depth = depth;
-    this.channels = channels;
+var XmlFrame = new Class({
+    initialize: function(rows, cols, depth, channels) {
+        this.rows = rows;
+        this.cols = cols;
+        this.depth = depth;
+        this.channels = channels;
 
-    return this;
-}
+        return this;
+    },
 
-XmlFrame.prototype = {
     load_xml: function(f) {
         this.frame_xml = f;
         this.duration = parseInt(this.frame_xml.get('duration'));
         return this;
     },
+
     colorFromString: function(row_str, col) {
         var c = new Color(0, 0, 0);
         c.set_from_string('#'+row_str.textContent.substr(this.depth*this.channels/4*col, this.depth*this.channels/4));
         return c;
     },
+
     to_frame: function() {
         fpletz = new Frame(this.rows, this.cols, this.duration);
         var xf = this;
@@ -90,4 +95,4 @@ XmlFrame.prototype = {
 
         return fpletz;
     }
-};
+});
