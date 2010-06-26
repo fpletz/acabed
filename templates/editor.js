@@ -36,7 +36,54 @@ function init() {
     }
 
     if (typeof FileReader === "undefined") {
-        alert("FileReader not supportet!");
+        alert("FileReader not supported!");
+    }
+
+    // omgwtf, iphone or ipad!
+    if (navigator.userAgent.contains('iPhone OS')) {
+        apple = new Element('div', {
+            class: 'applefail',
+            styles: {
+                position: 'fixed',
+                left: 0,
+                top: 0,
+                width: '100%',
+                height: '100%',
+                cursor: 'pointer',
+                opacity: 0.9,
+                zoom: 1,
+                'background-color': 'black',
+                'z-index': 1,
+            },
+            events: {
+                'click': function(event) {
+                    $$('.applefail').setStyle('display', 'none');
+                },
+            },
+        });
+
+        // scaling for the poor
+        apimgw = window.innerWidth < 960 ? window.innerWidth : 960;
+        apimgh = window.innerHeight < 960 ? window.innerHeight : 960;
+        if(apimgw < 960)
+            apimgh = apimgw;
+        else if(apimgh < 960)
+            apimgw = apimgh;
+
+        apimg = new Element('img', {
+            src: '/assets/ipad1984.png',
+            class: 'applefail',
+            styles: {
+                width: apimgw,
+                height: apimgh,
+                position: 'fixed',
+                left: window.innerWidth / 2 - apimgw / 2,
+                top: window.innerHeight / 2 - apimgh / 2,
+                'z-index': 2,
+            },
+         });
+        $$('body').grab(apimg);
+        $$('body').grab(apple);
     }
 
     var mv = new Movie();
@@ -49,13 +96,6 @@ function init() {
     var ed = new Editor(mt, pc);
 
     // Color picker change callback sets current_color of editor
-    /*$('color-picker').ColorPicker({flat: true,
-                                    color: '#000000',
-    	                            onChange: function(hsb, hex, rgb, el) {
-                                        c = new Color(0, 0, 0);
-                                        c.set_from_string('#'+hex);
-                                        ed.set_color(c);
-                                    }});*/
     var pallet = new Moopick({
 	palletParentElement: $('color-picker'),
 	palletID: 'colorfoo',
