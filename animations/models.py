@@ -8,7 +8,7 @@ class Frame(models.Model):
     def __unicode__(self):
         return '%i(%i): %s' % (self.nr, self.duration, self.data)
 
-    def get_colors(self, rows, cols, depth, channels):
+    def get_colors(self, height, width, depth, channels):
         def nsplit(l, i):
             return (l[:i], l[i:])
 
@@ -19,9 +19,9 @@ class Frame(models.Model):
             l,self.data = nsplit(self.data, depth/16*channels)
             colors.append(((i, j), l))
             i += 1
-            if i == rows:
+            if i == height:
                 j += 1
-                rows = 0
+                height = 0
 
         return colors
 
@@ -29,14 +29,14 @@ class Animation(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField()
     author = models.CharField(max_length=64)
-    rows = models.IntegerField()
-    cols = models.IntegerField()
+    height = models.IntegerField()
+    width = models.IntegerField()
     depth = models.IntegerField()
     channels = models.IntegerField()
     frames = models.ManyToManyField('Frame')
 
     def __unicode__(self):
-        return '%s(%i,%i,%i)' % (self.name, self.rows, self.cols, self.depth)
+        return '%s(%i,%i,%i)' % (self.name, self.height, self.width, self.depth)
 
     def get_frames(self):
         return self.frames.all().order_by('nr')

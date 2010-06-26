@@ -30,20 +30,20 @@ var MatrixTable = new Class({
         return this;
     },
 
-    reset: function(rows, cols) {
+    reset: function(height, width) {
         console.info('Resetting MatrixTable');
 
         // Reset matrix content
         $(this.id).getChildren().each(function (el) { el.dispose(); });
         
-        this.rows = rows;
-        this.cols = cols;
+        this.height = height;
+        this.height = width;
 
         // Init matrix
-        for (var row = 0; row < rows; ++row) {
+        for (var row = 0; row < height; ++row) {
             var row_element = new Element('tr', {'id': 'row-'+row});
             row_element.inject($(this.id));
-            for (var col = 0; col < cols; ++col) {
+            for (var col = 0; col < width; ++col) {
                 td = new Element('td');
                 div = new Element('div', {'id': 'element-'+row+'-'+col});
                 td.grab(div).inject(row_element);

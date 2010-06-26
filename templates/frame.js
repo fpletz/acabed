@@ -1,15 +1,15 @@
 // Internal Frame type
 var Frame = new Class({
-    initialize: function(rows, cols, duration) {
-        this.rows = rows;
-        this.cols = cols;
+    initialize: function(height, width, duration) {
+        this.height = height;
+        this.width = width;
         this.duration = duration;
         this.data = new Array();
 
         
-        for (var row = 0; row < rows; ++row) {
+        for (var row = 0; row < height; ++row) {
             t = new Array();
-            for (var col = 0; col < cols; ++col) {
+            for (var col = 0; col < width; ++col) {
                 var color = new Color(0, 0, 0);
                 t.push(color);
             }
@@ -32,9 +32,9 @@ var Frame = new Class({
         var frame = new Element('__frame');
         frame.get('duration', this.duration);
         
-        for (var row = 0; row < this.rows; ++row) {
+        for (var row = 0; row < this.height; ++row) {
             var line = '';
-            for (var col = 0; col < this.cols; ++col) {
+            for (var col = 0; col < this.width; ++col) {
                 var color = this.data[row][col].to_string();
                 line += color.substr(1, color.length-1);
             }
@@ -46,9 +46,9 @@ var Frame = new Class({
     },
 
     copy: function() {
-        var f = new Frame(this.rows, this.cols, this.duration);
-        for (var row = 0; row < this.rows; ++row) {
-            for (var col = 0; col < this.cols; ++col) {
+        var f = new Frame(this.height, this.width, this.duration);
+        for (var row = 0; row < this.height; ++row) {
+            for (var col = 0; col < this.width; ++col) {
                 f.set_color(row, col,
                             this.color(row, col).copy());
             }
@@ -59,9 +59,9 @@ var Frame = new Class({
 
 // Concrete xml based frame implementation
 var XmlFrame = new Class({
-    initialize: function(rows, cols, depth, channels) {
-        this.rows = rows;
-        this.cols = cols;
+    initialize: function(height, width, depth, channels) {
+        this.height = height;
+        this.width = width;
         this.depth = depth;
         this.channels = channels;
 
@@ -69,8 +69,8 @@ var XmlFrame = new Class({
     },
 
     load_xml: function(f) {
-        this.frame_xml = f;
-        this.duration = parseInt(this.frame_xml.get('duration'));
+	this.duration = parseInt(f.get('duration'));
+	this.rows = f.getElements('row');
         return this;
     },
 
@@ -81,18 +81,17 @@ var XmlFrame = new Class({
     },
 
     to_frame: function() {
-        fpletz = new Frame(this.rows, this.cols, this.duration);
-        var xf = this;
+        frame = new Frame(this.height, this.width, this.duration);
+        frame.data = [];
 
-        fpletz.data = [];        // fpletz
-        this.frame_xml.getElements('row').each(function(o) {
+        this.rows.each((function(o) {
             var t = [];
-            for(var col = 0; col < xf.cols; ++ col) {
-                t.push(xf.colorFromString(o, col));
+            for(var col = 0; col < this.width; ++col) {
+                t.push(this.colorFromString(o, col));
             }
-            fpletz.data.push(t);
-        });
+            frame.data.push(t);
+        }).bind(this));
 
-        return fpletz;
+        return frame;
     }
 });

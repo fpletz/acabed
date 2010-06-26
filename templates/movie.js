@@ -9,8 +9,8 @@ var Movie = new Class({
         this.url = '';
         this.loop = 'no';
 
-        this.rows = 4
-        this.cols = 24
+        this.height = 4
+        this.width = 24
         this.depth = 8
         this.channels = 3
         this.frames = 0;
@@ -31,22 +31,22 @@ var Movie = new Class({
         this.loop = header.getElement('loop').get('text');
 
         var blm = this.movie_xml.getElement('blm');
-        this.rows = parseInt(blm.get('height'));
-        this.cols = parseInt(blm.get('width'));
+        this.height = parseInt(blm.get('height'));
+        this.width = parseInt(blm.get('width'));
         this.depth = parseInt(blm.get('bits'));
         this.channels = parseInt(blm.get('channels'));
         this.frames = this.movie_xml.getElements('frame').length;
 
         // Build internal movie representation from xml
         var data = [];
-        var f = new XmlFrame(this.rows, this.cols, this.depth, this.channels);
+        var xmlfr = new XmlFrame(this.height, this.width, this.depth, this.channels);
         this.movie_xml.getElements('frame').each(function(o) {
-            data.push(f.load_xml(o).to_frame());
+            data.push(xmlfr.load_xml(o).to_frame());
         });
         this.data = data;
         
         console.info("Movie: %s", this.title);
-        console.info("size: %dx%d, depth: %d, channels: %d, frames: %d", this.rows, this.cols, this.depth, this.channels, this.frames);
+        console.info("size: %dx%d, depth: %d, channels: %d, frames: %d", this.height, this.width, this.depth, this.channels, this.frames);
     },
 
     frame: function(no) {
@@ -57,7 +57,7 @@ var Movie = new Class({
     add_frame_at: function(at) {
         ++this.frames;
         // TODO remove hardcoded fuck
-        this.data.splice(at, 0, new Frame(this.rows, this.cols, 40));
+        this.data.splice(at, 0, new Frame(this.height, this.width, 40));
         this.on_modify.call();
     },
 

@@ -20,7 +20,7 @@ var MoviePlayer = new Class({
 
         reader.onloadend = function() {
             mov.load_xml(reader.result);
-            mat.reset(mov.rows, mov.cols);
+            mat.reset(mov.height, mov.width);
 
             mp.update();
             mp.on_file_change.call(null, mp.movie);
@@ -91,8 +91,8 @@ var MoviePlayer = new Class({
     },
 
     render: function(frame) {
-        for (var row = 0; row < this.movie.rows; ++row) {
-            for (var col = 0; col < this.movie.cols; ++col) {
+        for (var row = 0; row < this.movie.height; ++row) {
+            for (var col = 0; col < this.movie.width; ++col) {
                 this.matrix_table.
                     set_str_color(row, col,
                                   frame.data[row][col].to_string())

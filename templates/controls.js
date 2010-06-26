@@ -66,7 +66,7 @@ var PlayerControls = new Class({
                 wheel: true,
                 snap: true,
                 onChange: function(pos) {
-                    if(movie_player.matrix_table.rows === undefined)
+                    if(movie_player.matrix_table.height === undefined)
                         return;
 
                     movie_player.set_frame(pos);
@@ -247,7 +247,7 @@ var FileControls = new Class({
 var InfoWidget = new Class({
     initialize: function(id) {
         this.id = $(id);
-        this.fields = ['title', 'description', 'author', 'email', 'url', 'loop', 'rows', 'cols', 'depth', 'channels', 'frames'];
+        this.fields = ['title', 'description', 'author', 'email', 'url', 'loop', 'height', 'width', 'depth', 'channels', 'frames'];
 
         return this;
     },
