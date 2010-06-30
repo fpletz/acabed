@@ -28,8 +28,11 @@ var CanvasMatrix = new Class({
 
         this.reset();
     },
-    reset: function() {
+    reset: function(height, width) {
         console.info('Resetting matrix');
+
+        this.options.height = height;
+        this.options.width = width;
 
         // Redraw background
         if (this.options.background_image) {
@@ -69,7 +72,12 @@ var CanvasMatrix = new Class({
         var rect = this.pixel_rects[row][col];
         this.context.fillStyle = color.to_string();
         this.context.fillRect(rect[0], rect[1], rect[2], rect[3]);
-    }
+    },
+    set_str_color: function(row, col, color) {
+        var c = new Color(0, 0, 0);
+        c.set_from_string(color)
+        this.set_color(row, col, c);
+    },
 });
 
 var MatrixTable = new Class({
