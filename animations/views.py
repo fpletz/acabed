@@ -17,6 +17,9 @@ def list(request, fmt='json'):
         data = serializers.serialize(fmt, Animation.objects.all())
         return HttpResponse(data,mimetype)
 
+def add(request, animation):
+    pass
+
 def detail(request, animation_id):
     try:
         a = Animation.objects.get(pk=animation_id)

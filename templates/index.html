@@ -8,6 +8,7 @@
 
     <!-- editor -->
     <link rel="stylesheet" type="text/css" href="/assets/editor.css" />
+    <script type="text/javascript" src="/assets/widgets.js"></script>
     <script type="text/javascript" src="/assets/editor.js"></script>
     <script type="text/javascript" src="/assets/controls.js"></script>
     <script type="text/javascript" src="/assets/color.js"></script>
@@ -20,15 +21,22 @@
     <script type="text/javascript" src="/assets/moopick.js"></script>
   </head>
   <body>
-    <img src="/assets/icons/acabed-logo.png" />
+    <img src="/assets/icons/acabed-logo.png">
 
     <div id="acabed-container">
-      <div id="matrix-container">
-        <table id="matrix-table" cellspacing="0"></table>
-        <div id="player-controls"></div>
+      <div id="toolbar"></div>
+      <div style="clear: both;"></div>
+      <div id="left">
+        <div id="actions"></div>
+      </div>
+      <div id="middle">
+          <div id="matrix-container">
+            <table id="matrix-table" cellspacing="0"></table>
+            <div id="player-controls"></div>
+          </div>
       </div>
 
-      <div id="editor-container">
+      <!--div id="editor-container">
         <div id="color-picker-container">
           <div id="color-picker"></div>
         </div>
@@ -42,8 +50,10 @@
         <div id="movie-list" class="boxxy"></div>
         <div id="movie-info" class="boxxy"></div>
       </div>
-    <div style="clear: both;"></div>
-    <div id="footer">Project AllColorsAreBeautiful</div>
+      <div style="clear: both;"></div>
+      -->
+      <div style="clear: both;"></div>
+      <div id="footer">Project AllColorsAreBeautiful</div>
     </div>
   </body>
 </html>

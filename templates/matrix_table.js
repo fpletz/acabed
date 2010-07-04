@@ -81,8 +81,10 @@ var CanvasMatrix = new Class({
 });
 
 var MatrixTable = new Class({
+    Implements: Events,
+
     initialize: function(id) {
-        this.id = id
+        this.id = id;
 
         // register click callback
         color_pixel = (function (ev) {
@@ -96,7 +98,7 @@ var MatrixTable = new Class({
                 var col = id.split('-')[2];
 
                 // call user provided callback with row and col
-                this.on_click.call(null, row, col);
+                this.fireEvent('click', [row, col]);
             }
         }).bind(this);
 
@@ -119,7 +121,7 @@ var MatrixTable = new Class({
         $(this.id).getChildren().each(function (el) { el.dispose(); });
         
         this.height = height;
-        this.height = width;
+        this.width = width;
 
         // Init matrix
         for (var row = 0; row < height; ++row) {
@@ -127,12 +129,12 @@ var MatrixTable = new Class({
             row_element.inject($(this.id));
             for (var col = 0; col < width; ++col) {
                 td = new Element('td');
-                div = new Element('div', {'id': 'element-'+row+'-'+col});
+                div = new Element('div', {'id': 'cell-'+row+'-'+col});
                 td.grab(div).inject(row_element);
             }
         }
 
-        this.on_reset.call();
+        this.fireEvent('reset');
     },
 
     set_rgb_color: function(row, col, r, g, b) {
@@ -149,6 +151,6 @@ var MatrixTable = new Class({
     },
 
     image: function(row, col) {
-        return $('element-'+row+'-'+col);
+        return $('cell-'+row+'-'+col);
     }
 });

@@ -1,18 +1,16 @@
 var Editor = new Class({
-    initialize: function(matrix_table, player_controls) {
-        this.matrix_table = matrix_table;
-        this.player_controls = player_controls;
+    initialize: function(movie_player) {
+        this.movie_player = movie_player;
         this.current_color = new Color(255, 0, 255);
 
         // initialize matrix click handler
-        ed = this;
-        this.matrix_table.on_click = function(row, col) {
-            var current_frame = ed.player_controls.movie_player.current_frame();
-            current_frame.set_color(row, col, ed.current_color);
-            ed.player_controls.movie_player.render(current_frame);
+        this.movie_player.matrix_table.addEvent('click', (function(row, col) {
+            var current_frame = this.movie_player.current_frame();
+            current_frame.set_color(row, col, this.current_color);
+            this.movie_player.render(current_frame);
 
-            console.info('set color to %s', ed.current_color.to_string());
-        };
+            console.info('set color to %s', this.current_color.to_string());
+        }).bind(this));
         
         return this;
     },
@@ -22,9 +20,62 @@ var Editor = new Class({
     }
 });
 
+function build_app() {
+    var actions = new WidgetContainer('actions', {
+        widgets: [
+            new Button('draw-button', {
+                events: {
+                    click: function() {alert("test");},
+                },
+                text: 'draw!',
+            }),
+            new Button('select-button', {
+                events: {
+                    click: function() {alert("test");},
+                }
+            }),
+            new Button('fill-button', {
+                events: {
+                    click: function() {alert("test");},
+                }
+            }),
+        ],
+    });
+
+    var mv = new Movie();
+    var mt = new MatrixTable('matrix-table');
+    var mp = new MoviePlayer(mv, mt);
+    var ed = new Editor(mp);
+    var pc = new PlayerControls('player-controls', {'movie_player': mp});
+
+    var toolbar = new WidgetContainer('toolbar', {
+        widgets: [
+            new FileButton('load-xml-button', {
+                image: '/assets/icons/48px-Go-jump.svg.png',
+                events: {
+                    change: function() {
+                        mp.load_file($$('#load-xml-button input')[0].files[0]);
+                    },
+                },
+            }),
+        ],
+    });
+
+    // Update slider max on Movie resizing
+    mv.addEvent('modify', function() {
+        mt.fireEvent('reset');
+        pc.slider.set(mp.current_frame_no);
+    });
+    mt.addEvent('reset',function() { });
+
+    // Set initial State
+    mv.add_frame_at(0);
+    mt.reset(4, 24);
+};
+
 function init() {
     // Don't use firebug console if not installed
-    if (typeof console === "undefined") {
+    if (typeof console === 'undefined') {
         console = {
             log: function () {},
             info: function () {},
@@ -35,8 +86,8 @@ function init() {
         };
     }
 
-    if (typeof FileReader === "undefined") {
-        alert("FileReader not supported!");
+    if (typeof FileReader === 'undefined') {
+        alert("FileReader not supported! fuck off");
     }
 
     // omgwtf, iphone or ipad!
@@ -86,6 +137,9 @@ function init() {
         $$('body').grab(apple);
     }
 
+    build_app();
+
+/*
     var mv = new Movie();
     var mt = new MatrixTable('matrix-table');
     var mp = new MoviePlayer(mv, mt);
@@ -154,6 +208,7 @@ function init() {
 		$('movie-list').grab(table);
 	}
     }).get();
-}
+*/
+};
 
 window.addEvent('domready', init);
