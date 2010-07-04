@@ -48,14 +48,30 @@ function build_app() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
+    var toolbar = new WidgetContainer('toolbar', {
+        widgets: [
+            new FileButton('load-xml-button', {
+                image: '/assets/icons/48px-Go-jump.svg.png',
+                events: {
+                    change: function() {
+                        mp.load_file($$('#load-xml-button input')[0].files[0]);
+                    },
+                },
+            }),
+        ],
+    });
+
     // Update slider max on Movie resizing
-    mv.addEvent('modify', function() { });
+    mv.addEvent('modify', function() {
+        mt.fireEvent('reset');
+        pc.slider.set(mp.current_frame_no);
+    });
     mt.addEvent('reset',function() { });
 
     // Set initial State
     mv.add_frame_at(0);
     mt.reset(4, 24);
-}
+};
 
 function init() {
     // Don't use firebug console if not installed
@@ -193,6 +209,6 @@ function init() {
 	}
     }).get();
 */
-}
+};
 
 window.addEvent('domready', init);

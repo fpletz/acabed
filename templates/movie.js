@@ -16,8 +16,6 @@ var Movie = new Class({
         this.depth = 8
         this.channels = 3
         this.frames = 0;
-
-        return this;
     },
 
     load_xml: function(movie_string) {

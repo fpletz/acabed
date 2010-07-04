@@ -7,42 +7,42 @@ var PlayerControls = new Class({
                 image: '/assets/icons/48px-Media-playback-start.svg.png',
                 class: 'button',
                 events: {
-                    click: (function() {
-                        if (this.options.movie_player.playing) {
-                            this.options.movie_player.play();
+                    click: function() {
+                        if (!options.movie_player.playing) {
+                            options.movie_player.play();
                         } else {
-                            this.options.movie_player.pause();
+                            options.movie_player.pause();
                         } 
-                    }).bind(this),
+                    },
                 },
             }),
             new Button('stop-button', {
                 image: '/assets/icons/48px-Media-playback-stop.svg.png',
                 class: 'button',
                 events: {
-                    click: (function() {
-                        this.options.movie_player.stop();
-                    }).bind(this),
+                    click: function() {
+                        options.movie_player.stop();
+                    },
                 },
             }),
             new Button('last-button', {
                 image: '/assets/icons/48px-Go-previous.svg.png',
                 class: 'button',
                 events: {
-                    click: (function() {
-                        this.options.movie_player.pause();
-                        this.options.movie_player.back(1);
-                    }).bind(this),
+                    click: function() {
+                        options.movie_player.pause();
+                        options.movie_player.back(1);
+                    },
                 },
             }),
             new Button('next-button', {
                 image: '/assets/icons/48px-Go-next.svg.png',
                 class: 'button',
                 events: {
-                    click: (function() {
-                        this.options.movie_player.pause();
-                        this.options.movie_player.forward(1);
-                    }).bind(this),
+                    click: function() {
+                        options.movie_player.pause();
+                        options.movie_player.forward(1);
+                    },
                 },
             }),
             new Widget('slider', {}),
@@ -52,40 +52,40 @@ var PlayerControls = new Class({
         ];
 
         this.parent(id, options);
-        this.setup_slider();
+        this.setup_slider(options.movie_player);
     },
 
-    setup_slider: function() {
+    setup_slider: function(mp) {
         this.tim = new Element('img', {'src': '/assets/icons/tim.png', 'id': 'slider-tim'});
-        this.slider = $('slider');
+        this.slider_el = $('slider');
 
-        this.slider.grab(this.tim);
+        this.slider_el.grab(this.tim);
 
         function createSlider() {
-            return new Slider(this.slider.get('id'), this.tim.get('id'), {
-                range: [0, this.options.movie_player.movie.frames-1],
-                steps: this.options.movie_player.movie.frames-1,
+            return new Slider(this.slider_el.get('id'), this.tim.get('id'), {
+                range: [0, mp.movie.frames-1],
+                steps: mp.movie.frames-1,
                 wheel: true,
                 snap: true,
                 onChange: function(pos) {
-                    if(this.options.movie_player.matrix_table.height === undefined)
+                    if(mp.matrix_table.height === undefined)
                         return;
 
-                    movie_player.set_frame(pos);
+                    mp.set_frame(pos);
                 }
             });
         }
         createSlider = createSlider.bind(this)
         
         // Update slider max on MatrixTable reset
-        this.options.movie_player.matrix_table.addEvent('reset', (function() {
+        mp.matrix_table.addEvent('reset', (function() {
             if(this.slider !== undefined)
                 this.slider.detach()
 
             this.slider = createSlider();
         }).bind(this));
 
-        this.options.movie_player.addEvent('render', (function(frame_no) {
+        mp.addEvent('render', (function(frame_no) {
             this.slider.set(frame_no);
         }).bind(this));
     },

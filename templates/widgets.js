@@ -1,4 +1,4 @@
-var Widget = new Class({
+    var Widget = new Class({
     Implements: [Events, Options],
 
     options: {
@@ -37,6 +37,34 @@ var Button = new Class({
         if (this.options.text !== undefined) {
             this.el.setProperty('alt', this.options.text);
         }
+    }
+});
+
+var FileButton = new Class({
+    Extends: Button,
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        var file = new Element('input', {
+            id: 'movie-file',
+            type: 'file',
+            styles: {
+                display: 'none',
+            },
+        });
+
+        this.el.addEvent('click', function() {
+            if (file.getStyle('display') == 'none')
+                file.setStyle('display', 'block');
+        });
+
+        file.addEvent('change', (function() {
+            //this.fireEvent('change', [file]);
+            file.setStyle('display', 'none');
+        }).bind(this));
+
+        this.el.grab(file);
     }
 });
 

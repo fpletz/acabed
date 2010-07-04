@@ -16,17 +16,13 @@ var MoviePlayer = new Class({
         var reader = new FileReader();
         reader.readAsText(file);
 
-        var mov = this.movie;
-        var mat = this.matrix_table;
-        var mp = this;
+        reader.onloadend = (function() {
+            this.movie.load_xml(reader.result);
+            this.matrix_table.reset(this.movie.height, this.movie.width);
 
-        reader.onloadend = function() {
-            mov.load_xml(reader.result);
-            mat.reset(mov.height, mov.width);
-
-            mp.update();
-            mp.fireEvent('file_change', [mp.movie]);
-        };
+            this.update();
+            this.fireEvent('file_change', [this.movie]);
+        }).bind(this);
     },
 
     play: function() {
@@ -34,7 +30,7 @@ var MoviePlayer = new Class({
         if (this.at_end()) {
             this.rewind();
         }
-        this.playing = true
+        this.playing = true;
 
         this.interval = setInterval(function(this_obj) {
             this_obj.next_frame()
@@ -104,7 +100,7 @@ var MoviePlayer = new Class({
             }
         }
 
-        this.fireEvent('render');
+        this.fireEvent('render', [this.current_frame_no]);
     },
 
     current_frame: function() {
