@@ -68,8 +68,8 @@ var Moopick = new Class({
 	buildPaletContainer: function(){
 		this.pallet = new Element('ul',{
 			'styles': {
-				'width': (this.options.styles.width.toInt() + this.options.styles['border-width'].toInt()) * 24 + 'px',
-				'height': (this.options.styles.height.toInt() + this.options.styles['border-width'].toInt()) * 9 + 'px',
+				'width': ((this.options.styles.width.toInt() + this.options.styles['border-width'].toInt()) * 24)/2 + 'px',
+				'height': ((this.options.styles.height.toInt() + this.options.styles['border-width'].toInt()) * 9)*2 + 1 + 'px',
 				'padding':'0',
 				'margin':'0',
 				'list-style':'none'

@@ -93,7 +93,7 @@ var MatrixTable = new Class({
 
             var id = $(ev.target).id;
 
-            if (id.split('-')[0] == 'element' && this.clicked) {
+            if (id.split('-')[0] == 'cell' && this.clicked) {
                 var row = id.split('-')[1];
                 var col = id.split('-')[2];
 

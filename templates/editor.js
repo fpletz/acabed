@@ -98,6 +98,20 @@ function build_app() {
         ],
     });
 
+    // Color picker change callback sets current_color of editor
+    var pallet = new Moopick({
+	palletParentElement: $('color-tools'),
+	palletID: 'colorfoo',
+	styles: { width: '10px', height: '10px' }
+    });
+    pallet.addEvents({
+	'onColorClick': function (s) {
+	    c = new Color();
+	    c.set_from_string(s);
+	    ed.set_color(c);
+	},
+    });
+
     // Update slider max on Movie resizing
     mv.addEvent('modify', function() {
         mt.fireEvent('reset');
@@ -186,20 +200,7 @@ function init() {
     var iw = new InfoWidget('movie-info');
     var ed = new Editor(mt, pc);
 
-    // Color picker change callback sets current_color of editor
-    var pallet = new Moopick({
-	palletParentElement: $('color-picker'),
-	palletID: 'colorfoo',
-	styles: { width: '15px', height: '15px' }
-    });
-    pallet.addEvents({
-	'onColorClick': function (s) {
-	    c = new Color();
-	    c.set_from_string(s);
-	    ed.set_color(c);
-	},
-	//'onColorHover': showColor
-    });
+
 
     // Update slider max on Movie resizing
     mv.on_modify = function() {

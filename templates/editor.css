@@ -103,11 +103,11 @@ body {
 
 #left {
     float: left;
-    width: 100px;
+    width: 150px;
     height: auto;
 }
 
-#pixel-tools, #frame-tools {
+#pixel-tools, #frame-tools, #color-tools {
     overflow: hidden;
 }
 
