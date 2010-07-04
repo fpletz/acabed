@@ -88,7 +88,13 @@ var Moopick = new Class({
 					var hex = '#'+_r+_b+_g;
 					this.options.styles.background = hex;
 					var li = new Element('li').setStyles(this.options.styles).set('html',hex).injectInside(this.pallet);
-				}
+                                        var d = new Drag(li, {
+                                            onComplete: function(el, ev) {
+                                                ev.target.setStyle('background-color', el.getStyle('background-color'));
+                                                ev.target.setProperty('html', el.getProperty('html'));
+                                            },
+                                        });
+                                    }
 			}
 		}
 	},

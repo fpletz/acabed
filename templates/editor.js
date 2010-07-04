@@ -99,17 +99,30 @@ function build_app() {
     });
 
     // Color picker change callback sets current_color of editor
-    var pallet = new Moopick({
+    var set_editor_color = function (s) {
+        c = new Color();
+        c.set_from_string(s);
+        ed.set_color(c);
+    };
+
+    var picker = new Moopick({
 	palletParentElement: $('color-tools'),
 	palletID: 'colorfoo',
 	styles: { width: '10px', height: '10px' }
     });
-    pallet.addEvents({
-	'onColorClick': function (s) {
-	    c = new Color();
-	    c.set_from_string(s);
-	    ed.set_color(c);
-	},
+
+    picker.addEvents({
+	'onColorClick': set_editor_color,
+    });
+
+    // Color picker change callback sets current_color of editor
+    var palette = new Palette({
+	palletParentElement: $('colorpalette-tools'),
+	palletID: 'colorpalettefoo',
+	styles: { width: '10px', height: '10px' }
+    });
+    palette.addEvents({
+	'onColorClick': set_editor_color,
     });
 
     // Update slider max on Movie resizing

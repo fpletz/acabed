@@ -107,8 +107,9 @@ body {
     height: auto;
 }
 
-#pixel-tools, #frame-tools, #color-tools {
+#pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
     overflow: hidden;
+    margin-top: 5px;
 }
 
 #middle {
