@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import json
+
 def get_colors(self, height, width, depth, channels):
     def nsplit(l, i):
         return (l[:i], l[i:])
@@ -36,6 +38,12 @@ class Animation(models.Model):
 
     def __unicode__(self):
         return '%s(%i,%i,%i)' % (self.title, self.height, self.width, self.depth)
+
+    def get_data(self):
+        return json.loads(self.data)
+
+    def set_data(self, data):
+        self.data = json.dumps(data)
 
 class AnimationInstance(models.Model):
     playlist = models.ForeignKey('Playlist')
