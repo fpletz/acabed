@@ -21,7 +21,7 @@ var Editor = new Class({
 });
 
 function build_app() {
-    var actions = new WidgetContainer('actions', {
+    var actions = new WidgetContainer('pixel-tools', {
         widgets: [
             new Button('draw-button', {
                 events: {
@@ -57,6 +57,43 @@ function build_app() {
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
                     },
                 },
+            }),
+        ],
+    });
+
+    var frametools = new WidgetContainer('frame-tools', {
+        widgets: [
+            new Button('duplicate-frame-button', {
+                //image: '',
+                events: {
+                    click: function() {
+                        console.info('duplicate frame: %d', mp.current_frame_no);
+                        mv.duplicate_frame_at(mp.current_frame_no);
+                        mp.forward(1);
+                    },
+                },
+            }),
+            new Button('add-frame-button', {
+                image: '/assets/icons/48px-List-add.svg.png',
+                events: {
+                    click: function() {
+                        console.info('add frame');
+                        mv.add_frame_at(mp.current_frame_no+1);
+                        mp.forward(1);
+                    },
+                },
+            }),
+            new Button('delete-frame-button', {
+                image: '/assets/icons/48px-List-remove.svg.png',
+                events: {
+                    click: function() {
+                        console.info('remove frame');
+                        if (mv.frames > 1) {
+                            mv.remove_frame_at(mp.current_frame_no);
+                            mp.update();
+                        }
+                    },
+                }
             }),
         ],
     });

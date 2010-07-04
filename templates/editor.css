@@ -107,6 +107,10 @@ body {
     height: auto;
 }
 
+#pixel-tools, #frame-tools {
+    overflow: hidden;
+}
+
 #middle {
     float: left;
     width: 800px;
