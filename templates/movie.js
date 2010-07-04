@@ -27,7 +27,10 @@ var Movie = new Class({
         this.description = header.getElement('description').get('text');
         this.author = header.getElement('author').get('text');
         this.email = header.getElement('email').get('text');
-        this.url = $try(function () {return header.getElement('url').get('text');}, $lambda(''));;
+        this.url = $try(function () {
+            u = header.getElement('url');
+            return u === null ? '' : u.get('text');
+        }, $lambda(''));;
         this.loop = header.getElement('loop').get('text');
 
         var blm = this.movie_xml.getElement('blm');
