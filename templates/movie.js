@@ -1,4 +1,6 @@
 var Movie = new Class({
+    Implements: Events,
+
     initialize: function() {
         this.data = new Array();
 
@@ -58,13 +60,13 @@ var Movie = new Class({
         ++this.frames;
         // TODO remove hardcoded fuck
         this.data.splice(at, 0, new Frame(this.height, this.width, 40));
-        this.on_modify.call();
+        this.fireEvent('modify');
     },
 
     remove_frame_at: function(at) {
         --this.frames;
         this.data.splice(at, 1);
-        this.on_modify.call();
+        this.fireEvent('modify');
     },
 
     duplicate_frame_at: function(at) {
@@ -72,7 +74,7 @@ var Movie = new Class({
         var frame_copy = this.frame(at).copy();
         // Add after 'at'
         this.data.splice(at+1, 0, frame_copy);
-        this.on_modify.call();
+        this.fireEvent('modify');
     },
 
     to_xml: function() {

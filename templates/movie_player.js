@@ -1,9 +1,11 @@
 var MoviePlayer = new Class({
+    Implements: Events,
+
     initialize: function(movie, matrix_table) {
         this.movie = movie;
         this.matrix_table = matrix_table;
-
         this.current_frame_no = 0;
+        this.playing = false;
 
         return this;
     },
@@ -23,7 +25,7 @@ var MoviePlayer = new Class({
             mat.reset(mov.height, mov.width);
 
             mp.update();
-            mp.on_file_change.call(null, mp.movie);
+            mp.fireEvent('file_change', [mp.movie]);
         };
     },
 
@@ -32,6 +34,7 @@ var MoviePlayer = new Class({
         if (this.at_end()) {
             this.rewind();
         }
+        this.playing = true
 
         this.interval = setInterval(function(this_obj) {
             this_obj.next_frame()
@@ -40,12 +43,14 @@ var MoviePlayer = new Class({
 
     pause: function() {
         clearInterval(this.interval);
+        this.playing = false;
     },
 
     stop: function() {
         clearInterval(this.interval);
         this.rewind();
-        this.on_stop.call();
+        this.fireEvent('stop');
+        this.playing = false;
     },
 
     forward: function(no) {
@@ -98,7 +103,8 @@ var MoviePlayer = new Class({
                                   frame.data[row][col].to_string())
             }
         }
-        this.on_render === undefined ? false : this.on_render(this.current_frame_no);
+
+        this.fireEvent('render');
     },
 
     current_frame: function() {
@@ -110,15 +116,10 @@ var MoviePlayer = new Class({
             return;
 
         this.render(this.current_frame());
-        this.update_status();
     },
 
     set_frame: function(no) {
         this.current_frame_no = no;
         this.update();
     },
-
-    update_status: function() {
-        $('status-field').set('text', (this.current_frame_no+1) + "/" + this.movie.frames);
-    }
 });

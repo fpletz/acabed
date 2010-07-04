@@ -1,72 +1,74 @@
 var PlayerControls = new Class({
-    initialize: function(id, movie_player) {
-        this.id = id;
-        this.movie_player = movie_player;
+    Extends: WidgetContainer,
 
-        var div = $(id);
-        this.play = new Element('img', {
-            'src': "/assets/icons/48px-Media-playback-start.svg.png",
-            'id': 'play-button',
-            'class': 'icon'
-        });
-        this.stop = new Element('img', {
-            'src': '/assets/icons/48px-Media-playback-stop.svg.png',
-            'id': 'stop-button',
-            'class': 'icon'
-        });
-        this.last = new Element('img', {
-            'src': '/assets/icons/48px-Go-previous.svg.png',
-            'id': 'last-button',
-            'class': 'icon'
-        });
-        this.next = new Element('img', {
-            'src': '/assets/icons/48px-Go-next.svg.png',
-            'id': 'next-button',
-            'class': 'icon'
-        });
-        this.sl = new Element('div', {
-            'id': 'slider'
-        });
-        this.status = new Element('span', {
-            'id': 'status-field'
-        });
+    initialize: function(id, options) {
+        options.widgets = [
+            new Button('play-button', {
+                image: '/assets/icons/48px-Media-playback-start.svg.png',
+                class: 'button',
+                events: {
+                    click: (function() {
+                        if (this.options.movie_player.playing) {
+                            this.options.movie_player.play();
+                        } else {
+                            this.options.movie_player.pause();
+                        } 
+                    }).bind(this),
+                },
+            }),
+            new Button('stop-button', {
+                image: '/assets/icons/48px-Media-playback-stop.svg.png',
+                class: 'button',
+                events: {
+                    click: (function() {
+                        this.options.movie_player.stop();
+                    }).bind(this),
+                },
+            }),
+            new Button('last-button', {
+                image: '/assets/icons/48px-Go-previous.svg.png',
+                class: 'button',
+                events: {
+                    click: (function() {
+                        this.options.movie_player.pause();
+                        this.options.movie_player.back(1);
+                    }).bind(this),
+                },
+            }),
+            new Button('next-button', {
+                image: '/assets/icons/48px-Go-next.svg.png',
+                class: 'button',
+                events: {
+                    click: (function() {
+                        this.options.movie_player.pause();
+                        this.options.movie_player.forward(1);
+                    }).bind(this),
+                },
+            }),
+            new Widget('slider', {}),
+            //this.status = new Element('span', {
+            //    'id': 'status-field'
+            //}),
+        ];
 
-        div.grab(this.play);
-        div.grab(this.stop);
-        div.grab(this.last);
-        div.grab(this.next);
+        this.parent(id, options);
+        this.setup_slider();
+    },
 
-        div.grab(this.sl);
-
-        div.grab(this.status);
-
-        // Click handlers
-        var pc = this;
-        this.play.addEvent('click', function() {
-            pc.play_click();
-        });
-        this.stop.addEvent('click', function() {
-            pc.stop_click();
-        });
-        this.last.addEvent('click', function() {
-            pc.last_click();
-        });
-        this.next.addEvent('click', function() {
-            pc.next_click();
-        });
-
-        // Setup slider
+    setup_slider: function() {
         this.tim = new Element('img', {'src': '/assets/icons/tim.png', 'id': 'slider-tim'});
-        this.sl.grab(this.tim);
+        this.slider = $('slider');
+
+        this.slider.grab(this.tim);
 
         function createSlider() {
-            return new Slider(this.sl.get('id'), this.tim.get('id'), {
-                range: [0, movie_player.movie.frames-1],
-                steps: movie_player.movie.frames-1,
+            return new Slider(this.slider.get('id'), this.tim.get('id'), {
+                range: [0, this.options.movie_player.movie.frames-1],
+                steps: this.options.movie_player.movie.frames-1,
                 wheel: true,
                 snap: true,
                 onChange: function(pos) {
-                    if(movie_player.matrix_table.height === undefined)
+                    if(this.options.movie_player.matrix_table.height === undefined)
                         return;
 
                     movie_player.set_frame(pos);
@@ -74,54 +76,19 @@ var PlayerControls = new Class({
             });
         }
         createSlider = createSlider.bind(this)
-
+        
         // Update slider max on MatrixTable reset
-        movie_player.matrix_table.on_reset = (function() {
+        this.options.movie_player.matrix_table.addEvent('reset', (function() {
             if(this.slider !== undefined)
                 this.slider.detach()
 
             this.slider = createSlider();
-        }).bind(this);
+        }).bind(this));
 
-        movie_player.on_render = (function(frame_no) {
+        this.options.movie_player.addEvent('render', (function(frame_no) {
             this.slider.set(frame_no);
-        }).bind(this);
-
-        return this;
+        }).bind(this));
     },
-
-    play_click: function() {
-        if (this.play.html == 'Play') {
-            this.movie_player.play();
-            this.play.html = 'Pause';
-        } else {
-            this.movie_player.pause();
-            this.play.html = 'Play';
-        }
-    },
-
-    stop_click: function() {
-        this.movie_player.stop();
-        this.play.html = 'Play';
-    },
-
-    last_click: function() {
-        this.movie_player.pause();
-        this.play.html = 'Play';
-        
-        this.movie_player.back(1);
-    },
-
-    next_click: function() {
-        this.movie_player.pause();
-        this.play.html = 'Play';
-        
-        this.movie_player.forward(1);
-    },
-
-    reset: function() {
-        this.play.html = 'Play';
-    }
 });
 
 var EditorControls = new Class({
@@ -223,11 +190,9 @@ var FileControls = new Class({
         div.grab(download_button);
 
         // Click stuff
-        var fc = this;
-
-        download_button.addEvent('click', function() {
-            fc.download_click();
-        });
+        download_button.addEvent('click', (function() {
+            this.download_click();
+        }).bind(this));
 
         // File stuff
         file.addEvent('change', function() {
