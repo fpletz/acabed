@@ -1,3 +1,85 @@
+var CanvasMatrix = new Class({
+    Implements: [Options, Events],
+    options: {
+        width: 24,              // Width in windows
+        height: 4,              // Height in windows
+        container_width: 800,   // Width in pixels of the canvas
+        container_height: 600,  // Height in pixles of the canvas
+        canvas: undefined,
+        background_image: undefined,
+        row_offset: 0,
+        col_offset: 0,
+        row_height: 10,
+        col_width: 10,
+        window_width: 9,
+        window_height: 9,
+        col_jitter_even: 0,
+        col_jitter_odd: 0,
+        row_jitter_even: 0,
+        row_jitter_odd: 0
+    },
+    initialize: function(id, options){
+        this.setOptions(options);
+
+        this.id = $(id);
+        this.canvas = new Element('canvas', {width: this.options.container_width, height: this.options.container_height});
+        this.context = this.canvas.getContext("2d");
+        this.id.grab(this.canvas);
+
+        this.reset();
+    },
+    reset: function(height, width) {
+        console.info('Resetting matrix');
+
+        this.options.height = height;
+        this.options.width = width;
+
+        // Redraw background
+        if (this.options.background_image) {
+            this.context.drawImage(this.options.background_image,
+                                   0, 0,
+                                   this.options.container_width,
+                                   this.options.container_height);
+        } else {
+            this.context.fillStyle = 'black';
+            this.context.fillRect(0, 0,
+                                  this.options.container_width,
+                                  this.options.container_height);
+        }
+
+        // Recompute pixel rects
+        this.compute_pixel_rects();
+    },
+    compute_pixel_rects: function() {
+        this.pixel_rects = [];
+
+        for (var row = 0; row < this.options.height; ++row) {
+            this.pixel_rects[row] = [];
+            var pixel_row = this.options.row_offset +
+                row*this.options.row_height +
+                ((row%2) ? this.options.row_jitter_even : this.options.row_jitter_odd);
+            for (var col = 0; col < this.options.width; ++col) {
+                var pixel_col = this.options.col_offset +
+                    col*this.options.col_width +
+                    ((col%2) ? this.options.col_jitter_even : this.options.col_jitter_odd);
+                this.pixel_rects[row][col] =
+                    [pixel_col, pixel_row,
+                     this.options.window_width, this.options.window_height];
+            }
+        }
+    },
+    set_color: function(row, col, color) {
+        var rect = this.pixel_rects[row][col];
+        this.context.fillStyle = color.to_string();
+        this.context.fillRect(rect[0], rect[1], rect[2], rect[3]);
+    },
+    set_str_color: function(row, col, color) {
+        var c = new Color(0, 0, 0);
+        c.set_from_string(color)
+        this.set_color(row, col, c);
+    },
+});
+
 var MatrixTable = new Class({
     Implements: Events,
 

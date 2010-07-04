@@ -36,9 +36,9 @@ var Color = new Class({
         var rs = this.r.toString(16);
         var gs = this.g.toString(16);
         var bs = this.b.toString(16);
-        if (rs.length == 1) rs += '0';
-        if (gs.length == 1) gs += '0';
-        if (bs.length == 1) bs += '0';
+        if (rs.length == 1) rs = '0'+rs;
+        if (gs.length == 1) gs = '0'+gs;
+        if (bs.length == 1) bs = '0'+bs;
         return '#'+rs+gs+bs;
     },
 
