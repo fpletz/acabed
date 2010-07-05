@@ -168,6 +168,8 @@ var MatrixTable = new Class({
         }).bind(this));
         $(this.id).addEvent('mouseover', color_pixel);
 
+        this.reset(4,24);
+
         return this;
     },
 
