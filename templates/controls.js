@@ -89,10 +89,8 @@ var PlayerControls = new Class({
                 wheel: true,
                 snap: true,
                 onChange: function(pos) {
-                    if(mp.matrix_table.height === undefined)
-                        return;
-
-                    mp.set_frame(pos);
+                    if (mp.matrix_table.pixel_rects.length !== 0)
+                        mp.set_frame(pos);
                 }
             });
         }
