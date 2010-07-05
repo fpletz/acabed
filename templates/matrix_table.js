@@ -9,10 +9,10 @@ var CanvasMatrix = new Class({
         background_image: undefined,
         row_offset: 0,
         col_offset: 0,
-        row_height: 10,
-        col_width: 10,
-        window_width: 9,
-        window_height: 9,
+        row_height: 31,
+        col_width: 21,
+        window_width: 15,
+        window_height: 25,
         col_jitter_even: 0,
         col_jitter_odd: 0,
         row_jitter_even: 0,
@@ -25,6 +25,40 @@ var CanvasMatrix = new Class({
         this.canvas = new Element('canvas', {width: this.options.container_width, height: this.options.container_height});
         this.context = this.canvas.getContext("2d");
         this.id.grab(this.canvas);
+        this.clicked = false;
+
+        color_pixel = (function(e) {
+            var pos = this.canvas.getPosition();
+            coords = {x: e.client.x - pos.x, y: e.client.y - pos.y};
+            var pixel_row = coords.y;
+            var pixel_col = coords.x;
+
+            for (row = 0; row < this.options.height; ++row) {
+                for (col = 0; col < this.options.width; ++col) {
+                    var rect = this.pixel_rects[row][col];
+                    if (coords.x >= rect[0] && coords.x-rect[0] <= rect[2] && coords.y >= rect[1] && coords.y-rect[1] <= rect[3])
+                        this.fireEvent('click', [row, col]);
+                }
+            }
+        }).bind(this);
+
+        this.id.addEvent('mousedown', (function(e) {
+            color_pixel(e);
+            this.clicked = true;
+        }).bind(this));
+
+        this.id.addEvent('mouseup', (function(e) {
+            this.clicked = false;
+        }).bind(this));
+
+        this.id.addEvent('mouseout', (function(e) {
+            this.clicked = false;
+        }).bind(this));
+
+        this.id.addEvent('mousemove', (function(e) {
+            if (this.clicked)
+                color_pixel(e);
+        }).bind(this));
 
         this.reset();
     },
@@ -49,6 +83,8 @@ var CanvasMatrix = new Class({
 
         // Recompute pixel rects
         this.compute_pixel_rects();
+
+        this.fireEvent('reset');
     },
     compute_pixel_rects: function() {
         this.pixel_rects = [];
