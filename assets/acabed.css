@@ -109,13 +109,28 @@ body {
     padding: 10px
 }
 
-#acabed-container {
+#login-widget {
     position: absolute;
-    left: 0;
-    top: 60px;
+    left: 700px;
+    top: 0px;
+    width: 150px;
+    height: 20px;
+    background-color: red;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-bottom-left-radius: 1em 1em;
+    border-bottom-right-radius: 1em 1em;
+}
+
+#content {
+    margin-top: 50px;
     padding: 10px;
     width: auto;
     height: auto;
+}
+
+#acabed-container {
+
 }
 
 #toolbar {
@@ -147,9 +162,8 @@ body {
 
 #footer {
     width: auto;
-    float: left;
     font-size: xx-small;
     color: #333;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 

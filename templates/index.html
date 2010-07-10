@@ -3,8 +3,14 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>acabed</title>
+
+    {% load dajaxice_templatetags %}
+    {% dajaxice_js_import %}
+
     <script type="text/javascript" src="{{ MEDIA_URL }}/mootools.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/mootools-more.js"></script>
+
+    <script type="text/javascript" src="{{ MEDIA_URL }}/mootools.dajax.core.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/acabed.css" />
 
@@ -21,49 +27,15 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}/moopick.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/palette.js"></script>
 
-    {% load dajaxice_templatetags %}
-    {% dajaxice_js_import %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}/mootools.dajax.core.js"></script>
   </head>
   <body>
     <img src="{{ MEDIA_URL }}/icons/acabed-logo.png">
 
-    <div id="acabed-container">
-      <div id="toolbar"></div>
-      <div style="clear: both;"></div>
-      <div id="left">
-        <div id="pixel-tools"></div>
-        <div id="frame-tools"></div>
-        <div id="color-tools"></div>
-        <div id="colorpalette-tools"></div>
-      </div>
-      <div id="middle">
-          <div id="matrix-container">
-            <table id="matrix-table" cellspacing="0"></table>
-            <div id="player-controls"></div>
-          </div>
-      </div>
-      <div id="right">
-      </div>
-      
-      <!--div id="editor-container">
-        <div id="color-picker-container">
-          <div id="color-picker"></div>
-        </div>
-        <div id="editor-controls-container" class="boxxy">
-          <div id="editor-controls"></div>
-        </div>
-        <div style="clear: both;"></div>
+    <div id="login-widget"></div>
 
-        <div id="file-controls" class="boxxy"></div>
+    <div id="content"></div>
 
-        <div id="movie-list" class="boxxy"></div>
-        <div id="movie-info" class="boxxy"></div>
-      </div>
-      <div style="clear: both;"></div>
-      -->
-      <div style="clear: both;"></div>
-      <div id="footer">Project AllColorsAreBeautiful</div>
-    </div>
+    <div style="clear: both;"></div>
+    <div id="footer">Projekt AllColorsAreBeautiful | CCC M&uuml;nchen</div>
   </body>
 </html>

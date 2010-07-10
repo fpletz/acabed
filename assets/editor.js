@@ -41,7 +41,7 @@ var Editor = new Class({
     }
 });
 
-function build_app() {
+function init_editor() {
     var actions = new WidgetContainer('pixel-tools', {
         widgets: [
             new Button('draw-button', {
@@ -244,65 +244,8 @@ function init() {
         $$('body').grab(apple);
     }
 
-    build_app();
-
-/*
-    var mv = new Movie();
-    var mt = new MatrixTable('matrix-table');
-    var mp = new MoviePlayer(mv, mt);
-    var pc = new PlayerControls('player-controls', mp);
-    var ec = new EditorControls('editor-controls', mp);
-    var fc = new FileControls('file-controls', mp);
-    var iw = new InfoWidget('movie-info');
-    var ed = new Editor(mt, pc);
-
-
-
-    // Update slider max on Movie resizing
-    mv.on_modify = function() {
-        mt.on_reset();
-        pc.slider.set(mp.current_frame_no);
-        mp.update_status();
-    };
-
-
-    // Reset player controls on stop
-    mp.on_stop = function() {
-        pc.reset();
-    };
-
-    // Register Movie info change callback
-    mp.on_file_change = function(movie) {
-        iw.update_movie_info(movie);
-    };
-    iw.update_movie_info(mv);
-
-    // Set initial State
-    mv.add_frame_at(0);
-    mt.reset(4, 24);
-
-    // Load animootions
-    var req = new Request.JSON({
-	url: 'animation/list',
-	onSuccess: function(movies) {
-		var table = new Element('table');
-		var head_line = new Element('tr');
-		head_line.grab(new Element('th', {'html': 'ID'}));
-		head_line.grab(new Element('th', {'html': 'Name'}));
-		table.grab(head_line);
-
-		movies.each(function(movie, i) {
-		    var row = new Element('tr');
-		    var id = new Element('td', {'html': movie.pk});
-		    var name = new Element('td', {'html': movie.fields.title});
-		    row.grab(id);
-		    row.grab(name);
-		    table.grab(row);
-		});
-		$('movie-list').grab(table);
-	}
-    }).get();
-*/
+    Dajaxice.animations.login_widget('Dajax.process');
+    Dajaxice.animations.load_editor('Dajax.process');
 };
 
 window.addEvent('domready', init);
