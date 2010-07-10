@@ -166,6 +166,13 @@ function build_app() {
     });
     mt.addEvent('reset',function() { });
 
+    var inpectors = new WidgetContainer('right', {
+        widgets: [
+            new ObjectInspector('object-inspector', {
+                fields: [{duration: 10}],
+            })],
+    });
+
     // Set initial State
     mv.add_frame_at(0);
     mt.reset(4, 24);
