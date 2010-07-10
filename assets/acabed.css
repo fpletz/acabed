@@ -139,6 +139,12 @@ body {
     height: auto;
 }
 
+#right {
+    float: left;
+    width: 100px;
+    height: auto;
+}
+
 #footer {
     width: auto;
     float: left;
