@@ -166,10 +166,12 @@ function build_app() {
     });
     mt.addEvent('reset',function() { });
 
+    var m = {duration: 10}
     var inpectors = new WidgetContainer('right', {
         widgets: [
             new ObjectInspector('object-inspector', {
-                fields: [{duration: 10}],
+                properties: ['duration'],
+                model: m,
             })],
     });
 
