@@ -20,23 +20,24 @@
  */
 
 var Movie = new Class({
-    Implements: Events,
+    Implements: [Events, Settable], 
 
     initialize: function() {
         this.data = new Array();
 
-        this.title = '';
-        this.description = '';
-        this.author = '';
-        this.email = '';
-        this.url = '';
-        this.loop = 'no';
+        this.set('title', '');
+        this.set('description', '');
+        this.set('author', '');
+        this.set('creator', 'acabed');
+        this.set('email', '');
+        this.set('url', '');
+        this.set('loop', 'no');
 
-        this.height = 4
-        this.width = 24
-        this.depth = 8
-        this.channels = 3
-        this.frames = 0;
+        this.set('height', 4);
+        this.set('width', 24);
+        this.set('depth', 8);
+        this.set('channels', 3);
+        this.set('frames', 0);
     },
 
     load_xml: function(movie_string) {
@@ -44,22 +45,22 @@ var Movie = new Class({
         this.movie_xml = movie_dom;
         header = this.movie_xml.getElement('header');
 
-        this.title = header.getElement('title').get('text');
-        this.description = header.getElement('description').get('text');
-        this.author = header.getElement('author').get('text');
-        this.email = header.getElement('email').get('text');
-        this.url = $try(function () {
+        this.set('title', header.getElement('title').get('text'));
+        this.set('description', header.getElement('description').get('text'));
+        this.set('author', header.getElement('author').get('text'));
+        this.set('email', header.getElement('email').get('text'));
+        this.set('url', $try(function () {
             u = header.getElement('url');
             return u === null ? '' : u.get('text');
-        }, $lambda(''));;
-        this.loop = header.getElement('loop').get('text');
+        }, $lambda('')));
+        this.set('loop', header.getElement('loop').get('text'));
 
         var blm = this.movie_xml.getElement('blm');
-        this.height = parseInt(blm.get('height'));
-        this.width = parseInt(blm.get('width'));
-        this.depth = parseInt(blm.get('bits'));
-        this.channels = parseInt(blm.get('channels'));
-        this.frames = this.movie_xml.getElements('frame').length;
+        this.set('height', parseInt(blm.get('height')));
+        this.set('width', parseInt(blm.get('width')));
+        this.set('depth', parseInt(blm.get('bits')));
+        this.set('channels', parseInt(blm.get('channels')));
+        this.set('frames', this.movie_xml.getElements('frame').length);
 
         // Build internal movie representation from xml
         var data = [];
