@@ -156,13 +156,13 @@ body {
 
 #middle {
     float: left;
-    width: 800px;
+    width: 600px;
     height: auto;
 }
 
 #right {
     float: left;
-    width: 100px;
+    width: 80px;
     height: auto;
 }
 

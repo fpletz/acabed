@@ -41,6 +41,11 @@ var Editor = new Class({
     }
 });
 
+// Dirty hack
+function fix_frame(xml) {
+    return xml.innerHTML.replace(/__frame/g, 'frame');
+}
+
 function init_editor() {
     var actions = new WidgetContainer('pixel-tools', {
         widgets: [
@@ -82,6 +87,18 @@ function init_editor() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
+    var movie_inspector = new ObjectInspector('object-inspector',
+                                              { properties: ['title',
+                                                             'description',
+                                                             'author',
+                                                             'email',
+                                                             'loop'], },
+                                              mv);
+
+    var inspectors = new WidgetContainer('right', {
+        widgets: [movie_inspector],
+    });
+
     var toolbar = new WidgetContainer('toolbar', {
         widgets: [
             new FileButton('load-xml-button', {
@@ -89,6 +106,16 @@ function init_editor() {
                 events: {
                     change: function() {
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
+                    },
+                },
+            }),
+            new Button('download-xml-button', {
+                image: '/assets/icons/48px-Go-jump.svg.png',
+                events: {
+                    click: function() {
+                        var uri = 'data:text/xml;charset=utf-8,';
+                        uri += fix_frame(mp.movie.to_xml());
+                        document.location = uri;
                     },
                 },
             }),
@@ -165,15 +192,6 @@ function init_editor() {
         pc.slider.set(mp.current_frame_no);
     });
     mt.addEvent('reset',function() { });
-
-    var m = {duration: 10}
-    var inpectors = new WidgetContainer('right', {
-        widgets: [
-            new ObjectInspector('object-inspector', {
-                properties: ['duration'],
-                model: m,
-            })],
-    });
 
     // Set initial State
     mv.add_frame_at(0);
