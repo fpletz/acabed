@@ -20,6 +20,9 @@
     <!-- colorpicker -->
     <script type="text/javascript" src="{{ MEDIA_URL }}/moopick.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}/palette.js"></script>
+
+    {% load dajaxice_templatetags %}
+    {% dajaxice_js_import %}
   </head>
   <body>
     <img src="{{ MEDIA_URL }}/icons/acabed-logo.png">

@@ -88,5 +88,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'dajaxice',
     'animations'
 )
+
+DAJAXICE_MEDIA_PREFIX = "dajaxice"
+
