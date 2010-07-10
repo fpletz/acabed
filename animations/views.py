@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.template import Context, loader
+from django.template import RequestContext, loader
 from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -25,7 +25,8 @@ from animations.models import *
 
 def index(request):
     return render_to_response('index.html',
-            {'animations': Animation.objects.all()})
+                              {'animations': Animation.objects.all()},
+                              context_instance=RequestContext(request))
 
 def list(request, fmt='json'):
     #if request.is_ajax():
