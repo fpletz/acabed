@@ -20,6 +20,7 @@
  */
 
 body {
+    font-family: Helvetica, sans-serif;
     background-color: black;
     color: white;
 }
@@ -113,13 +114,18 @@ body {
     position: absolute;
     left: 700px;
     top: 0px;
-    width: 150px;
-    height: 20px;
+    width: 200px;
     background-color: red;
     font-size: 12px;
     padding: 5px 10px;
     border-bottom-left-radius: 1em 1em;
     border-bottom-right-radius: 1em 1em;
+}
+
+#login-widget ul {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
 }
 
 #content {
