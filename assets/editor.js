@@ -248,6 +248,10 @@ function init_editor() {
     mt.reset(4, 24);
 };
 
+function init_start() {
+
+}
+
 function init() {
     // Don't use firebug console if not installed
     if (typeof console === 'undefined') {
@@ -314,6 +318,7 @@ function init() {
 
     Dajaxice.animations.login_widget('Dajax.process');
     Dajaxice.animations.load_editor('Dajax.process');
+    //Dajaxice.animations.load_start('Dajax.process');
 };
 
 window.addEvent('domready', init);

@@ -42,16 +42,8 @@ body {
     border: solid 1px #333;
 }
 
-#movie-info {
-    border: solid 1px #333;
-}
-
 .icon {
     width: 24px;
-}
-
-#editor-controls img {
-    vertical-align: middle;
 }
 
 .button {
@@ -73,37 +65,6 @@ body {
     border: solid 1px #333;
     padding: 5px 5px 0px 5px;
     margin: 3px;
-}
-
-#player-controls {
-    padding-bottom: 10px;
-}
-
-#editor-container {
-    float: left;
-    border: solid 1px #333;
-    padding: 5px 5px 0px 5px;
-    margin: 0px;
-}
-
-#color-picker-container {
-    position: relative;
-    left: -4px;
-    top: -4px;
-    float: left;
-    margin: 0px -3px -3px 0px;
-}
-
-#editor-controls-container {
-    float: left;
-    Width: auto;
-}
-
-.boxxy {
-    border: solid 1px #333;
-    background-color: #111111;
-    padding: 5px;
-    margin: 0px 0px 5px 0px;
 }
 
 #slider {

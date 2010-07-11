@@ -49,6 +49,7 @@ def logout(request):
     dajax.script('Dajaxice.animations.login_widget("Dajax.process");')
     return dajax.json()
 dajaxice.register(logout)
+
 def load_editor(request):
     r = render_to_string('editor.html')
 
@@ -57,3 +58,13 @@ def load_editor(request):
     dajax.script('init_editor();')
     return dajax.json()
 dajaxice.register(load_editor)
+
+def load_start(request):
+    r = render_to_string('start.html')
+
+    dajax = Dajax()
+    dajax.assign('#content', 'innerHTML', r)
+    dajax.script('init_start();')
+    return dajax.json()
+dajaxice.register(load_start)
+
