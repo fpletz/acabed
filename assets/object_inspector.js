@@ -40,23 +40,27 @@ var ObjectInspector = new Class({
             this.update();
         }).bind(this));
 
-        this.inject_model_setters();
+        if ($defined(this.model) && this.modeel !== null) {
+            this.inject_model_setters();
+        }
 
         this.update();
     },
 
     set_model: function(model) {
-        self.model = model;
-        inject_model_setters();
-        update();
+        this.model = model;
+        this.inject_model_setters();
+        this.update();
     },
 
     inject_model_setters: function() {
         var inspector = this;
-        this.model.set = (function(property, value) {
-            this[property] = value;
-            inspector.fireEvent('propertyChanged', [property, value]);
-        }).bind(this.model);
+        if ($defined(this.model) && this.modeel !== null) {
+            this.model.set = (function(property, value) {
+                this[property] = value;
+                inspector.fireEvent('propertyChanged', [property, value]);
+            }).bind(this.model);
+        }
     },
 
     update: function() {

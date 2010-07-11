@@ -21,10 +21,12 @@
 
 // Internal Frame type
 var Frame = new Class({
+    Implements: Settable,
+    
     initialize: function(height, width, duration) {
-        this.height = height;
-        this.width = width;
-        this.duration = duration;
+        this.set('height', height);
+        this.set('width', width);
+        this.set('duration', duration);
         this.data = new Array();
 
         

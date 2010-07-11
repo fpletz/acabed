@@ -82,7 +82,9 @@ var Movie = new Class({
     add_frame_at: function(at) {
         ++this.frames;
         // TODO remove hardcoded fuck
-        this.data.splice(at, 0, new Frame(this.height, this.width, 40));
+        var frame = new Frame(this.height, this.width, 40);
+        frame.duration = 100;
+        this.data.splice(at, 0, frame);
         this.fireEvent('modify');
     },
 

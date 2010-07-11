@@ -87,7 +87,11 @@ function build_app() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
-    var movie_inspector = new ObjectInspector('object-inspector',
+    var frame_inspector = new ObjectInspector('frame-inspector',
+                                              { properties: ['duration'], },
+                                              mp.current_frame());
+
+    var movie_inspector = new ObjectInspector('movie-inspector',
                                               { properties: ['title',
                                                              'description',
                                                              'author',
@@ -95,8 +99,17 @@ function build_app() {
                                                              'loop'], },
                                               mv);
 
+    // Update Frame info
+    mp.addEvent('render', (function() {
+        if (!this.playing) {
+            console.log('update frame model');
+            frame_inspector.set_model(mp.current_frame());
+        }
+    }).bind(mp));
+
     var inspectors = new WidgetContainer('right', {
-        widgets: [movie_inspector],
+        widgets: [frame_inspector,
+                  movie_inspector],
     });
 
     var toolbar = new WidgetContainer('toolbar', {
