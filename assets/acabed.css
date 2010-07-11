@@ -23,6 +23,7 @@ body {
     font-family: Helvetica, sans-serif;
     background-color: black;
     color: white;
+    padding: 0px;
 }
 
 #matrix-table td, #matrix-table tr {
@@ -38,8 +39,10 @@ body {
 }
 
 #matrix-table {
-    margin: 0px;
-    border: solid 1px #333;
+    margin: 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 .icon {
@@ -62,10 +65,13 @@ body {
 }
 
 .object-inspector {
-    border: solid 1px #333;
-    padding: 5px 5px 0px 5px;
-    margin: 3px;
+    border: solid 1px #666;
+    padding: 5px 5px 5px 5px;
+    margin: 2px 2px 4px 2px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
+
 
 #slider {
     width: 300px;
@@ -83,13 +89,13 @@ body {
     left: 700px;
     top: 0px;
     width: 200px;
-    background-color: red;
+    background-color: #333;
     font-size: 12px;
     padding: 5px 10px;
-    border-bottom-left-radius: 1em 1em;
-    border-bottom-right-radius: 1em 1em;
-    -moz-border-radius-bottomleft: 1em 1em;
-    -moz-border-radius-bottomright: 1em 1em;
+    border-bottom-left-radius: 4px 4px;
+    border-bottom-right-radius: 4px 4px;
+    -moz-border-radius-bottomleft: 4px 4px;
+    -moz-border-radius-bottomright: 4px 4px;
 }
 
 #login-widget ul {
@@ -99,8 +105,8 @@ body {
 }
 
 #content {
-    margin-top: 50px;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 3px;
     width: auto;
     height: auto;
 }
@@ -109,24 +115,43 @@ body {
 
 }
 
-#toolbar {
+.container {
+    float: left;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 2px;
+}
 
+hr {
+    color: #666;
+    background-color: #666;
+    height: 1px;
+    border: solid 0px;
+}
+
+#toolbar {
+    float: left;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 #left {
     float: left;
-    width: 150px;
+    width: 140px;
     height: auto;
 }
 
 #pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
     overflow: hidden;
-    margin-top: 5px;
 }
 
 #middle {
     float: left;
-    width: 600px;
+    /* width: 600px; */
     height: auto;
 }
 
@@ -139,6 +164,6 @@ body {
 #footer {
     width: auto;
     font-size: xx-small;
-    color: #333;
+    color: #666;
     margin-top: 20px;
 }
