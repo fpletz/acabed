@@ -61,7 +61,6 @@ body {
     vertical-align: middle;
 }
 
-
 .button {
     padding: 1px 3px;
     margin: 2px 2px;
@@ -70,6 +69,12 @@ body {
     width: 30px;
     height: 30px;
     background-color: red;
+}
+
+.object-inspector {
+    border: solid 1px #333;
+    padding: 5px 5px 0px 5px;
+    margin: 3px;
 }
 
 #player-controls {
@@ -162,7 +167,7 @@ body {
 
 #right {
     float: left;
-    width: 80px;
+    /* width: 80px; */
     height: auto;
 }
 
