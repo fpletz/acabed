@@ -132,6 +132,14 @@ function init_editor() {
                     },
                 },
             }),
+            new Button('send-json-button', {
+                image: '/assets/icons/48px-Go-jump.svg.png',
+                events: {
+                    click: function() {
+                        console.log(mp.movie.to_json());
+                    },
+                },
+            }),
         ],
     });
 

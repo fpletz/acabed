@@ -68,6 +68,21 @@ var Frame = new Class({
         return frame;
     },
 
+    to_json: function() {
+        var frame = [];
+        for (var row = 0; row < this.height; ++row) {
+            var line = '';
+            frame.push(new Array());
+            for (var col = 0; col < this.width; ++col) {
+                var color = this.data[row][col].to_string();
+                line += color.substr(1, color.length-1);
+            }
+            frame[row] = line;
+        }
+
+        return frame;
+    },
+
     copy: function() {
         var f = new Frame(this.height, this.width, this.duration);
         for (var row = 0; row < this.height; ++row) {
