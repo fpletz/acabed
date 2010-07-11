@@ -20,7 +20,7 @@
  */
 
 var Movie = new Class({
-    Implements: [Events, Settable], 
+    Implements: [Events, Model],
 
     initialize: function() {
         this.data = new Array();
