@@ -125,6 +125,8 @@ body {
     padding: 5px 10px;
     border-bottom-left-radius: 1em 1em;
     border-bottom-right-radius: 1em 1em;
+    -moz-border-radius-bottomleft: 1em 1em;
+    -moz-border-radius-bottomright: 1em 1em;
 }
 
 #login-widget ul {
