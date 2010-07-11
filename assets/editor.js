@@ -301,7 +301,7 @@ function init() {
             apimgw = apimgh;
 
         apimg = new Element('img', {
-            src: '/assets/ipad1984.png',
+            src: '/assets/images/ipad1984.png',
             class: 'applefail',
             styles: {
                 width: apimgw,
