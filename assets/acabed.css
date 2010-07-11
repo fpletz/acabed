@@ -37,13 +37,6 @@ body {
     margin: 5px;
 }
 
-#slider {
-    margin: 10px;
-    display: inline-block;
-    width: 400px;
-    top: 5px;
-}
-
 #matrix-table {
     margin: 0px;
     border: solid 1px #333;
@@ -62,13 +55,18 @@ body {
 }
 
 .button {
-    padding: 1px 3px;
+    padding: 2px 2px;
     margin: 2px 2px;
-    border: solid 1px #333;
+    border: solid 1px #666;
     float: left;
-    width: 30px;
-    height: 30px;
-    background-color: red;
+    width: 16px;
+    height: 16px;
+    background-color: #222;
+
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 .object-inspector {
@@ -98,7 +96,7 @@ body {
 
 #editor-controls-container {
     float: left;
-    width: auto;
+    Width: auto;
 }
 
 .boxxy {
@@ -110,9 +108,13 @@ body {
 
 #slider {
     width: 300px;
-    height: 30px;
-    background-color: #888888;
-    padding: 10px
+    height: 16px;
+    background-color: #222;
+    padding: 2px 20px 2px 0px;
+    margin: 2px 0px 0px 8px;
+}
+
+#slider-tim {
 }
 
 #login-widget {
@@ -179,4 +181,3 @@ body {
     color: #333;
     margin-top: 20px;
 }
-

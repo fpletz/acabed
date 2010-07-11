@@ -62,6 +62,7 @@ function init_editor() {
     var actions = new WidgetContainer('pixel-tools', {
         widgets: [
             new Button('draw-button', {
+                image: '/assets/icons/pencil.png',
                 events: {
                     click: function() {alert("test");},
                 },
@@ -127,7 +128,7 @@ function init_editor() {
     var toolbar = new WidgetContainer('toolbar', {
         widgets: [
             new FileButton('load-xml-button', {
-                image: '/assets/icons/48px-Go-jump.svg.png',
+                image: '/assets/icons/arrow-090.png',
                 events: {
                     change: function() {
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
@@ -135,7 +136,7 @@ function init_editor() {
                 },
             }),
             new Button('download-xml-button', {
-                image: '/assets/icons/48px-Go-jump.svg.png',
+                image: '/assets/icons/arrow-270.png',
                 events: {
                     click: function() {
                         var uri = 'data:text/xml;charset=utf-8,';
@@ -145,7 +146,7 @@ function init_editor() {
                 },
             }),
             new Button('send-json-button', {
-                image: '/assets/icons/48px-Go-jump.svg.png',
+                image: '/assets/icons/arrow-curve-000-left.png',
                 events: {
                     click: function() {
                         console.log(mp.movie.to_json());
@@ -158,7 +159,7 @@ function init_editor() {
     var frametools = new WidgetContainer('frame-tools', {
         widgets: [
             new Button('duplicate-frame-button', {
-                //image: '',
+                image: '/assets/icons/layers-arrange.png',
                 events: {
                     click: function() {
                         console.info('duplicate frame: %d', mp.current_frame_no);
@@ -168,7 +169,7 @@ function init_editor() {
                 },
             }),
             new Button('add-frame-button', {
-                image: '/assets/icons/48px-List-add.svg.png',
+                image: '/assets/icons/layer--plus.png',
                 events: {
                     click: function() {
                         console.info('add frame');
@@ -178,7 +179,7 @@ function init_editor() {
                 },
             }),
             new Button('delete-frame-button', {
-                image: '/assets/icons/48px-List-remove.svg.png',
+                image: '/assets/icons/layer--minus.png',
                 events: {
                     click: function() {
                         console.info('remove frame');
@@ -190,7 +191,7 @@ function init_editor() {
                 }
             }),
             new Button('copy-frame-button', {
-                image: '/assets/icons/48px-List-remove.svg.png',
+                image: '/assets/icons/layer-up.png',
                 events: {
                     click: function() {
                         ed.current_frame_to_clipboard();
@@ -198,7 +199,7 @@ function init_editor() {
                 }
             }),
             new Button('paste-frame-button', {
-                image: '/assets/icons/48px-List-remove.svg.png',
+                image: '/assets/icons/layer-down.png',
                 events: {
                     click: function() {
                         ed.clipboard_to_current_position();

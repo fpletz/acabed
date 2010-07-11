@@ -35,7 +35,7 @@ var Widget = new Class({
             id: id,
             class: this.options.class,
         });
-        
+
         this.el.addEvents(this.options.events);
     },
 });

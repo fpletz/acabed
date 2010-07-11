@@ -25,7 +25,7 @@ var PlayerControls = new Class({
     initialize: function(id, options) {
         options.widgets = [
             new Button('play-button', {
-                image: '/assets/icons/48px-Media-playback-start.svg.png',
+                image: '/assets/icons/control.png',
                 class: 'button',
                 events: {
                     click: function() {
@@ -38,7 +38,7 @@ var PlayerControls = new Class({
                 },
             }),
             new Button('stop-button', {
-                image: '/assets/icons/48px-Media-playback-stop.svg.png',
+                image: '/assets/icons/control-stop-square.png',
                 class: 'button',
                 events: {
                     click: function() {
@@ -47,7 +47,7 @@ var PlayerControls = new Class({
                 },
             }),
             new Button('last-button', {
-                image: '/assets/icons/48px-Go-previous.svg.png',
+                image: '/assets/icons/control-stop-180.png',
                 class: 'button',
                 events: {
                     click: function() {
@@ -57,7 +57,7 @@ var PlayerControls = new Class({
                 },
             }),
             new Button('next-button', {
-                image: '/assets/icons/48px-Go-next.svg.png',
+                image: '/assets/icons/control-stop.png',
                 class: 'button',
                 events: {
                     click: function() {
@@ -77,7 +77,7 @@ var PlayerControls = new Class({
     },
 
     setup_slider: function(mp) {
-        this.tim = new Element('img', {'src': '/assets/icons/tim.png', 'id': 'slider-tim'});
+        this.tim = new Element('img', {'src': '/assets/icons/tim-small.png', 'id': 'slider-tim'});
         this.slider_el = $('slider');
 
         this.slider_el.grab(this.tim);
@@ -88,6 +88,7 @@ var PlayerControls = new Class({
                 steps: mp.movie.frames-1,
                 wheel: true,
                 snap: true,
+                offset: -2,
                 onChange: function(pos) {
                     // not portable to matrix without canvas
                     //if (mp.matrix_table.pixel_rects.length !== 0)
