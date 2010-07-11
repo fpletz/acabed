@@ -23,6 +23,7 @@ var Editor = new Class({
     initialize: function(movie_player) {
         this.movie_player = movie_player;
         this.current_color = new Color(255, 0, 255);
+        this.clipboard = null;
 
         // initialize matrix click handler
         this.movie_player.matrix_table.addEvent('click', (function(row, col) {
@@ -38,7 +39,18 @@ var Editor = new Class({
 
     set_color: function(c) {
         this.current_color = c;
-    }
+    },
+
+    current_frame_to_clipboard: function() {
+        this.clipboard = this.movie_player.current_frame().copy();
+    },
+
+    clipboard_to_current_position: function() {
+        if (this.clipboard !== null) {
+            this.movie_player.movie.add_frame_at(this.movie_player.current_frame_no);
+            this.movie_player.movie.set_frame(this.movie_player.current_frame_no, this.clipboard);
+        }
+    },
 });
 
 // Dirty hack
@@ -174,6 +186,22 @@ function init_editor() {
                             mv.remove_frame_at(mp.current_frame_no);
                             mp.update();
                         }
+                    },
+                }
+            }),
+            new Button('copy-frame-button', {
+                image: '/assets/icons/48px-List-remove.svg.png',
+                events: {
+                    click: function() {
+                        ed.current_frame_to_clipboard();
+                    },
+                }
+            }),
+            new Button('paste-frame-button', {
+                image: '/assets/icons/48px-List-remove.svg.png',
+                events: {
+                    click: function() {
+                        ed.clipboard_to_current_position();
                     },
                 }
             }),

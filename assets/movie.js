@@ -78,6 +78,11 @@ var Movie = new Class({
         return this.data[no];
     },
 
+    set_frame: function(no, frame) {
+        this.data[no] = frame;
+        this.fireEvent('modify');
+    },
+
     // TODO corner cases
     add_frame_at: function(at) {
         ++this.frames;
