@@ -23,6 +23,7 @@ body {
     font-family: Helvetica, sans-serif;
     background-color: black;
     color: white;
+    padding: 0px;
 }
 
 #matrix-table td, #matrix-table tr {
@@ -38,12 +39,14 @@ body {
 }
 
 #matrix-table {
-    margin: 0px;
-    border: solid 1px #333;
+    margin: 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 #movie-info {
-    border: solid 1px #333;
+    border: solid 1px #666;
 }
 
 .icon {
@@ -67,21 +70,24 @@ body {
     background-position: 2px 2px;
     border-radius: 4px;
     -moz-border-radius: 4px;
-}
+n}
 
 .object-inspector {
-    border: solid 1px #333;
-    padding: 5px 5px 0px 5px;
-    margin: 3px;
+    border: solid 1px #666;
+    padding: 5px 5px 5px 5px;
+    margin: 2px 2px 4px 2px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 #player-controls {
-    padding-bottom: 10px;
+    margin-top: 3px;
+    margin-bottom: 8px;
 }
 
 #editor-container {
     float: left;
-    border: solid 1px #333;
+    border: solid 1px #666;
     padding: 5px 5px 0px 5px;
     margin: 0px;
 }
@@ -100,7 +106,7 @@ body {
 }
 
 .boxxy {
-    border: solid 1px #333;
+    border: solid 1px #666;
     background-color: #111111;
     padding: 5px;
     margin: 0px 0px 5px 0px;
@@ -139,7 +145,7 @@ body {
 
 #content {
     margin-top: 50px;
-    padding: 10px;
+    padding: 3px;
     width: auto;
     height: auto;
 }
@@ -154,7 +160,7 @@ body {
 
 #left {
     float: left;
-    width: 150px;
+    width: 140px;
     height: auto;
 }
 
@@ -165,7 +171,7 @@ body {
 
 #middle {
     float: left;
-    width: 600px;
+    /* width: 600px; */
     height: auto;
 }
 
@@ -178,6 +184,6 @@ body {
 #footer {
     width: auto;
     font-size: xx-small;
-    color: #333;
+    color: #666;
     margin-top: 20px;
 }
