@@ -53,7 +53,7 @@ var Frame = new Class({
     // TODO: Handle non 3 color values
     to_xml: function() {
         var frame = new Element('__frame');
-        frame.get('duration', this.duration);
+        frame.set('duration', this.duration);
         
         for (var row = 0; row < this.height; ++row) {
             var line = '';

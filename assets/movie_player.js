@@ -48,9 +48,6 @@ var MoviePlayer = new Class({
 
     play: function() {
         var duration = this.movie.frame(this.current_frame_no).duration;
-        if (this.at_end()) {
-            this.rewind();
-        }
         this.playing = true;
 
         this.interval = setInterval(function(this_obj) {
