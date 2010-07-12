@@ -79,6 +79,12 @@ a:visited {
     -moz-border-radius: 4px;
 }
 
+#frame-counter {
+    padding: 2px 5px;
+    margin: 2px 2px;
+    float: left;
+}
+
 .object-inspector {
     border: solid 1px #666;
     padding: 5px 5px 5px 5px;
@@ -86,7 +92,6 @@ a:visited {
     border-radius: 4px;
     -moz-border-radius: 4px;
 }
-
 
 #slider {
     width: 300px;
@@ -176,6 +181,7 @@ hr {
     /* width: 80px; */
     height: auto;
 }
+
 
 #footer {
     width: auto;

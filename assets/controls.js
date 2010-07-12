@@ -66,14 +66,21 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Widget('slider', {}),
-            //this.status = new Element('span', {
-            //    'id': 'status-field'
-            //}),
+            new Widget('slider', {
+                class: 'button',
+            }),
+            new Widget('frame-counter', {
+                class: '',
+            }),
         ];
 
         this.parent(id, options);
         this.setup_slider(options.movie_player);
+
+        options.movie_player.addEvent('render', (function() {
+            $('frame-counter').setProperty('text',
+                (this.current_frame_no+1) + ' / ' + this.movie.frames);
+        }).bind(options.movie_player));
     },
 
     setup_slider: function(mp) {

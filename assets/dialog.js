@@ -26,3 +26,15 @@ var Dialog = new Class({
         class: 'dialog',
     }
 });
+
+var ModelDialog = new Class({
+    Extends: Dialog,
+
+    options: {
+    },
+
+    intialize: function(id, options) {
+        this.parent(id, options);
+    }
+}
+

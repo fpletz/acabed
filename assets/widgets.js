@@ -24,7 +24,7 @@ var Widget = new Class({
 
     options: {
         events: {},
-        class: 'button'
+        class: ''
     },
 
     initialize: function(id, options) {
@@ -46,6 +46,7 @@ var Button = new Class({
     options: {
         text: undefined,
         image: undefined,
+        class: 'button'
     },
 
     initialize: function(id, options) {
