@@ -156,6 +156,11 @@ hr {
     height: auto;
 }
 
+#color {
+    padding: 0px 3px;
+    padding-bottom: 5px;
+}
+
 #pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
     overflow: hidden;
 }
