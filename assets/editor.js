@@ -125,7 +125,34 @@ function init_editor() {
                   movie_inspector],
     });
 
-    var toolbar = new WidgetContainer('toolbar', {
+    var file_toolbar = new WidgetContainer('file-toolbar', {
+        widgets: [
+            new Button('new-movie-button', {
+                image: '/assets/icons/film.png',
+                events: {
+                    click: function() {
+                        Dajaxice.animations.load_editor('Dajax.process');
+                    },
+                },
+            }),
+            new Button('load-movie-button', {
+                image: '/assets/icons/folder-open-film.png',
+                events: {
+                    click: function() {
+                    },
+                },
+            }),
+            new Button('save-movie-button', {
+                image: '/assets/icons/disk.png',
+                events: {
+                    click: function() {
+                    },
+                },
+            }),
+        ],
+    });
+
+    var port_toolbar = new WidgetContainer('port-toolbar', {
         widgets: [
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
@@ -191,7 +218,7 @@ function init_editor() {
                 }
             }),
             new Button('copy-frame-button', {
-                image: '/assets/icons/layer-up.png',
+                image: '/assets/icons/document-copy.png',
                 events: {
                     click: function() {
                         ed.current_frame_to_clipboard();
@@ -199,7 +226,7 @@ function init_editor() {
                 }
             }),
             new Button('paste-frame-button', {
-                image: '/assets/icons/layer-down.png',
+                image: '/assets/icons/clipboard-paste.png',
                 events: {
                     click: function() {
                         ed.clipboard_to_current_position();
@@ -248,77 +275,3 @@ function init_editor() {
     mt.reset(4, 24);
 };
 
-function init_start() {
-
-}
-
-function init() {
-    // Don't use firebug console if not installed
-    if (typeof console === 'undefined') {
-        console = {
-            log: function () {},
-            info: function () {},
-            group: function () {},
-            error: function () {},
-            warn: function () {},
-            groupEnd: function () {}
-        };
-    }
-
-    if (typeof FileReader === 'undefined') {
-        alert("FileReader not supported! fuck off");
-    }
-
-    // omgwtf, iphone or ipad!
-    if (navigator.userAgent.contains('iPhone OS')) {
-        apple = new Element('div', {
-            class: 'applefail',
-            styles: {
-                position: 'fixed',
-                left: 0,
-                top: 0,
-                width: '100%',
-                height: '100%',
-                cursor: 'pointer',
-                opacity: 0.9,
-                zoom: 1,
-                'background-color': 'black',
-                'z-index': 1,
-            },
-            events: {
-                'click': function(event) {
-                    $$('.applefail').setStyle('display', 'none');
-                },
-            },
-        });
-
-        // scaling for the poor
-        apimgw = window.innerWidth < 960 ? window.innerWidth : 960;
-        apimgh = window.innerHeight < 960 ? window.innerHeight : 960;
-        if(apimgw < 960)
-            apimgh = apimgw;
-        else if(apimgh < 960)
-            apimgw = apimgh;
-
-        apimg = new Element('img', {
-            src: '/assets/images/ipad1984.png',
-            class: 'applefail',
-            styles: {
-                width: apimgw,
-                height: apimgh,
-                position: 'fixed',
-                left: window.innerWidth / 2 - apimgw / 2,
-                top: window.innerHeight / 2 - apimgh / 2,
-                'z-index': 2,
-            },
-         });
-        $$('body').grab(apimg);
-        $$('body').grab(apple);
-    }
-
-    Dajaxice.animations.login_widget('Dajax.process');
-    Dajaxice.animations.load_editor('Dajax.process');
-    //Dajaxice.animations.load_start('Dajax.process');
-};
-
-window.addEvent('domready', init);

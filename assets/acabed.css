@@ -26,6 +26,21 @@ body {
     padding: 0px;
 }
 
+a:link {
+    color: #aaaaff;
+    text-decoration: none;
+}
+
+a:hover, a:visited:hover {
+    color: #ffaaaa;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #aaaaff;
+    text-decoration: none;
+}
+
 #matrix-table td, #matrix-table tr {
     padding: 0px;
     margin: 0px;
@@ -88,7 +103,6 @@ body {
     position: absolute;
     left: 700px;
     top: 0px;
-    width: 200px;
     background-color: #333;
     font-size: 12px;
     padding: 5px 10px;
@@ -134,9 +148,6 @@ hr {
 
 #toolbar {
     float: left;
-    border: solid 1px #666;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
 }
 
 #left {
@@ -166,4 +177,8 @@ hr {
     font-size: xx-small;
     color: #666;
     margin-top: 20px;
+}
+
+#footer a {
+    color: #666;
 }
