@@ -24,7 +24,8 @@ var Widget = new Class({
 
     options: {
         events: {},
-        class: ''
+        class: '',
+        text: ''
     },
 
     initialize: function(id, options) {
@@ -34,6 +35,7 @@ var Widget = new Class({
         this.el = new Element('div', {
             id: id,
             class: this.options.class,
+            text: this.options.text,
         });
 
         this.el.addEvents(this.options.events);
@@ -44,7 +46,7 @@ var Button = new Class({
     Extends: Widget,
 
     options: {
-        text: undefined,
+        //text: undefined, // TODO: tooltips
         image: undefined,
         class: 'button'
     },
@@ -56,9 +58,9 @@ var Button = new Class({
             this.el.setStyle('background-image', 'url(' + this.options.image + ')');
         }
 
-        if (this.options.text !== undefined) {
-            this.el.setProperty('alt', this.options.text);
-        }
+        //if (this.options.text !== undefined) {
+        //    this.el.setProperty('alt', this.options.text);
+        //}
     }
 });
 

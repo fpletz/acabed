@@ -66,7 +66,6 @@ function init_editor() {
                 events: {
                     click: function() {alert("test");},
                 },
-                text: 'draw!',
             }),
             new Button('select-button', {
                 events: {
