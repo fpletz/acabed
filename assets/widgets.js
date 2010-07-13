@@ -113,8 +113,13 @@ var WidgetContainer = new Class({
         this.setOptions(options);
         this.id = id;
         
-        var el = $(this.id);
-        this.options.widgets.each(function (widget) { el.grab(widget.el); });
+        this.el = $(this.id);
+        if(this.el === null)
+            this.el = new Element('div', { id: id });
+
+        this.options.widgets.each((function (widget) {
+            this.el.grab(widget.el);
+        }).bind(this));
     }
 });
 
