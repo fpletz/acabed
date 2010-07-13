@@ -74,6 +74,11 @@ a:visited {
     background-color: #222;
 }
 
+.textbutton {
+    padding: 5px;
+    background-color: #444;
+}
+
 .imagebutton {
     width: 16px;
     height: 16px;

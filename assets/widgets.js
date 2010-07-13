@@ -47,7 +47,7 @@ var Button = new Class({
 
     options: {
         //text: undefined, // TODO: tooltips
-        class: 'button'
+        class: 'button textbutton'
     },
 
     initialize: function(id, options) {
