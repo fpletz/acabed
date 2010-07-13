@@ -77,10 +77,12 @@ var ModalDialog = new Class({
     show: function() {
         this.mask.show();
 
-        var overlay = $('overlay');
+        var overlay_size = $('overlay').getSize();
         var container = this.container.el;
-        container.setStyle('left', (overlay.offsetWidth / 2 - container.offsetWidth / 2) + 'px');
-        container.setStyle('top', (overlay.offsetHeight / 2 - container.offsetHeight / 2) + 'px');
+        var container_size = container.getSize();
+
+        container.setStyle('left', (overlay_size.x / 2 - container_size.x / 2) + 'px');
+        container.setStyle('top', (overlay_size.y / 2 - container_size.y / 2) + 'px');
     },
 
     hide: function() {
