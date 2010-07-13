@@ -25,7 +25,8 @@ var Widget = new Class({
     options: {
         events: {},
         class: '',
-        text: ''
+        text: '',
+        tooltip: null,
     },
 
     initialize: function(id, options) {
@@ -39,6 +40,10 @@ var Widget = new Class({
         });
 
         this.el.addEvents(this.options.events);
+
+        if(this.options.tooltip !== null) {
+            this.tooltip = new Tooltip(this.el, { text: this.options.tooltip });
+        }
     },
 });
 
@@ -46,16 +51,11 @@ var Button = new Class({
     Extends: Widget,
 
     options: {
-        //text: undefined, // TODO: tooltips
         class: 'button textbutton'
     },
 
     initialize: function(id, options) {
         this.parent(id, options);
-        
-        //if (this.options.text !== undefined) {
-        //    this.el.setProperty('alt', this.options.text);
-        //}
     }
 });
 
@@ -119,3 +119,43 @@ var WidgetContainer = new Class({
     }
 });
 
+
+var Tooltip = new Class({
+    Implements: [Options, Events],
+
+    options: {
+        class: 'tooltip',
+        text: 'empty tooltip',
+        styles: [],
+    },
+
+    initialize: function(target, options) {
+        this.setOptions(options);
+        this.target = target;
+
+        this.el = new Element('div', {
+            class: this.options.class,
+            styles: this.options.styles,
+            text: this.options.text,
+        });
+
+        document.body.grab(this.el);
+
+        this.target.addEvent('mouseover', this.show.bind(this));
+        this.target.addEvent('mouseout', this.hide.bind(this));
+    },
+
+    show: function() {
+        var coords = this.target.getCoordinates();
+        this.el.setStyles({
+            display: 'block',
+            left: coords.left + coords.width,
+            top: coords.top + coords.height,
+        });
+    },
+
+    hide: function() {
+        this.el.setStyle('display', 'none');
+    },
+
+});

@@ -26,6 +26,7 @@ var PlayerControls = new Class({
         options.widgets = [
             new ImageButton('play-button', {
                 image: '/assets/icons/control.png',
+                tooltip: 'Animation abspielen',
                 events: {
                     click: function() {
                         if (!options.movie_player.playing) {
@@ -38,6 +39,7 @@ var PlayerControls = new Class({
             }),
             new ImageButton('stop-button', {
                 image: '/assets/icons/control-stop-square.png',
+                tooltip: 'Animation anhalten',
                 events: {
                     click: function() {
                         options.movie_player.stop();
@@ -46,6 +48,7 @@ var PlayerControls = new Class({
             }),
             new ImageButton('last-button', {
                 image: '/assets/icons/control-stop-180.png',
+                tooltip: 'Vorheriger Frame',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -55,6 +58,7 @@ var PlayerControls = new Class({
             }),
             new ImageButton('next-button', {
                 image: '/assets/icons/control-stop.png',
+                tooltip: 'Nächster Frame',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -67,6 +71,7 @@ var PlayerControls = new Class({
             }),
             new Widget('frame-counter', {
                 class: '',
+                tooltip: 'Aktueller Frame / Anzahl Frames',
             }),
         ];
 

@@ -228,3 +228,12 @@ hr {
     padding: 5px;
 }
 
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: #666;
+    padding: 3px;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
