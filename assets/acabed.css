@@ -68,15 +68,32 @@ a:visited {
     padding: 2px 2px;
     margin: 2px 2px;
     border: solid 1px #666;
-    float: left;
-    width: 16px;
-    height: 16px;
-    background-color: #222;
-
-    background-repeat: no-repeat;
-    background-position: 2px 2px;
     border-radius: 4px;
     -moz-border-radius: 4px;
+    float: left;
+    background-color: #222;
+}
+
+.textbutton {
+    padding: 5px;
+    background-color: #444;
+}
+
+.imagebutton {
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+}
+
+.movie-file {
+    display: none;
+}
+
+#frame-counter {
+    padding: 2px 5px;
+    margin: 2px 2px;
+    float: left;
 }
 
 .object-inspector {
@@ -86,7 +103,6 @@ a:visited {
     border-radius: 4px;
     -moz-border-radius: 4px;
 }
-
 
 #slider {
     width: 300px;
@@ -156,6 +172,11 @@ hr {
     height: auto;
 }
 
+#color {
+    padding: 0px 3px;
+    padding-bottom: 5px;
+}
+
 #pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
     overflow: hidden;
 }
@@ -171,6 +192,7 @@ hr {
     /* width: 80px; */
     height: auto;
 }
+
 
 #footer {
     width: auto;
@@ -202,4 +224,37 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
 {
 	background-image: url("/assets/images/input-bg-active.png");
 	background-color: #FFFFF4;
+}
+
+#overlay {
+    background-color: rgba(0,0,0,.8);
+}
+
+#dialog-container {
+    position: absolute;
+    overflow: hidden;
+    padding: 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+#dialog-title, #dialog-buttons {
+    background-color: #666;
+    padding: 2px 5px;
+    overflow: hidden;
+}
+
+#dialog-content {
+    padding: 5px;
+}
+
+.tooltip {
+    position: absolute;
+    display: none;
+    background-color: #666;
+    padding: 3px;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }

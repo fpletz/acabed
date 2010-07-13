@@ -47,21 +47,32 @@ var MoviePlayer = new Class({
     },
 
     play: function() {
-        var duration = this.movie.frame(this.current_frame_no).duration;
+        // var duration = this.movie.frame(this.current_frame_no).duration;
         this.playing = true;
 
-        this.interval = setInterval(function(this_obj) {
-            this_obj.next_frame()
-        }, duration, this);
+        // this.interval = setTimeout(function(this_obj) {
+        //     this_obj.next_frame()
+        // }, duration, this);
+        
+        this.play_whatever(true);
+    },
+
+    play_whatever: function(first) {
+        if (this.playing) {
+            if (!first) {
+                this.next_frame();
+            }
+
+            var duration = this.current_frame().duration;
+            this.timout = setTimeout(this.play_whatever.bind(this), duration, false);
+        }
     },
 
     pause: function() {
-        clearInterval(this.interval);
         this.playing = false;
     },
 
     stop: function() {
-        clearInterval(this.interval);
         this.rewind();
         this.fireEvent('stop');
         this.playing = false;
@@ -84,15 +95,15 @@ var MoviePlayer = new Class({
     next_frame: function() {
         var frame = this.movie.frame(this.current_frame_no)
 
-        if (this.current_frame_no >= this.movie.frames) {
+        if (this.current_frame_no +1 >= this.movie.frames) {
             if (this.movie.loop == 'no') {
                 this.stop();
             } else {
                 this.rewind();
             }
         } else {
-            this.update();
             ++this.current_frame_no;
+            this.update();
         }
     },
 

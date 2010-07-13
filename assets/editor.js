@@ -61,19 +61,21 @@ function fix_frame(xml) {
 function init_editor() {
     var actions = new WidgetContainer('pixel-tools', {
         widgets: [
-            new Button('draw-button', {
+            new ImageButton('draw-button', {
                 image: '/assets/icons/pencil.png',
+                tooltip: 'Farben malen',
                 events: {
                     click: function() {alert("test");},
                 },
-                text: 'draw!',
             }),
-            new Button('select-button', {
+            new ImageButton('select-button', {
+                tooltip: 'Bereich auswählen',
                 events: {
                     click: function() {alert("test");},
                 }
             }),
-            new Button('fill-button', {
+            new ImageButton('fill-button', {
+                tooltip: 'Füllen',
                 events: {
                     click: function() {alert("test");},
                 }
@@ -108,7 +110,7 @@ function init_editor() {
     			id: 'duration',
 				title: 'Duration [ms]',
 				description: 'Display time of the current frame.',
-				type: 'text',
+				type: 'number',
 				max: '50'
 			}
 		]
@@ -149,9 +151,9 @@ function init_editor() {
 			},
 			{
 				id: 'loop',
-				title: 'L00p WTF',
-				description: 'Loop for ever????',
-				type: 'yes-no'
+				title: 'Loop time',
+				description: 'Should this animation only be played once or for a specified time in seconds.',
+				type: 'number'
 			}
 		]
 	});
@@ -159,7 +161,6 @@ function init_editor() {
     // Update Frame info
     mp.addEvent('render', (function() {
         if (!this.playing) {
-            console.log('update frame model');
             frame_inspector.set_model(mp.current_frame());
         }
     }).bind(mp));
@@ -171,23 +172,52 @@ function init_editor() {
 
     var file_toolbar = new WidgetContainer('file-toolbar', {
         widgets: [
-            new Button('new-movie-button', {
+            new ImageButton('new-movie-button', {
                 image: '/assets/icons/film.png',
+                tooltip: 'Neuer Film',
                 events: {
                     click: function() {
                         Dajaxice.animations.load_editor('Dajax.process');
                     },
                 },
             }),
-            new Button('load-movie-button', {
+            new ImageButton('load-movie-button', {
                 image: '/assets/icons/folder-open-film.png',
+                tooltip: 'Animation vom Server öffnen',
                 events: {
                     click: function() {
+                        var d = new ModalDialog('movie-list',
+                            new Widget('movie-list', {
+                                text: 'lorem ipsum'
+                            }),
+                            {
+                                title: 'Animation öffnen',
+                                buttons: [
+                                    new Button('open-button', {
+                                        text: 'Öffnen',
+                                        events: {
+                                            click: function() {
+                                            },
+                                        }
+                                    }),
+                                     new Button('cancel-button', {
+                                        text: 'Abbrechen',
+                                        events: {
+                                            click: function() {
+                                                ModalDialog.destroy();
+                                            },
+                                        }
+                                    }),
+                               ],
+                            }
+                        );
+                        d.show();
                     },
                 },
             }),
-            new Button('save-movie-button', {
+            new ImageButton('save-movie-button', {
                 image: '/assets/icons/disk.png',
+                tooltip: 'Animation auf dem Server speichern',
                 events: {
                     click: function() {
                     },
@@ -200,14 +230,16 @@ function init_editor() {
         widgets: [
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
+                tooltip: 'Animation hochladen',
                 events: {
                     change: function() {
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
                     },
                 },
             }),
-            new Button('download-xml-button', {
+            new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
+                tooltip: 'Animation herunterladen',
                 events: {
                     click: function() {
                         var uri = 'data:text/xml;charset=utf-8,';
@@ -216,8 +248,9 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('send-json-button', {
+            new ImageButton('send-json-button', {
                 image: '/assets/icons/arrow-curve-000-left.png',
+                tooltip: 'wtf? xD',
                 events: {
                     click: function() {
                         console.log(mp.movie.to_json());
@@ -229,8 +262,9 @@ function init_editor() {
 
     var frametools = new WidgetContainer('frame-tools', {
         widgets: [
-            new Button('duplicate-frame-button', {
+            new ImageButton('duplicate-frame-button', {
                 image: '/assets/icons/layers-arrange.png',
+                tooltip: 'Aktuellen Frame duplizieren',
                 events: {
                     click: function() {
                         console.info('duplicate frame: %d', mp.current_frame_no);
@@ -239,8 +273,9 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('add-frame-button', {
+            new ImageButton('add-frame-button', {
                 image: '/assets/icons/layer--plus.png',
+                tooltip: 'Neuen leeren Frame hinzufügen',
                 events: {
                     click: function() {
                         console.info('add frame');
@@ -249,8 +284,9 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('delete-frame-button', {
+            new ImageButton('delete-frame-button', {
                 image: '/assets/icons/layer--minus.png',
+                tooltip: 'Aktuellen Frame löschen',
                 events: {
                     click: function() {
                         console.info('remove frame');
@@ -261,16 +297,18 @@ function init_editor() {
                     },
                 }
             }),
-            new Button('copy-frame-button', {
+            new ImageButton('copy-frame-button', {
                 image: '/assets/icons/document-copy.png',
+                tooltip: 'Frame kopieren',
                 events: {
                     click: function() {
                         ed.current_frame_to_clipboard();
                     },
                 }
             }),
-            new Button('paste-frame-button', {
+            new ImageButton('paste-frame-button', {
                 image: '/assets/icons/clipboard-paste.png',
+                tooltip: 'Frame einfügen',
                 events: {
                     click: function() {
                         ed.clipboard_to_current_position();

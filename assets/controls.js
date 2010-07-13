@@ -24,9 +24,9 @@ var PlayerControls = new Class({
 
     initialize: function(id, options) {
         options.widgets = [
-            new Button('play-button', {
+            new ImageButton('play-button', {
                 image: '/assets/icons/control.png',
-                class: 'button',
+                tooltip: 'Animation abspielen',
                 events: {
                     click: function() {
                         if (!options.movie_player.playing) {
@@ -37,18 +37,18 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Button('stop-button', {
+            new ImageButton('stop-button', {
                 image: '/assets/icons/control-stop-square.png',
-                class: 'button',
+                tooltip: 'Animation anhalten',
                 events: {
                     click: function() {
                         options.movie_player.stop();
                     },
                 },
             }),
-            new Button('last-button', {
+            new ImageButton('last-button', {
                 image: '/assets/icons/control-stop-180.png',
-                class: 'button',
+                tooltip: 'Vorheriger Frame',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -56,9 +56,9 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Button('next-button', {
+            new ImageButton('next-button', {
                 image: '/assets/icons/control-stop.png',
-                class: 'button',
+                tooltip: 'Nächster Frame',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -66,14 +66,22 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Widget('slider', {}),
-            //this.status = new Element('span', {
-            //    'id': 'status-field'
-            //}),
+            new Widget('slider', {
+                class: 'button',
+            }),
+            new Widget('frame-counter', {
+                class: '',
+                tooltip: 'Aktueller Frame / Anzahl Frames',
+            }),
         ];
 
         this.parent(id, options);
         this.setup_slider(options.movie_player);
+
+        options.movie_player.addEvent('render', (function() {
+            $('frame-counter').setProperty('text',
+                (this.current_frame_no+1) + ' / ' + this.movie.frames);
+        }).bind(options.movie_player));
     },
 
     setup_slider: function(mp) {

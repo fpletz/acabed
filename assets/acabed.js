@@ -42,36 +42,21 @@ function init() {
 
     // omgwtf, iphone or ipad!
     if (navigator.userAgent.contains('iPhone OS')) {
-        apple = new Element('div', {
-            class: 'applefail',
-            styles: {
-                position: 'fixed',
-                left: 0,
-                top: 0,
-                width: '100%',
-                height: '100%',
-                cursor: 'pointer',
-                opacity: 0.9,
-                zoom: 1,
-                'background-color': 'black',
-                'z-index': 1,
-            },
-            events: {
-                'click': function(event) {
-                    $$('.applefail').setStyle('display', 'none');
-                },
-            },
+        var mask = new Mask(document.body, {
+            id: 'overlay',
+            hideOnClick: true,
+            destroyOnHide: true,
         });
 
         // scaling for the poor
-        apimgw = window.innerWidth < 960 ? window.innerWidth : 960;
-        apimgh = window.innerHeight < 960 ? window.innerHeight : 960;
+        var apimgw = window.innerWidth < 960 ? window.innerWidth : 960;
+        var apimgh = window.innerHeight < 960 ? window.innerHeight : 960;
         if(apimgw < 960)
             apimgh = apimgw;
         else if(apimgh < 960)
             apimgw = apimgh;
 
-        apimg = new Element('img', {
+        var apimg = new Element('img', {
             src: '/assets/images/ipad1984.png',
             class: 'applefail',
             styles: {
@@ -80,11 +65,11 @@ function init() {
                 position: 'fixed',
                 left: window.innerWidth / 2 - apimgw / 2,
                 top: window.innerHeight / 2 - apimgh / 2,
-                'z-index': 2,
             },
          });
-        $$('body').grab(apimg);
-        $$('body').grab(apple);
+        $('overlay').grab(apimg);
+
+        mask.show();
     }
 
     Dajaxice.animations.login_widget('Dajax.process');

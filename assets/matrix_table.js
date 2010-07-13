@@ -636,10 +636,14 @@ var MatrixTable = new Class({
 					this.fireEvent('click', [row, col]);
 				}
 			}
-        }).bind(this);
-        
-        
-        
+		}).bind(this);
+		
+		
+		document.body.addEvent('mouseup', (function(e) {
+			this.clicked = false;
+		}).bind(this));
+		
+		
 		for (var row = 3; row >= 0; --row) {
 			for (var col = 23; col >= 0; --col) {
 				eventLayer = $('cell-'+col+'-'+row);
@@ -649,16 +653,12 @@ var MatrixTable = new Class({
 					color_pixel(e);
 				}).bind(this));
 				
-				eventLayer.addEvent('mouseup', (function(e) {
-					this.clicked = false;
-				}).bind(this));
-				
 				eventLayer.addEvent('mouseout', (function(e) {
 					// More usefull in img.mouseout? oder body.mouseup ?
 					//this.clicked = false;
 				}).bind(this));
 				
-				eventLayer.addEvent('mousemove', (function(e) {
+				eventLayer.addEvent('mouseover', (function(e) {
 					if (this.clicked) {
 						color_pixel(e);
 					}

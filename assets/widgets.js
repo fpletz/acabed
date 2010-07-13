@@ -24,7 +24,9 @@ var Widget = new Class({
 
     options: {
         events: {},
-        class: 'button'
+        class: '',
+        text: '',
+        tooltip: null,
     },
 
     initialize: function(id, options) {
@@ -34,9 +36,14 @@ var Widget = new Class({
         this.el = new Element('div', {
             id: id,
             class: this.options.class,
+            text: this.options.text,
         });
 
         this.el.addEvents(this.options.events);
+
+        if(this.options.tooltip !== null) {
+            this.tooltip = new Tooltip(this.el, { text: this.options.tooltip });
+        }
     },
 });
 
@@ -44,35 +51,38 @@ var Button = new Class({
     Extends: Widget,
 
     options: {
-        text: undefined,
+        class: 'button textbutton'
+    },
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+    }
+});
+
+var ImageButton = new Class({
+    Extends: Button,
+
+    options: {
+        class: 'button imagebutton',
         image: undefined,
     },
 
     initialize: function(id, options) {
         this.parent(id, options);
-        
-        if(this.options.image !== undefined) {
-            this.el.setStyle('background-image', 'url(' + this.options.image + ')');
-        }
 
-        if (this.options.text !== undefined) {
-            this.el.setProperty('alt', this.options.text);
-        }
-    }
+        this.el.setStyle('background-image', 'url(' + this.options.image + ')');
+    },
 });
 
 var FileButton = new Class({
-    Extends: Button,
+    Extends: ImageButton,
 
     initialize: function(id, options) {
         this.parent(id, options);
 
         var file = new Element('input', {
-            id: 'movie-file',
+            class: 'movie-file',
             type: 'file',
-            styles: {
-                display: 'none',
-            },
         });
 
         this.el.addEvent('click', function() {
@@ -81,7 +91,6 @@ var FileButton = new Class({
         });
 
         file.addEvent('change', (function() {
-            //this.fireEvent('change', [file]);
             file.setStyle('display', 'none');
         }).bind(this));
 
@@ -100,8 +109,53 @@ var WidgetContainer = new Class({
         this.setOptions(options);
         this.id = id;
         
-        var el = $(this.id);
-        this.options.widgets.each(function (widget) { el.grab(widget.el); });
+        this.el = $(this.id);
+        if(this.el === null)
+            this.el = new Element('div', { id: id });
+
+        this.options.widgets.each((function (widget) {
+            this.el.grab(widget.el);
+        }).bind(this));
     }
 });
 
+
+var Tooltip = new Class({
+    Implements: [Options, Events],
+
+    options: {
+        class: 'tooltip',
+        text: 'empty tooltip',
+        styles: [],
+    },
+
+    initialize: function(target, options) {
+        this.setOptions(options);
+        this.target = target;
+
+        this.el = new Element('div', {
+            class: this.options.class,
+            styles: this.options.styles,
+            text: this.options.text,
+        });
+
+        document.body.grab(this.el);
+
+        this.target.addEvent('mouseover', this.show.bind(this));
+        this.target.addEvent('mouseout', this.hide.bind(this));
+    },
+
+    show: function() {
+        var coords = this.target.getCoordinates();
+        this.el.setStyles({
+            display: 'block',
+            left: coords.left + coords.width,
+            top: coords.top + coords.height,
+        });
+    },
+
+    hide: function() {
+        this.el.setStyle('display', 'none');
+    },
+
+});
