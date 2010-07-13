@@ -137,6 +137,32 @@ function init_editor() {
                 image: '/assets/icons/folder-open-film.png',
                 events: {
                     click: function() {
+                        var d = new ModalDialog('movie-list',
+                            new Widget('movie-list', {
+                                text: 'lorem ipsum'
+                            }),
+                            {
+                                title: 'Animation öffnen',
+                                buttons: [
+                                    new Button('open-button', {
+                                        text: 'Öffnen',
+                                        events: {
+                                            click: function() {
+                                            },
+                                        }
+                                    }),
+                                     new Button('cancel-button', {
+                                        text: 'Abbrechen',
+                                        events: {
+                                            click: function() {
+                                                ModalDialog.destroy();
+                                            },
+                                        }
+                                    }),
+                               ],
+                            }
+                        );
+                        d.show();
                     },
                 },
             }),

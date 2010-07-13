@@ -24,17 +24,71 @@ var Dialog = new Class({
 
     options: {
         class: 'dialog',
+        title: 'new dialog',
+        buttons: [],
+    },
+
+    initialize: function(id, content, options) {
+        this.parent(id, options);
+        this.content = content;
+
+        var widget_content = new Widget('dialog-content');
+        widget_content.el.grab(content.el);
+
+        this.container = new WidgetContainer('dialog-container', {
+            widgets: [
+                new Widget('dialog-title', {
+                    text: this.options.title,
+                }),
+                widget_content,
+                new WidgetContainer('dialog-buttons', {
+                    widgets: this.options.buttons,
+                }),
+            ],
+        });
     }
 });
 
-var ModelDialog = new Class({
+var ModalDialog = new Class({
     Extends: Dialog,
 
     options: {
     },
 
-    intialize: function(id, options) {
-        this.parent(id, options);
-    }
+    initialize: function(id, content, options) {
+        this.parent(id, content, options);
+
+        this.mask = document.body.get('mask', {
+            id: 'overlay',
+            hideOnClick: true,
+            destroyOnHide: true,
+        });
+
+        var overlay = $('overlay');
+        var container = this.container.el;
+
+        overlay.grab(container);
+
+        container.addEvent('click', function(event) {
+            event.stop();
+        });
+    },
+
+    show: function() {
+        this.mask.show();
+
+        var overlay = $('overlay');
+        var container = this.container.el;
+        container.setStyle('left', (overlay.offsetWidth / 2 - container.offsetWidth / 2) + 'px');
+        container.setStyle('top', (overlay.offsetHeight / 2 - container.offsetHeight / 2) + 'px');
+    },
+
+    hide: function() {
+        this.mask.hide();
+    },
+});
+
+ModalDialog.destroy = function() {
+    document.body.get('mask').destroy();
 }
 

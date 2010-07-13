@@ -200,3 +200,27 @@ hr {
 #footer a {
     color: #666;
 }
+
+#overlay {
+    background-color: rgba(0,0,0,.8);
+}
+
+#dialog-container {
+    position: absolute;
+    overflow: hidden;
+    padding: 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+#dialog-title, #dialog-buttons {
+    background-color: #666;
+    padding: 2px 5px;
+    overflow: hidden;
+}
+
+#dialog-content {
+    padding: 5px;
+}
+
