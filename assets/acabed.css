@@ -86,6 +86,10 @@ a:visited {
     background-position: 2px 2px;
 }
 
+.movie-file {
+    display: none;
+}
+
 #frame-counter {
     padding: 2px 5px;
     margin: 2px 2px;

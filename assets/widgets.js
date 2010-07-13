@@ -81,11 +81,8 @@ var FileButton = new Class({
         this.parent(id, options);
 
         var file = new Element('input', {
-            id: 'movie-file',
+            class: 'movie-file',
             type: 'file',
-            styles: {
-                display: 'none',
-            },
         });
 
         this.el.addEvent('click', function() {
@@ -94,7 +91,6 @@ var FileButton = new Class({
         });
 
         file.addEvent('change', (function() {
-            //this.fireEvent('change', [file]);
             file.setStyle('display', 'none');
         }).bind(this));
 
