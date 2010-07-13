@@ -110,14 +110,15 @@ var MoviePlayer = new Class({
     },
 
     render: function(frame) {
-        for (var row = 0; row < this.movie.height; ++row) {
-            for (var col = 0; col < this.movie.width; ++col) {
-                this.matrix_table.
-                    set_str_color(row, col,
-                                  frame.data[row][col].to_string())
-            }
-        }
-
+    	if(this.matrix_table.update(frame.data, this.movie.width, this.movie.height) == false) {
+			for (var row = this.movie.height - 1; row >= 0; --row) {
+				for (var col = this.movie.width - 1; col >= 0; --col) {
+					this.matrix_table.set_str_color(
+					    row, col, frame.data[row][col].to_string());
+				}
+			}
+		}
+		
         this.fireEvent('render', [this.current_frame_no]);
     },
 

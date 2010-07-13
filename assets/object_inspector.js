@@ -31,16 +31,14 @@ var ObjectInspector = new Class({
 
     model: null,
 
-    initialize: function(id, options, model) {
-        this.parent(id, options);
-
-        this.model = model;
+    initialize: function(properties) {
+        this.parent(properties.id, properties);
 
         this.addEvent('propertyChanged', (function(property, value) {
             this.update();
         }).bind(this));
 
-        if ($defined(this.model) && this.modeel !== null) {
+        if ($defined(this.options.model) && this.options.model !== null) {
             this.inject_model_setters();
         }
 
@@ -48,45 +46,73 @@ var ObjectInspector = new Class({
     },
 
     set_model: function(model) {
-        this.model = model;
+        this.options.model = model;
         this.inject_model_setters();
         this.update();
     },
 
     inject_model_setters: function() {
         var inspector = this;
-        if ($defined(this.model) && this.modeel !== null) {
-            this.model.set = (function(property, value) {
+        if ($defined(this.options.model) && this.options.model !== null) {
+            this.options.model.set = (function(property, value) {
                 this[property] = value;
                 inspector.fireEvent('propertyChanged', [property, value]);
-            }).bind(this.model);
+            }).bind(this.options.model);
         }
     },
 
     update: function() {
         this.el.set('html', '');
 
-        if (this.model === null || ! $defined(this.model) ) {
+        if (this.options.model === null || ! $defined(this.options.model) ) {
             this.el.set('html', 'Empty object');
         } else {
-            var table = new Element('table');
-            this.options.properties.each(function(p) {
-                var tr = new Element('tr');
-                var label = new Element('td');
-                label.set('html', p + ': ');
-                var value = new Element('td');
-                var input = new Element('input', {id: p+'-input', value: this.model[p]})
-
-                input.addEvent('change', (function(el) {
-                    this.model.set(p, el.target.getProperty('value'));
-                }).bind(this));
-
-                value.grab(input);
-                tr.grab(label);
-                tr.grab(value);
-                table.grab(tr);
+            var list = new Element('dl');
+            
+            this.options.items.each(function(item) {
+            	var id = item.id + '-input';
+                var nameContainer = new Element('dt');
+                var valueContainer = new Element('dd');
+                var nameLabel = new Element('label', {
+                	'for': item.id,
+                	html: item.title,
+                	title: item.description});
+				
+                var valueInput = undefined;
+                
+                if(item.type == 'multiline')
+                {
+                	valueInput = new Element('textarea', {
+                		id: id,
+						html: this.options.model[item.id],
+						title: item.description,
+						maxlength: item.max,
+						rows: item.height});
+					
+					valueInput.addEvent('change', (function(el) {
+						this.options.model.set(item.id, el.target.getProperty('html'));
+					}).bind(this));
+				}
+				else
+				{
+					valueInput = new Element('input', {
+						id: id,
+						value: this.options.model[item.id],
+						title: item.description,
+						maxlength: item.max,
+						type: 'text'});
+					
+					valueInput.addEvent('change', (function(el) {
+						this.options.model.set(item.id, el.target.getProperty('value'));
+					}).bind(this));
+				}
+				
+                nameContainer.grab(nameLabel);
+                valueContainer.grab(valueInput);
+                list.grab(nameContainer);
+                list.grab(valueContainer);
             }, this);
-            this.el.grab(table);
+            this.el.grab(list);
         }
     }
 });

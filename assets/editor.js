@@ -100,17 +100,61 @@ function init_editor() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
-    var frame_inspector = new ObjectInspector('frame-inspector',
-                                              { properties: ['duration'], },
-                                              mp.current_frame());
+    var frame_inspector = new ObjectInspector({
+    	id: 'frame-inspector',
+    	model: mp.current_frame(),
+    	items: [
+    		{
+    			id: 'duration',
+				title: 'Duration [ms]',
+				description: 'Display time of the current frame.',
+				type: 'text',
+				max: '50'
+			}
+		]
+	});
 
-    var movie_inspector = new ObjectInspector('movie-inspector',
-                                              { properties: ['title',
-                                                             'description',
-                                                             'author',
-                                                             'email',
-                                                             'loop'], },
-                                              mv);
+    var movie_inspector = new ObjectInspector({
+		id: 'movie-inspector',
+		model: mv,
+		items: [
+			{
+				id: 'title',
+				title: 'Title',
+				description: 'The name of the new animation.',
+				type: 'text',
+				max: '50'
+			},
+			{
+				id: 'description',
+				title: 'Description',
+				description: 'An optional description that describes your work.',
+				type: 'multiline',
+				max: '1500',
+				height: '5'
+			},
+			{
+				id: 'author',
+				title: 'Author',
+				description: 'Your name',
+				type: 'text',
+				max: '50'
+			},
+			{
+				id: 'email',
+				title: 'E-Mail',
+				description: 'Your E-Mail adress to send you information and administration links for your animation. Trust us, we won\'t resell your personal data or send any spam!',
+				type: 'text',
+				max: '50'
+			},
+			{
+				id: 'loop',
+				title: 'L00p WTF',
+				description: 'Loop for ever????',
+				type: 'yes-no'
+			}
+		]
+	});
 
     // Update Frame info
     mp.addEvent('render', (function() {
