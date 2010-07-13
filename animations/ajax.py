@@ -1,3 +1,22 @@
+# acabed - webeditor for blinkenlights xml files
+# Copyright (C) 2010 Raffael Mancini <raffael.mancini@hcl-club.lu>
+#                    Franz Pletz <fpletz@fnordicwalking.de>
+#
+# This file is part of acabed.
+#
+# acabed is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# acabed is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 from django.template.loader import render_to_string
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -49,6 +68,7 @@ def logout(request):
     dajax.script('Dajaxice.animations.login_widget("Dajax.process");')
     return dajax.json()
 dajaxice.register(logout)
+
 def load_editor(request):
     r = render_to_string('editor.html')
 
@@ -57,3 +77,13 @@ def load_editor(request):
     dajax.script('init_editor();')
     return dajax.json()
 dajaxice.register(load_editor)
+
+def load_start(request):
+    r = render_to_string('start.html')
+
+    dajax = Dajax()
+    dajax.assign('#content', 'innerHTML', r)
+    dajax.script('init_start();')
+    return dajax.json()
+dajaxice.register(load_start)
+

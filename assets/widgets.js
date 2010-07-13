@@ -24,7 +24,8 @@ var Widget = new Class({
 
     options: {
         events: {},
-        class: 'button'
+        class: '',
+        text: ''
     },
 
     initialize: function(id, options) {
@@ -34,8 +35,9 @@ var Widget = new Class({
         this.el = new Element('div', {
             id: id,
             class: this.options.class,
+            text: this.options.text,
         });
-        
+
         this.el.addEvents(this.options.events);
     },
 });
@@ -44,25 +46,36 @@ var Button = new Class({
     Extends: Widget,
 
     options: {
-        text: undefined,
-        image: undefined,
+        //text: undefined, // TODO: tooltips
+        class: 'button textbutton'
     },
 
     initialize: function(id, options) {
         this.parent(id, options);
         
-        if(this.options.image !== undefined) {
-            this.el.setStyle('background-image', 'url(' + this.options.image + ')');
-        }
-
-        if (this.options.text !== undefined) {
-            this.el.setProperty('alt', this.options.text);
-        }
+        //if (this.options.text !== undefined) {
+        //    this.el.setProperty('alt', this.options.text);
+        //}
     }
 });
 
-var FileButton = new Class({
+var ImageButton = new Class({
     Extends: Button,
+
+    options: {
+        class: 'button imagebutton',
+        image: undefined,
+    },
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        this.el.setStyle('background-image', 'url(' + this.options.image + ')');
+    },
+});
+
+var FileButton = new Class({
+    Extends: ImageButton,
 
     initialize: function(id, options) {
         this.parent(id, options);
@@ -100,8 +113,13 @@ var WidgetContainer = new Class({
         this.setOptions(options);
         this.id = id;
         
-        var el = $(this.id);
-        this.options.widgets.each(function (widget) { el.grab(widget.el); });
+        this.el = $(this.id);
+        if(this.el === null)
+            this.el = new Element('div', { id: id });
+
+        this.options.widgets.each((function (widget) {
+            this.el.grab(widget.el);
+        }).bind(this));
     }
 });
 

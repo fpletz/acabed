@@ -78,6 +78,11 @@ var Movie = new Class({
         return this.data[no];
     },
 
+    set_frame: function(no, frame) {
+        this.data[no] = frame;
+        this.fireEvent('modify');
+    },
+
     // TODO corner cases
     add_frame_at: function(at) {
         ++this.frames;
@@ -127,5 +132,29 @@ var Movie = new Class({
         }
 
         return xml;
-    }
+    },
+    
+    to_json: function() {
+        var movie = new Object();
+        movie.title = this.title;
+        movie.description = this.description;
+        movie.author = this.author;
+        movie.creator = this.creator;
+        movie.email = this.email;
+        movie.url = this.url;
+        movie.loop = this.loop;
+
+        movie.height = this.height;
+        movie.width = this.width;
+        movie.depth = this.depth;
+        movie.channels = this.channels;
+        movie.frames = this.frames;
+
+        movie.data = [];
+        this.data.each(function(frame) {
+            movie.data.push(frame.to_json());
+        });
+        
+        return JSON.encode(movie);
+    },
 });

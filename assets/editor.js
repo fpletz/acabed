@@ -23,6 +23,7 @@ var Editor = new Class({
     initialize: function(movie_player) {
         this.movie_player = movie_player;
         this.current_color = new Color(255, 0, 255);
+        this.clipboard = null;
 
         // initialize matrix click handler
         this.movie_player.matrix_table.addEvent('click', (function(row, col) {
@@ -38,7 +39,18 @@ var Editor = new Class({
 
     set_color: function(c) {
         this.current_color = c;
-    }
+    },
+
+    current_frame_to_clipboard: function() {
+        this.clipboard = this.movie_player.current_frame().copy();
+    },
+
+    clipboard_to_current_position: function() {
+        if (this.clipboard !== null) {
+            this.movie_player.movie.add_frame_at(this.movie_player.current_frame_no);
+            this.movie_player.movie.set_frame(this.movie_player.current_frame_no, this.clipboard);
+        }
+    },
 });
 
 // Dirty hack
@@ -49,18 +61,18 @@ function fix_frame(xml) {
 function init_editor() {
     var actions = new WidgetContainer('pixel-tools', {
         widgets: [
-            new Button('draw-button', {
+            new ImageButton('draw-button', {
+                image: '/assets/icons/pencil.png',
                 events: {
                     click: function() {alert("test");},
                 },
-                text: 'draw!',
             }),
-            new Button('select-button', {
+            new ImageButton('select-button', {
                 events: {
                     click: function() {alert("test");},
                 }
             }),
-            new Button('fill-button', {
+            new ImageButton('fill-button', {
                 events: {
                     click: function() {alert("test");},
                 }
@@ -111,18 +123,71 @@ function init_editor() {
                   movie_inspector],
     });
 
-    var toolbar = new WidgetContainer('toolbar', {
+    var file_toolbar = new WidgetContainer('file-toolbar', {
+        widgets: [
+            new ImageButton('new-movie-button', {
+                image: '/assets/icons/film.png',
+                events: {
+                    click: function() {
+                        Dajaxice.animations.load_editor('Dajax.process');
+                    },
+                },
+            }),
+            new ImageButton('load-movie-button', {
+                image: '/assets/icons/folder-open-film.png',
+                events: {
+                    click: function() {
+                        var d = new ModalDialog('movie-list',
+                            new Widget('movie-list', {
+                                text: 'lorem ipsum'
+                            }),
+                            {
+                                title: 'Animation öffnen',
+                                buttons: [
+                                    new Button('open-button', {
+                                        text: 'Öffnen',
+                                        events: {
+                                            click: function() {
+                                            },
+                                        }
+                                    }),
+                                     new Button('cancel-button', {
+                                        text: 'Abbrechen',
+                                        events: {
+                                            click: function() {
+                                                ModalDialog.destroy();
+                                            },
+                                        }
+                                    }),
+                               ],
+                            }
+                        );
+                        d.show();
+                    },
+                },
+            }),
+            new ImageButton('save-movie-button', {
+                image: '/assets/icons/disk.png',
+                events: {
+                    click: function() {
+                    },
+                },
+            }),
+        ],
+    });
+
+    var port_toolbar = new WidgetContainer('port-toolbar', {
         widgets: [
             new FileButton('load-xml-button', {
-                image: '/assets/icons/48px-Go-jump.svg.png',
+                image: '/assets/icons/arrow-090.png',
                 events: {
                     change: function() {
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
                     },
                 },
             }),
-            new Button('download-xml-button', {
-                image: '/assets/icons/48px-Go-jump.svg.png',
+            new ImageButton('download-xml-button', {
+                image: '/assets/icons/arrow-270.png',
                 events: {
                     click: function() {
                         var uri = 'data:text/xml;charset=utf-8,';
@@ -131,13 +196,21 @@ function init_editor() {
                     },
                 },
             }),
+            new ImageButton('send-json-button', {
+                image: '/assets/icons/arrow-curve-000-left.png',
+                events: {
+                    click: function() {
+                        console.log(mp.movie.to_json());
+                    },
+                },
+            }),
         ],
     });
 
     var frametools = new WidgetContainer('frame-tools', {
         widgets: [
-            new Button('duplicate-frame-button', {
-                //image: '',
+            new ImageButton('duplicate-frame-button', {
+                image: '/assets/icons/layers-arrange.png',
                 events: {
                     click: function() {
                         console.info('duplicate frame: %d', mp.current_frame_no);
@@ -146,8 +219,8 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('add-frame-button', {
-                image: '/assets/icons/48px-List-add.svg.png',
+            new ImageButton('add-frame-button', {
+                image: '/assets/icons/layer--plus.png',
                 events: {
                     click: function() {
                         console.info('add frame');
@@ -156,8 +229,8 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('delete-frame-button', {
-                image: '/assets/icons/48px-List-remove.svg.png',
+            new ImageButton('delete-frame-button', {
+                image: '/assets/icons/layer--minus.png',
                 events: {
                     click: function() {
                         console.info('remove frame');
@@ -165,6 +238,22 @@ function init_editor() {
                             mv.remove_frame_at(mp.current_frame_no);
                             mp.update();
                         }
+                    },
+                }
+            }),
+            new ImageButton('copy-frame-button', {
+                image: '/assets/icons/document-copy.png',
+                events: {
+                    click: function() {
+                        ed.current_frame_to_clipboard();
+                    },
+                }
+            }),
+            new ImageButton('paste-frame-button', {
+                image: '/assets/icons/clipboard-paste.png',
+                events: {
+                    click: function() {
+                        ed.clipboard_to_current_position();
                     },
                 }
             }),
@@ -210,72 +299,3 @@ function init_editor() {
     mt.reset(4, 24);
 };
 
-function init() {
-    // Don't use firebug console if not installed
-    if (typeof console === 'undefined') {
-        console = {
-            log: function () {},
-            info: function () {},
-            group: function () {},
-            error: function () {},
-            warn: function () {},
-            groupEnd: function () {}
-        };
-    }
-
-    if (typeof FileReader === 'undefined') {
-        alert("FileReader not supported! fuck off");
-    }
-
-    // omgwtf, iphone or ipad!
-    if (navigator.userAgent.contains('iPhone OS')) {
-        apple = new Element('div', {
-            class: 'applefail',
-            styles: {
-                position: 'fixed',
-                left: 0,
-                top: 0,
-                width: '100%',
-                height: '100%',
-                cursor: 'pointer',
-                opacity: 0.9,
-                zoom: 1,
-                'background-color': 'black',
-                'z-index': 1,
-            },
-            events: {
-                'click': function(event) {
-                    $$('.applefail').setStyle('display', 'none');
-                },
-            },
-        });
-
-        // scaling for the poor
-        apimgw = window.innerWidth < 960 ? window.innerWidth : 960;
-        apimgh = window.innerHeight < 960 ? window.innerHeight : 960;
-        if(apimgw < 960)
-            apimgh = apimgw;
-        else if(apimgh < 960)
-            apimgw = apimgh;
-
-        apimg = new Element('img', {
-            src: '/assets/ipad1984.png',
-            class: 'applefail',
-            styles: {
-                width: apimgw,
-                height: apimgh,
-                position: 'fixed',
-                left: window.innerWidth / 2 - apimgw / 2,
-                top: window.innerHeight / 2 - apimgh / 2,
-                'z-index': 2,
-            },
-         });
-        $$('body').grab(apimg);
-        $$('body').grab(apple);
-    }
-
-    Dajaxice.animations.login_widget('Dajax.process');
-    Dajaxice.animations.load_editor('Dajax.process');
-};
-
-window.addEvent('domready', init);

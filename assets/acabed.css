@@ -23,6 +23,22 @@ body {
     font-family: Helvetica, sans-serif;
     background-color: black;
     color: white;
+    padding: 0px;
+}
+
+a:link {
+    color: #aaaaff;
+    text-decoration: none;
+}
+
+a:hover, a:visited:hover {
+    color: #ffaaaa;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #aaaaff;
+    text-decoration: none;
 }
 
 #matrix-table td, #matrix-table tr {
@@ -37,94 +53,75 @@ body {
     margin: 5px;
 }
 
-#slider {
-    margin: 10px;
-    display: inline-block;
-    width: 400px;
-    top: 5px;
-}
-
 #matrix-table {
-    margin: 0px;
-    border: solid 1px #333;
-}
-
-#movie-info {
-    border: solid 1px #333;
+    margin: 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 .icon {
     width: 24px;
 }
 
-#editor-controls img {
-    vertical-align: middle;
+.button {
+    padding: 2px 2px;
+    margin: 2px 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    float: left;
+    background-color: #222;
 }
 
-.button {
-    padding: 1px 3px;
+.textbutton {
+    padding: 5px;
+    background-color: #444;
+}
+
+.imagebutton {
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+}
+
+#frame-counter {
+    padding: 2px 5px;
     margin: 2px 2px;
-    border: solid 1px #333;
     float: left;
-    width: 30px;
-    height: 30px;
-    background-color: red;
 }
 
 .object-inspector {
-    border: solid 1px #333;
-    padding: 5px 5px 0px 5px;
-    margin: 3px;
-}
-
-#player-controls {
-    padding-bottom: 10px;
-}
-
-#editor-container {
-    float: left;
-    border: solid 1px #333;
-    padding: 5px 5px 0px 5px;
-    margin: 0px;
-}
-
-#color-picker-container {
-    position: relative;
-    left: -4px;
-    top: -4px;
-    float: left;
-    margin: 0px -3px -3px 0px;
-}
-
-#editor-controls-container {
-    float: left;
-    width: auto;
-}
-
-.boxxy {
-    border: solid 1px #333;
-    background-color: #111111;
-    padding: 5px;
-    margin: 0px 0px 5px 0px;
+    border: solid 1px #666;
+    padding: 5px 5px 5px 5px;
+    margin: 2px 2px 4px 2px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 #slider {
     width: 300px;
-    height: 30px;
-    background-color: #888888;
-    padding: 10px
+    height: 16px;
+    background-color: #222;
+    padding: 2px 20px 2px 0px;
+    margin: 2px 0px 0px 8px;
+}
+
+#slider-tim {
 }
 
 #login-widget {
     position: absolute;
     left: 700px;
     top: 0px;
-    width: 200px;
-    background-color: red;
+    background-color: #333;
     font-size: 12px;
     padding: 5px 10px;
-    border-bottom-left-radius: 1em 1em;
-    border-bottom-right-radius: 1em 1em;
+    border-bottom-left-radius: 4px 4px;
+    border-bottom-right-radius: 4px 4px;
+    -moz-border-radius-bottomleft: 4px 4px;
+    -moz-border-radius-bottomright: 4px 4px;
 }
 
 #login-widget ul {
@@ -134,8 +131,8 @@ body {
 }
 
 #content {
-    margin-top: 50px;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 3px;
     width: auto;
     height: auto;
 }
@@ -144,24 +141,45 @@ body {
 
 }
 
-#toolbar {
+.container {
+    float: left;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    padding: 2px;
+}
 
+hr {
+    color: #666;
+    background-color: #666;
+    height: 1px;
+    border: solid 0px;
+}
+
+#toolbar {
+    float: left;
 }
 
 #left {
     float: left;
-    width: 150px;
+    width: 140px;
     height: auto;
+}
+
+#color {
+    padding: 0px 3px;
+    padding-bottom: 5px;
 }
 
 #pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
     overflow: hidden;
-    margin-top: 5px;
 }
 
 #middle {
     float: left;
-    width: 600px;
+    /* width: 600px; */
     height: auto;
 }
 
@@ -171,10 +189,38 @@ body {
     height: auto;
 }
 
+
 #footer {
     width: auto;
     font-size: xx-small;
-    color: #333;
+    color: #666;
     margin-top: 20px;
+}
+
+#footer a {
+    color: #666;
+}
+
+#overlay {
+    background-color: rgba(0,0,0,.8);
+}
+
+#dialog-container {
+    position: absolute;
+    overflow: hidden;
+    padding: 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+#dialog-title, #dialog-buttons {
+    background-color: #666;
+    padding: 2px 5px;
+    overflow: hidden;
+}
+
+#dialog-content {
+    padding: 5px;
 }
 

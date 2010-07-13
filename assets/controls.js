@@ -24,9 +24,8 @@ var PlayerControls = new Class({
 
     initialize: function(id, options) {
         options.widgets = [
-            new Button('play-button', {
-                image: '/assets/icons/48px-Media-playback-start.svg.png',
-                class: 'button',
+            new ImageButton('play-button', {
+                image: '/assets/icons/control.png',
                 events: {
                     click: function() {
                         if (!options.movie_player.playing) {
@@ -37,18 +36,16 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Button('stop-button', {
-                image: '/assets/icons/48px-Media-playback-stop.svg.png',
-                class: 'button',
+            new ImageButton('stop-button', {
+                image: '/assets/icons/control-stop-square.png',
                 events: {
                     click: function() {
                         options.movie_player.stop();
                     },
                 },
             }),
-            new Button('last-button', {
-                image: '/assets/icons/48px-Go-previous.svg.png',
-                class: 'button',
+            new ImageButton('last-button', {
+                image: '/assets/icons/control-stop-180.png',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -56,9 +53,8 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Button('next-button', {
-                image: '/assets/icons/48px-Go-next.svg.png',
-                class: 'button',
+            new ImageButton('next-button', {
+                image: '/assets/icons/control-stop.png',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -66,18 +62,25 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Widget('slider', {}),
-            //this.status = new Element('span', {
-            //    'id': 'status-field'
-            //}),
+            new Widget('slider', {
+                class: 'button',
+            }),
+            new Widget('frame-counter', {
+                class: '',
+            }),
         ];
 
         this.parent(id, options);
         this.setup_slider(options.movie_player);
+
+        options.movie_player.addEvent('render', (function() {
+            $('frame-counter').setProperty('text',
+                (this.current_frame_no+1) + ' / ' + this.movie.frames);
+        }).bind(options.movie_player));
     },
 
     setup_slider: function(mp) {
-        this.tim = new Element('img', {'src': '/assets/icons/tim.png', 'id': 'slider-tim'});
+        this.tim = new Element('img', {'src': '/assets/icons/tim-small.png', 'id': 'slider-tim'});
         this.slider_el = $('slider');
 
         this.slider_el.grab(this.tim);
@@ -88,6 +91,7 @@ var PlayerControls = new Class({
                 steps: mp.movie.frames-1,
                 wheel: true,
                 snap: true,
+                offset: -2,
                 onChange: function(pos) {
                     // not portable to matrix without canvas
                     //if (mp.matrix_table.pixel_rects.length !== 0)
