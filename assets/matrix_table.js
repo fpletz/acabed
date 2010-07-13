@@ -159,14 +159,16 @@ var MatrixTable = new Class({
             }
         }).bind(this);
 
-        $(this.id).addEvent('mousedown', (function(ev) {
+        var el = $(this.id);
+
+        el.addEvent('mousedown', (function(ev) {
             this.clicked = true;
             color_pixel(ev);
         }).bind(this));
-        $(this.id).addEvent('mouseup', (function(ev) {
+        document.body.addEvent('mouseup', (function(ev) {
             this.clicked = false;
         }).bind(this));
-        $(this.id).addEvent('mouseover', color_pixel);
+        el.addEvent('mouseover', color_pixel);
 
         this.reset(4,24);
 
