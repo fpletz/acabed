@@ -61,18 +61,18 @@ function fix_frame(xml) {
 function init_editor() {
     var actions = new WidgetContainer('pixel-tools', {
         widgets: [
-            new Button('draw-button', {
+            new ImageButton('draw-button', {
                 image: '/assets/icons/pencil.png',
                 events: {
                     click: function() {alert("test");},
                 },
             }),
-            new Button('select-button', {
+            new ImageButton('select-button', {
                 events: {
                     click: function() {alert("test");},
                 }
             }),
-            new Button('fill-button', {
+            new ImageButton('fill-button', {
                 events: {
                     click: function() {alert("test");},
                 }
@@ -125,7 +125,7 @@ function init_editor() {
 
     var file_toolbar = new WidgetContainer('file-toolbar', {
         widgets: [
-            new Button('new-movie-button', {
+            new ImageButton('new-movie-button', {
                 image: '/assets/icons/film.png',
                 events: {
                     click: function() {
@@ -133,14 +133,14 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('load-movie-button', {
+            new ImageButton('load-movie-button', {
                 image: '/assets/icons/folder-open-film.png',
                 events: {
                     click: function() {
                     },
                 },
             }),
-            new Button('save-movie-button', {
+            new ImageButton('save-movie-button', {
                 image: '/assets/icons/disk.png',
                 events: {
                     click: function() {
@@ -160,7 +160,7 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('download-xml-button', {
+            new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
                 events: {
                     click: function() {
@@ -170,7 +170,7 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('send-json-button', {
+            new ImageButton('send-json-button', {
                 image: '/assets/icons/arrow-curve-000-left.png',
                 events: {
                     click: function() {
@@ -183,7 +183,7 @@ function init_editor() {
 
     var frametools = new WidgetContainer('frame-tools', {
         widgets: [
-            new Button('duplicate-frame-button', {
+            new ImageButton('duplicate-frame-button', {
                 image: '/assets/icons/layers-arrange.png',
                 events: {
                     click: function() {
@@ -193,7 +193,7 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('add-frame-button', {
+            new ImageButton('add-frame-button', {
                 image: '/assets/icons/layer--plus.png',
                 events: {
                     click: function() {
@@ -203,7 +203,7 @@ function init_editor() {
                     },
                 },
             }),
-            new Button('delete-frame-button', {
+            new ImageButton('delete-frame-button', {
                 image: '/assets/icons/layer--minus.png',
                 events: {
                     click: function() {
@@ -215,7 +215,7 @@ function init_editor() {
                     },
                 }
             }),
-            new Button('copy-frame-button', {
+            new ImageButton('copy-frame-button', {
                 image: '/assets/icons/document-copy.png',
                 events: {
                     click: function() {
@@ -223,7 +223,7 @@ function init_editor() {
                     },
                 }
             }),
-            new Button('paste-frame-button', {
+            new ImageButton('paste-frame-button', {
                 image: '/assets/icons/clipboard-paste.png',
                 events: {
                     click: function() {

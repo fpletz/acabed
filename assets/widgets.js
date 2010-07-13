@@ -47,25 +47,35 @@ var Button = new Class({
 
     options: {
         //text: undefined, // TODO: tooltips
-        image: undefined,
         class: 'button'
     },
 
     initialize: function(id, options) {
         this.parent(id, options);
         
-        if(this.options.image !== undefined) {
-            this.el.setStyle('background-image', 'url(' + this.options.image + ')');
-        }
-
         //if (this.options.text !== undefined) {
         //    this.el.setProperty('alt', this.options.text);
         //}
     }
 });
 
-var FileButton = new Class({
+var ImageButton = new Class({
     Extends: Button,
+
+    options: {
+        class: 'button imagebutton',
+        image: undefined,
+    },
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        this.el.setStyle('background-image', 'url(' + this.options.image + ')');
+    },
+});
+
+var FileButton = new Class({
+    Extends: ImageButton,
 
     initialize: function(id, options) {
         this.parent(id, options);

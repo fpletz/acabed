@@ -24,9 +24,8 @@ var PlayerControls = new Class({
 
     initialize: function(id, options) {
         options.widgets = [
-            new Button('play-button', {
+            new ImageButton('play-button', {
                 image: '/assets/icons/control.png',
-                class: 'button',
                 events: {
                     click: function() {
                         if (!options.movie_player.playing) {
@@ -37,18 +36,16 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Button('stop-button', {
+            new ImageButton('stop-button', {
                 image: '/assets/icons/control-stop-square.png',
-                class: 'button',
                 events: {
                     click: function() {
                         options.movie_player.stop();
                     },
                 },
             }),
-            new Button('last-button', {
+            new ImageButton('last-button', {
                 image: '/assets/icons/control-stop-180.png',
-                class: 'button',
                 events: {
                     click: function() {
                         options.movie_player.pause();
@@ -56,9 +53,8 @@ var PlayerControls = new Class({
                     },
                 },
             }),
-            new Button('next-button', {
+            new ImageButton('next-button', {
                 image: '/assets/icons/control-stop.png',
-                class: 'button',
                 events: {
                     click: function() {
                         options.movie_player.pause();

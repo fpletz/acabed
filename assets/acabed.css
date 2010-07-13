@@ -68,15 +68,17 @@ a:visited {
     padding: 2px 2px;
     margin: 2px 2px;
     border: solid 1px #666;
-    float: left;
-    width: 16px;
-    height: 16px;
-    background-color: #222;
-
-    background-repeat: no-repeat;
-    background-position: 2px 2px;
     border-radius: 4px;
     -moz-border-radius: 4px;
+    float: left;
+    background-color: #222;
+}
+
+.imagebutton {
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
 }
 
 #frame-counter {
