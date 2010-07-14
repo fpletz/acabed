@@ -116,8 +116,8 @@ function init_editor() {
     });
 
     var movie_inspector = new ObjectInspector(mv, {
-    id: 'movie-inspector',
-    items: [
+        id: 'movie-inspector',
+        items: [
             {
                 id: 'title',
                 title: 'Title',
@@ -149,10 +149,16 @@ function init_editor() {
             },
             {
                 id: 'loop',
-                title: 'Loop time',
-                description: 'Should this animation only be played once or for a specified time in seconds.',
+                title: 'Loop video',
+                description: 'Should this animation be played more than once.',
+                type: 'bool',
+            },
+            {
+                id: 'max_duration',
+                title: 'Maximal duration [s]',
+                description: 'Maximal play time',
                 type: 'number'
-            }
+            },
         ]
     });
 

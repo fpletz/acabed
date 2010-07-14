@@ -97,6 +97,19 @@ var ObjectInspector = new Class({
                     valueInput.addEvent('change', (function(el) {
                         this.model.set(item.id, el.target.getProperty('value'));
                     }).bind(this));
+                } else if (item.type == 'bool') {
+                    valueInput = new Element('input', {
+                        id: id,
+                        checked: this.model[item.id] === 'yes'? true: false,
+                        title: item.description,
+                        name: item.description,
+                        type: 'checkbox'});
+
+                    valueInput.addEvent('click', (function(el) {
+                        var checked = el.target.get('checked')
+                        var value = checked ? 'yes': 'no';
+                        this.model[item.id] = value;
+                    }).bind(this));
                 } else {
                     valueInput = new Element('input', {
                         id: id,

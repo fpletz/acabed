@@ -38,6 +38,7 @@ var Movie = new Class({
         this.set('depth', 8);
         this.set('channels', 3);
         this.set('frames', 0);
+        this.set('max_duration', 120);
     },
 
     load_xml: function(movie_string) {
@@ -54,6 +55,10 @@ var Movie = new Class({
             return u === null ? '' : u.get('text');
         }, $lambda('')));
         this.set('loop', header.getElement('loop').get('text'));
+        this.set('max_duration', $try(function () {
+            u = header.getElement('max_duration');
+            return u === null ? '' : u.get('max_duration');
+        }, $lambda('')));
 
         var blm = this.movie_xml.getElement('blm');
         this.set('height', parseInt(blm.get('height')));
@@ -126,6 +131,7 @@ var Movie = new Class({
         header.grab(new Element('author').set('text', this.author));
         header.grab(new Element('email').set('text', this.email));
         header.grab(new Element('loop').set('text', this.loop));
+        header.grab(new Element('max_duration').set('text', this.max_duration));
         // TODO duration
         header.inject(blm);
 
@@ -145,6 +151,7 @@ var Movie = new Class({
         movie.email = this.email;
         movie.url = this.url;
         movie.loop = this.loop;
+        movie.max_duration = this.max_duration;
 
         movie.height = this.height;
         movie.width = this.width;
