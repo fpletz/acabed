@@ -72,6 +72,8 @@ var Movie = new Class({
         
         console.info("Movie: %s", this.title);
         console.info("size: %dx%d, depth: %d, channels: %d, frames: %d", this.height, this.width, this.depth, this.channels, this.frames);
+
+        this.fireEvent('loaded');
     },
 
     frame: function(no) {

@@ -689,7 +689,7 @@ var MatrixTable = new Class({
 					this.context.beginPath();
 					this.context.fillStyle = data[row][col].to_string();
 					
-					path = this.windows[col+"-"+row];
+					var path = this.windows[col+"-"+row];
 					
 					this.context.moveTo(path[0][0], path[0][1]);
 					for(j = path.length - 1; j > 0; j--)

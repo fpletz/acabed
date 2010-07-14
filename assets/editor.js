@@ -231,6 +231,20 @@ function init_editor() {
                 tooltip: 'Animation hochladen',
                 events: {
                     change: function() {
+                        var d = new ModalDialog('loading-dialog',
+                            new Widget('loading', {
+                                text: 'Der Film wird geladen'
+                            }),
+                            {
+                                title: 'Bitte Warten',
+                            }
+                        );
+                        d.show();
+
+                        mp.movie.addEvent('loaded', function(mv) {
+                            d.hide();
+                        });
+
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
                     },
                 },
