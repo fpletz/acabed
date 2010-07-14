@@ -1,6 +1,6 @@
 [submodule "externals/django_compressor"]
 	path = externals/django_compressor
-	url = http://github.com/mintchaos/django_compressor.git
+	url = git://github.com/mintchaos/django_compressor.git
 [submodule "externals/django-dajaxice"]
 	path = externals/django-dajaxice
 	url = git://github.com/jorgebastida/django-dajaxice.git
