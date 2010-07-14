@@ -257,4 +257,5 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus
     border: solid 1px #ccc;
     border-radius: 4px;
     -moz-border-radius: 4px;
+    z-index: 100;
 }
