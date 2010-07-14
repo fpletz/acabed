@@ -31,40 +31,42 @@ var ObjectInspector = new Class({
 
     model: null,
 
-    initialize: function(properties) {
+    initialize: function(model, properties) {
         this.parent(properties.id, properties);
 
         this.addEvent('propertyChanged', (function(property, value) {
             this.update();
         }).bind(this));
 
-        if ($defined(this.options.model) && this.options.model !== null) {
-            this.inject_model_setters();
-        }
+        // if ($defined(this.model) && this.model !== null) {
+        //     this.inject_model_setters();
+        // }
 
-        this.update();
+        this.set_model(model);
+
+        // this.update();
     },
 
     set_model: function(model) {
-        this.options.model = model;
+        this.model = model;
         this.inject_model_setters();
         this.update();
     },
 
     inject_model_setters: function() {
         var inspector = this;
-        if ($defined(this.options.model) && this.options.model !== null) {
-            this.options.model.set = (function(property, value) {
+        if ($defined(this.model) && this.model !== null) {
+            this.model.set = (function(property, value) {
                 this[property] = value;
                 inspector.fireEvent('propertyChanged', [property, value]);
-            }).bind(this.options.model);
+            }).bind(this.model);
         }
     },
 
     update: function() {
         this.el.set('html', '');
 
-        if (this.options.model === null || ! $defined(this.options.model) ) {
+        if (this.model === null || ! $defined(this.model) ) {
             this.el.set('html', 'Empty object');
         } else {
             var list = new Element('dl');
@@ -74,39 +76,40 @@ var ObjectInspector = new Class({
                 var nameContainer = new Element('dt');
                 var valueContainer = new Element('dd');
                 var nameLabel = new Element('label', {
-                	'for': item.id,
-                	html: item.title,
-                	title: item.description});
-				
+                    'for': item.id,
+                    html: item.title,
+                    title: item.description});
+		
                 var valueInput = undefined;
                 
                 if(item.type == 'multiline')
                 {
-                	valueInput = new Element('textarea', {
-                		id: id,
-						html: this.options.model[item.id],
-						title: item.description,
-						maxlength: item.max,
-						rows: item.height});
-					
-					valueInput.addEvent('change', (function(el) {
-						this.options.model.set(item.id, el.target.getProperty('html'));
-					}).bind(this));
-				}
-				else
-				{
-					valueInput = new Element('input', {
-						id: id,
-						value: this.options.model[item.id],
-						title: item.description,
-						maxlength: item.max,
-						type: 'text'});
-					
-					valueInput.addEvent('change', (function(el) {
-						this.options.model.set(item.id, el.target.getProperty('value'));
-					}).bind(this));
-				}
-				
+                    valueInput = new Element('textarea', {
+                	id: id,
+			html: this.model[item.id],
+			title: item.description,
+			maxlength: item.max,
+			rows: item.height});
+		    
+		    valueInput.addEvent('change', (function(el) {
+			this.model.set(item.id, el.target.getProperty('html'));
+		    }).bind(this));
+		}
+		else
+		{
+		    valueInput = new Element('input', {
+			id: id,
+			value: this.model[item.id],
+			title: item.description,
+			maxlength: item.max,
+			type: 'text'});
+		    
+		    valueInput.addEvent('change', (function(el) {
+                        console.log(el.target.getProperty('value'));
+			this.model.set(item.id, el.target.getProperty('value'));
+		    }).bind(this));
+		}
+		
                 nameContainer.grab(nameLabel);
                 valueContainer.grab(valueInput);
                 list.grab(nameContainer);

@@ -102,61 +102,59 @@ function init_editor() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
-    var frame_inspector = new ObjectInspector({
+    var frame_inspector = new ObjectInspector(mp.current_frame(), {
     	id: 'frame-inspector',
-    	model: mp.current_frame(),
     	items: [
-    		{
-    			id: 'duration',
-				title: 'Duration [ms]',
-				description: 'Display time of the current frame.',
-				type: 'number',
-				max: '50'
-			}
-		]
-	});
+    	    {
+    		id: 'duration',
+		title: 'Duration [ms]',
+		description: 'Display time of the current frame.',
+		type: 'number',
+		max: '50'
+	    }
+	]
+    });
 
-    var movie_inspector = new ObjectInspector({
-		id: 'movie-inspector',
-		model: mv,
-		items: [
-			{
-				id: 'title',
-				title: 'Title',
-				description: 'The name of the new animation.',
-				type: 'text',
-				max: '50'
-			},
-			{
-				id: 'description',
-				title: 'Description',
-				description: 'An optional description that describes your work.',
-				type: 'multiline',
-				max: '1500',
-				height: '5'
-			},
-			{
-				id: 'author',
-				title: 'Author',
-				description: 'Your name',
-				type: 'text',
-				max: '50'
-			},
-			{
-				id: 'email',
-				title: 'E-Mail',
-				description: 'Your E-Mail adress to send you information and administration links for your animation. Trust us, we won\'t resell your personal data or send any spam!',
-				type: 'text',
-				max: '50'
-			},
-			{
-				id: 'loop',
-				title: 'Loop time',
-				description: 'Should this animation only be played once or for a specified time in seconds.',
-				type: 'number'
-			}
-		]
-	});
+    var movie_inspector = new ObjectInspector(mv, {
+	id: 'movie-inspector',
+	items: [
+	    {
+		id: 'title',
+		title: 'Title',
+		description: 'The name of the animation.',
+		type: 'text',
+		max: '50'
+	    },
+	    {
+		id: 'description',
+		title: 'Description',
+		description: 'An optional description that describes the work.',
+		type: 'multiline',
+		max: '1500',
+		height: '5'
+	    },
+	    {
+		id: 'author',
+		title: 'Author',
+		description: 'Name of the author',
+		type: 'text',
+		max: '50'
+	    },
+	    {
+		id: 'email',
+		title: 'E-Mail',
+		description: 'Author E-Mail address',
+		type: 'text',
+		max: '50'
+	    },
+	    {
+		id: 'loop',
+		title: 'Loop time',
+		description: 'Should this animation only be played once or for a specified time in seconds.',
+		type: 'number'
+	    }
+	]
+    });
 
     // Update Frame info
     mp.addEvent('render', (function() {
