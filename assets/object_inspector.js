@@ -72,44 +72,44 @@ var ObjectInspector = new Class({
             var list = new Element('dl');
             
             this.options.items.each(function(item) {
-            	var id = item.id + '-input';
+                var id = item.id + '-input';
                 var nameContainer = new Element('dt');
                 var valueContainer = new Element('dd');
                 var nameLabel = new Element('label', {
                     'for': item.id,
                     html: item.title,
                     title: item.description});
-		
-                var valueInput = undefined;
                 
-                if(item.type == 'multiline')
-                {
+                var valueInput = undefined;
+
+                if (!$defined(item.max)) {
+                    item.max = 100;
+                }
+                
+                if (item.type == 'multiline') {
                     valueInput = new Element('textarea', {
-                	id: id,
-			html: this.model[item.id],
-			title: item.description,
-			maxlength: item.max,
-			rows: item.height});
-		    
-		    valueInput.addEvent('change', (function(el) {
-			this.model.set(item.id, el.target.getProperty('html'));
-		    }).bind(this));
-		}
-		else
-		{
-		    valueInput = new Element('input', {
-			id: id,
-			value: this.model[item.id],
-			title: item.description,
-			maxlength: item.max,
-			type: 'text'});
-		    
-		    valueInput.addEvent('change', (function(el) {
-                        console.log(el.target.getProperty('value'));
-			this.model.set(item.id, el.target.getProperty('value'));
-		    }).bind(this));
-		}
-		
+                        id: id,
+                        html: this.model[item.id],
+                        title: item.description,
+                        maxlength: item.max,
+                        rows: item.height});
+                    
+                    valueInput.addEvent('change', (function(el) {
+                        this.model.set(item.id, el.target.getProperty('value'));
+                    }).bind(this));
+                } else {
+                    valueInput = new Element('input', {
+                        id: id,
+                        value: this.model[item.id],
+                        title: item.description,
+                        maxlength: item.max,
+                        type: 'text'});
+                    
+                    valueInput.addEvent('change', (function(el) {
+                        this.model.set(item.id, el.target.getProperty('value'));
+                    }).bind(this));
+                }
+                
                 nameContainer.grab(nameLabel);
                 valueContainer.grab(valueInput);
                 list.grab(nameContainer);
