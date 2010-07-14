@@ -90,8 +90,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'dajaxice',
     'dajax',
+    'compressor',
     'animations'
 )
 
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
-
+COMPRESS_PARSER = 'compressor.parser.LxmlParser'
