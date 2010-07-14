@@ -3,4 +3,5 @@
 settings.py
 *.db
 .*.swp
+assets/CACHE/*
 *~
