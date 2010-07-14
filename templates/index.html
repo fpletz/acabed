@@ -6,35 +6,36 @@
 
     {% load compress %}
     {% compress css %}
-    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}acabed.css" />
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}/acabed.css" />
     {% endcompress %}
 
     {% load dajaxice_templatetags %}
     {% dajaxice_js_import %}
 
-    <script type="text/javascript" src="{{ MEDIA_URL }}mootools.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}mootools-more.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/mootools.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/mootools-more.js"></script>
 
     {% compress js %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}mootools.dajax.core.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/mootools.dajax.core.js"></script>
 
-    <script type="text/javascript" src="{{ MEDIA_URL }}acabed.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}widgets.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}settable.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}editor.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}controls.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}color.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}movie.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}movie_player.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}matrix_table.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}frame.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}login.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}object_inspector.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}dialog.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/model.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/acabed.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/widgets.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/settable.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/editor.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/controls.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/color.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/movie.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/movie_player.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/matrix_table.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/frame.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/login.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/object_inspector.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/dialog.js"></script>
 
     <!-- colorpicker -->
-    <script type="text/javascript" src="{{ MEDIA_URL }}moopick.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}palette.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/moopick.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}/palette.js"></script>
     {% endcompress %}
   </head>
   <body>

@@ -21,7 +21,7 @@
 
 // Internal Frame type
 var Frame = new Class({
-    Implements: Settable,
+    Implements: Model,
     
     initialize: function(height, width, duration) {
         this.set('height', height);
