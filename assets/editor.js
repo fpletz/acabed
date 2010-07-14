@@ -63,16 +63,19 @@ function init_editor() {
         widgets: [
             new ImageButton('draw-button', {
                 image: '/assets/icons/pencil.png',
+                tooltip: 'Farben malen',
                 events: {
                     click: function() {alert("test");},
                 },
             }),
             new ImageButton('select-button', {
+                tooltip: 'Bereich auswählen',
                 events: {
                     click: function() {alert("test");},
                 }
             }),
             new ImageButton('fill-button', {
+                tooltip: 'Füllen',
                 events: {
                     click: function() {alert("test");},
                 }
@@ -127,6 +130,7 @@ function init_editor() {
         widgets: [
             new ImageButton('new-movie-button', {
                 image: '/assets/icons/film.png',
+                tooltip: 'Neuer Film',
                 events: {
                     click: function() {
                         Dajaxice.animations.load_editor('Dajax.process');
@@ -135,6 +139,7 @@ function init_editor() {
             }),
             new ImageButton('load-movie-button', {
                 image: '/assets/icons/folder-open-film.png',
+                tooltip: 'Animation vom Server öffnen',
                 events: {
                     click: function() {
                         var d = new ModalDialog('movie-list',
@@ -168,6 +173,7 @@ function init_editor() {
             }),
             new ImageButton('save-movie-button', {
                 image: '/assets/icons/disk.png',
+                tooltip: 'Animation auf dem Server speichern',
                 events: {
                     click: function() {
                     },
@@ -180,6 +186,7 @@ function init_editor() {
         widgets: [
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
+                tooltip: 'Animation hochladen',
                 events: {
                     change: function() {
                         mp.load_file($$('#load-xml-button input')[0].files[0]);
@@ -188,6 +195,7 @@ function init_editor() {
             }),
             new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
+                tooltip: 'Animation herunterladen',
                 events: {
                     click: function() {
                         var uri = 'data:text/xml;charset=utf-8,';
@@ -198,6 +206,7 @@ function init_editor() {
             }),
             new ImageButton('send-json-button', {
                 image: '/assets/icons/arrow-curve-000-left.png',
+                tooltip: 'wtf? xD',
                 events: {
                     click: function() {
                         console.log(mp.movie.to_json());
@@ -211,6 +220,7 @@ function init_editor() {
         widgets: [
             new ImageButton('duplicate-frame-button', {
                 image: '/assets/icons/layers-arrange.png',
+                tooltip: 'Aktuellen Frame duplizieren',
                 events: {
                     click: function() {
                         console.info('duplicate frame: %d', mp.current_frame_no);
@@ -221,6 +231,7 @@ function init_editor() {
             }),
             new ImageButton('add-frame-button', {
                 image: '/assets/icons/layer--plus.png',
+                tooltip: 'Neuen leeren Frame hinzufügen',
                 events: {
                     click: function() {
                         console.info('add frame');
@@ -231,6 +242,7 @@ function init_editor() {
             }),
             new ImageButton('delete-frame-button', {
                 image: '/assets/icons/layer--minus.png',
+                tooltip: 'Aktuellen Frame löschen',
                 events: {
                     click: function() {
                         console.info('remove frame');
@@ -243,6 +255,7 @@ function init_editor() {
             }),
             new ImageButton('copy-frame-button', {
                 image: '/assets/icons/document-copy.png',
+                tooltip: 'Frame kopieren',
                 events: {
                     click: function() {
                         ed.current_frame_to_clipboard();
@@ -251,6 +264,7 @@ function init_editor() {
             }),
             new ImageButton('paste-frame-button', {
                 image: '/assets/icons/clipboard-paste.png',
+                tooltip: 'Frame einfügen',
                 events: {
                     click: function() {
                         ed.clipboard_to_current_position();
