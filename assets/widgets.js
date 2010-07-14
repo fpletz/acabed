@@ -139,7 +139,7 @@ var Tooltip = new Class({
             text: this.options.text,
         });
 
-        document.body.grab(this.el);
+        this.target.grab(this.el);
 
         this.target.addEvent('mouseover', this.show.bind(this));
         this.target.addEvent('mouseout', this.hide.bind(this));
