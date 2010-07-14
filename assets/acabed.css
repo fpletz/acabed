@@ -207,23 +207,23 @@ hr {
 
 input[type="text"], input[type="password"], input[type="file"]
 {
-	height: 17px;
+    height: 17px;
 }
 
 input[type="text"], input[type="password"], input[type="file"], textarea, select
 {
-	background-repeat: repeat-x;
-	background-image: url("/assets/images/input-bg.png");
-	background-position: bottom;
-	background-color: #F4FCFF;
-	border: 1px solid #666;
-	padding: 1px 8px 0px 8px;
+    background-repeat: repeat-x;
+    background-image: url("/assets/images/input-bg.png");
+    background-position: bottom;
+    background-color: #F4FCFF;
+    border: 1px solid #666;
+    padding: 1px 8px 0px 8px;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, textarea:focus, select:focus
 {
-	background-image: url("/assets/images/input-bg-active.png");
-	background-color: #FFFFF4;
+    background-image: url("/assets/images/input-bg-active.png");
+    background-color: #FFFFF4;
 }
 
 #overlay {
