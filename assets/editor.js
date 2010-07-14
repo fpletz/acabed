@@ -102,17 +102,59 @@ function init_editor() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
-    var frame_inspector = new ObjectInspector('frame-inspector',
-                                              { properties: ['duration'], },
-                                              mp.current_frame());
+    var frame_inspector = new ObjectInspector(mp.current_frame(), {
+    	id: 'frame-inspector',
+    	items: [
+    	    {
+    		id: 'duration',
+		title: 'Duration [ms]',
+		description: 'Display time of the current frame.',
+		type: 'number',
+		max: '50'
+	    }
+	]
+    });
 
-    var movie_inspector = new ObjectInspector('movie-inspector',
-                                              { properties: ['title',
-                                                             'description',
-                                                             'author',
-                                                             'email',
-                                                             'loop'], },
-                                              mv);
+    var movie_inspector = new ObjectInspector(mv, {
+	id: 'movie-inspector',
+	items: [
+	    {
+		id: 'title',
+		title: 'Title',
+		description: 'The name of the animation.',
+		type: 'text',
+		max: '50'
+	    },
+	    {
+		id: 'description',
+		title: 'Description',
+		description: 'An optional description that describes the work.',
+		type: 'multiline',
+		max: '1500',
+		height: '5'
+	    },
+	    {
+		id: 'author',
+		title: 'Author',
+		description: 'Name of the author',
+		type: 'text',
+		max: '50'
+	    },
+	    {
+		id: 'email',
+		title: 'E-Mail',
+		description: 'Author E-Mail address',
+		type: 'text',
+		max: '50'
+	    },
+	    {
+		id: 'loop',
+		title: 'Loop time',
+		description: 'Should this animation only be played once or for a specified time in seconds.',
+		type: 'number'
+	    }
+	]
+    });
 
     // Update Frame info
     mp.addEvent('render', (function() {

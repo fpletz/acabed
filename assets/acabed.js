@@ -37,7 +37,7 @@ function init() {
     }
 
     if (typeof FileReader === 'undefined') {
-        alert("FileReader not supported! fuck off");
+        alert("FileReader not supported! Opera ROCKT!!!!!!!!");
     }
 
     // omgwtf, iphone or ipad!

@@ -31,20 +31,20 @@ var ObjectInspector = new Class({
 
     model: null,
 
-    initialize: function(id, options, model) {
-        this.parent(id, options);
-
-        this.model = model;
+    initialize: function(model, properties) {
+        this.parent(properties.id, properties);
 
         this.addEvent('propertyChanged', (function(property, value) {
             this.update();
         }).bind(this));
 
-        if ($defined(this.model) && this.modeel !== null) {
-            this.inject_model_setters();
-        }
+        // if ($defined(this.model) && this.model !== null) {
+        //     this.inject_model_setters();
+        // }
 
-        this.update();
+        this.set_model(model);
+
+        // this.update();
     },
 
     set_model: function(model) {
@@ -55,7 +55,7 @@ var ObjectInspector = new Class({
 
     inject_model_setters: function() {
         var inspector = this;
-        if ($defined(this.model) && this.modeel !== null) {
+        if ($defined(this.model) && this.model !== null) {
             this.model.set = (function(property, value) {
                 this[property] = value;
                 inspector.fireEvent('propertyChanged', [property, value]);
@@ -69,24 +69,53 @@ var ObjectInspector = new Class({
         if (this.model === null || ! $defined(this.model) ) {
             this.el.set('html', 'Empty object');
         } else {
-            var table = new Element('table');
-            this.options.properties.each(function(p) {
-                var tr = new Element('tr');
-                var label = new Element('td');
-                label.set('html', p + ': ');
-                var value = new Element('td');
-                var input = new Element('input', {id: p+'-input', value: this.model[p]})
-
-                input.addEvent('change', (function(el) {
-                    this.model.set(p, el.target.getProperty('value'));
-                }).bind(this));
-
-                value.grab(input);
-                tr.grab(label);
-                tr.grab(value);
-                table.grab(tr);
+            var list = new Element('dl');
+            
+            this.options.items.each(function(item) {
+            	var id = item.id + '-input';
+                var nameContainer = new Element('dt');
+                var valueContainer = new Element('dd');
+                var nameLabel = new Element('label', {
+                    'for': item.id,
+                    html: item.title,
+                    title: item.description});
+		
+                var valueInput = undefined;
+                
+                if(item.type == 'multiline')
+                {
+                    valueInput = new Element('textarea', {
+                	id: id,
+			html: this.model[item.id],
+			title: item.description,
+			maxlength: item.max,
+			rows: item.height});
+		    
+		    valueInput.addEvent('change', (function(el) {
+			this.model.set(item.id, el.target.getProperty('html'));
+		    }).bind(this));
+		}
+		else
+		{
+		    valueInput = new Element('input', {
+			id: id,
+			value: this.model[item.id],
+			title: item.description,
+			maxlength: item.max,
+			type: 'text'});
+		    
+		    valueInput.addEvent('change', (function(el) {
+                        console.log(el.target.getProperty('value'));
+			this.model.set(item.id, el.target.getProperty('value'));
+		    }).bind(this));
+		}
+		
+                nameContainer.grab(nameLabel);
+                valueContainer.grab(valueInput);
+                list.grab(nameContainer);
+                list.grab(valueContainer);
             }, this);
-            this.el.grab(table);
+            this.el.grab(list);
         }
     }
 });
