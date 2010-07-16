@@ -36,10 +36,6 @@ function init() {
         };
     }
 
-    if (typeof FileReader === 'undefined') {
-        alert("FileReader not supported! Opera ROCKT!!!!!!!!");
-    }
-
     // omgwtf, iphone or ipad!
     if (navigator.userAgent.contains('iPhone OS')) {
         var mask = new Mask(document.body, {

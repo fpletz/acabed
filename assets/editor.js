@@ -84,20 +84,8 @@ function init_editor() {
     });
 
     var mv = new Movie();
-    /*var bg_image = new Element('img', {src: '/assets/images/matrix-background.png' });
-    var mt = new CanvasMatrix('matrix-table', {
-        row_offset: 39,
-        col_offset: 30,
-        row_height: 47,
-        col_width: 14.5,
-        window_width: 9.4,
-        window_height: 19.2,
-        col_jitter_even: -2,
-        container_width: bg_image.width/1.5,
-        container_height: bg_image.height/1.5,
-        background_image: bg_image,
-    });*/
-    var mt = new MatrixTable('matrix-table');
+    var mt = new CanvasTable('matrix-table');
+    //var mt = new MatrixTable('matrix-table');
     var mp = new MoviePlayer(mv, mt);
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
@@ -232,9 +220,7 @@ function init_editor() {
                 image: '/assets/icons/arrow-090.png',
                 tooltip: 'Animation hochladen',
                 events: {
-                    change: function() {
-                        mp.load_file($$('#load-xml-button input')[0].files[0]);
-                    },
+                    loaded: mp.load_file.bind(mp)
                 },
             }),
             new ImageButton('download-xml-button', {

@@ -30,21 +30,15 @@ var MoviePlayer = new Class({
 
         return this;
     },
-
-    load_file: function(file) {
-        this.stop();
-
-        var reader = new FileReader();
-        reader.readAsText(file);
-
-        reader.onloadend = (function() {
-            this.movie.load_xml(reader.result);
-            this.matrix_table.reset(this.movie.height, this.movie.width);
-
-            this.update();
-            this.fireEvent('file_change', [this.movie]);
-        }).bind(this);
-    },
+    
+	load_file: function(xmlContent) {
+		this.stop();
+		this.movie.load_xml(xmlContent);
+		this.matrix_table.reset(this.movie.height, this.movie.width);
+		
+		this.update();
+		this.fireEvent('file_change', [this.movie]);
+	},
 
     play: function() {
         // var duration = this.movie.frame(this.current_frame_no).duration;
