@@ -27,7 +27,7 @@ var MoviePlayer = new Class({
         this.matrix_table = matrix_table;
         this.current_frame_no = 0;
         this.playing = false;
-
+		
         return this;
     },
     

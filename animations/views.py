@@ -47,7 +47,6 @@ def filereplay(request):
 	response = HttpResponse('', 'application/javascript')
 	#response = HttpResponse('', 'application/json')
 	#fileReplay = FileReplay()
-
 	if request.method == 'POST':
 		#fileReplay.content = request.FILES['file'].read()
 		for chunk in request.FILES['file'].chunks():

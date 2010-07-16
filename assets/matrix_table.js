@@ -122,31 +122,32 @@ var CanvasTable = new Class({
 			'3-1': [[125.00, 165.00], [103.50, 164.50], [103.50, 119.50], [125.50, 123.00]],
 			'3-0': [[126.00, 94.00], [104.50, 93.50], [104.50, 48.50], [126.50, 52.00]]
 		};
-		
-		this.maskImgLoaded = false;
-		
-		this.maskImg = new Image();
-		this.maskImg.src = '/assets/images/matrix-background.png';
-		this.maskImg.onload = (function() {
+        
+        this.maskImgLoaded = false;
+        
+        this.maskImg = new Image();
+        this.maskImg.onload = (function() {
 			// Do nothing more than just draw something so the user is happy.
-			this.context.drawImage(
-			    this.maskImg, 0, 0, this.maskImg.width, this.maskImg.height);
-			
-			this.maskImgLoaded = true;
-		}).bind(this);
-		
-		this.canvas = document.getElementById('canvas1');
+            this.context.drawImage(
+                this.maskImg, 0, 0, this.maskImg.width, this.maskImg.height
+            );
+            
+            this.maskImgLoaded = true;
+        }).bind(this);
+        this.maskImg.src = '/assets/images/matrix-background.png';
+        
+        this.canvas = document.getElementById('canvas1');
 		this.context = this.canvas.getContext('2d');
 		
 		this.id = id;
-		
+        
 		// register click callback
 		color_pixel = (function (ev) {
 			ev.stopPropagation();
 			ev.preventDefault();
-			
+            
 			var id = $(ev.target).id;
-				
+                
 			if (id.split('-')[0] == 'cell' && this.clicked) {
 				var col = id.split('-')[1];
 				var row = id.split('-')[2];
@@ -154,41 +155,41 @@ var CanvasTable = new Class({
 				// call user provided callback with row and col
 				this.fireEvent('click', [row, col]);
 			}
-		}).bind(this);
-		
-		
-		document.body.addEvent('mouseup', (function(e) {
-			this.clicked = false;
-		}).bind(this));
-		
-		
-		for (var row = 3; row >= 0; --row) {
-			for (var col = 23; col >= 0; --col) {
-				eventLayer = $('cell-'+col+'-'+row);
-				
-				eventLayer.addEvent('mousedown', (function(e) {
-					this.clicked = true;
-					color_pixel(e);
-				}).bind(this));
-				
-				eventLayer.addEvent('mouseover', (function(e) {
-					if (this.clicked) {
-						color_pixel(e);
-					}
-				}).bind(this));
-			}
-		}
-		
+        }).bind(this);
+        
+        
+        document.body.addEvent('mouseup', (function(e) {
+            this.clicked = false;
+        }).bind(this));
+        
+        
+        for (var row = 3; row >= 0; --row) {
+            for (var col = 23; col >= 0; --col) {
+                eventLayer = $('cell-'+col+'-'+row);
+                
+                eventLayer.addEvent('mousedown', (function(e) {
+                    this.clicked = true;
+                    color_pixel(e);
+                }).bind(this));
+                
+                eventLayer.addEvent('mouseover', (function(e) {
+                    if (this.clicked) {
+                        color_pixel(e);
+                    }
+                }).bind(this));
+            }
+        }
+        
         this.fireEvent('reset');
-		
+        
         return this;
     },
-	
-	/***
-	 * @ToDo: Is the reset method call from editor.js realy usefull? Doesn't has
-	 *     this object to take care of it's status by itself and anyone else has
-	 *     just set set new colors?
-	 */
+    
+    /***
+     * @ToDo: Is the reset method call from editor.js realy usefull? Doesn't has
+     *     this object to take care of it's status by itself and anyone else has
+     *     just set set new colors?
+     */
 	reset: function(height, width) {
 		console.info('Resetting MatrixTable');
 		this.fireEvent('reset');
@@ -197,27 +198,29 @@ var CanvasTable = new Class({
 	update: function(data, width, height) {
 		if(this.maskImgLoaded == true)
 		{
-			for (var row = height - 1; row >= 0; --row) {
-				for (var col = width - 1; col >= 0; --col) {
-					this.context.beginPath();
-					this.context.fillStyle = data[row][col].to_string();
-					
-					path = this.windows[col+"-"+row];
-					
-					this.context.moveTo(path[0][0], path[0][1]);
-					for(j = path.length - 1; j > 0; j--)
-					{
-						this.context.lineTo(path[j][0], path[j][1]);
-					}
-					
-					this.context.closePath();
-					this.context.fill();
-				}
-			}
-			this.context.drawImage(this.maskImg, 0, 0, this.maskImg.width, this.maskImg.height);
-		}
-		
-		return true;
+            for (var row = height - 1; row >= 0; --row) {
+                for (var col = width - 1; col >= 0; --col) {
+                    this.context.beginPath();
+                    this.context.fillStyle = data[row][col].to_string();
+                    
+                    var path = this.windows[col+"-"+row];
+                    
+                    this.context.moveTo(path[0][0], path[0][1]);
+                    for(j = path.length - 1; j > 0; j--)
+                    {
+                        this.context.lineTo(path[j][0], path[j][1]);
+                    }
+                    
+                    this.context.closePath();
+                    this.context.fill();
+                }
+            }
+            this.context.drawImage(
+                this.maskImg, 0, 0, this.maskImg.width, this.maskImg.height
+            );
+        }
+        
+        return true;
     },
 
     set_rgb_color: function(row, col, r, g, b) {
@@ -301,9 +304,7 @@ var MatrixTable = new Class({
     },
 
     set_str_color: function(row, col, color) {
-    	var foo = this.image(row, col);
-    	
-        foo.setStyle('background-color', color);
+    	this.image(row, col).setStyle('background-color', color);
     },
 
     set_color: function(row, col, c) {

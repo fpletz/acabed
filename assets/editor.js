@@ -33,7 +33,7 @@ var Editor = new Class({
 
             console.info('set color to %s', this.current_color.to_string());
         }).bind(this));
-        
+
         return this;
     },
 
@@ -89,62 +89,79 @@ function init_editor() {
     var mp = new MoviePlayer(mv, mt);
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
+    
+	var loadingDialog = new ModalDialog(
+		'loading-dialog',
+		
+		new Widget('loading', {
+			text: 'Der Film wird geladen'
+		}),
+		
+		{
+			title: 'Bitte Warten',
+		}
+	);
 
-    var frame_inspector = new ObjectInspector({
-    	id: 'frame-inspector',
-    	model: mp.current_frame(),
-    	items: [
-    		{
-    			id: 'duration',
-				title: 'Duration [ms]',
-				description: 'Display time of the current frame.',
-				type: 'number',
-				max: '50'
-			}
-		]
-	});
 
-    var movie_inspector = new ObjectInspector({
-		id: 'movie-inspector',
-		model: mv,
-		items: [
-			{
-				id: 'title',
-				title: 'Title',
-				description: 'The name of the new animation.',
-				type: 'text',
-				max: '50'
-			},
-			{
-				id: 'description',
-				title: 'Description',
-				description: 'An optional description that describes your work.',
-				type: 'multiline',
-				max: '1500',
-				height: '5'
-			},
-			{
-				id: 'author',
-				title: 'Author',
-				description: 'Your name',
-				type: 'text',
-				max: '50'
-			},
-			{
-				id: 'email',
-				title: 'E-Mail',
-				description: 'Your E-Mail adress to send you information and administration links for your animation. Trust us, we won\'t resell your personal data or send any spam!',
-				type: 'text',
-				max: '50'
-			},
-			{
-				id: 'loop',
-				title: 'Loop time',
-				description: 'Should this animation only be played once or for a specified time in seconds.',
-				type: 'number'
-			}
-		]
-	});
+    var frame_inspector = new ObjectInspector(mp.current_frame(), {
+        id: 'frame-inspector',
+        items: [
+            {
+                id: 'duration',
+                title: 'Duration [ms]',
+                description: 'Display time of the current frame.',
+                type: 'number',
+                max: '50'
+            }
+        ]
+    });
+
+    var movie_inspector = new ObjectInspector(mv, {
+        id: 'movie-inspector',
+        items: [
+            {
+                id: 'title',
+                title: 'Title',
+                description: 'The name of the animation.',
+                type: 'text',
+                max: '50'
+            },
+            {
+                id: 'description',
+                title: 'Description',
+                description: 'An optional description that describes the work.',
+                type: 'multiline',
+                max: '1500',
+                height: '5'
+            },
+            {
+                id: 'author',
+                title: 'Author',
+                description: 'Name of the author',
+                type: 'text',
+                max: '50'
+            },
+            {
+                id: 'email',
+                title: 'E-Mail',
+                description: 'Author E-Mail address',
+                type: 'text',
+                max: '50'
+            },
+            {
+                id: 'loop',
+                title: 'Loop video',
+                description: 'Should this animation be played more than once.',
+                type: 'bool',
+            },
+            {
+                id: 'max_duration',
+                title: 'Maximal duration [s]',
+                description: 'Maximal play time',
+                type: 'number'
+            },
+        ]
+    });
 
     // Update Frame info
     mp.addEvent('render', (function() {
@@ -220,7 +237,14 @@ function init_editor() {
                 image: '/assets/icons/arrow-090.png',
                 tooltip: 'Animation hochladen',
                 events: {
-                    loaded: mp.load_file.bind(mp)
+                    loaded: function(text) {
+                    	mp.load_file(text);
+                    	loadingDialog.hide();
+                    },
+                    
+					clicked: function() {
+						loadingDialog.show();
+					}
                 },
             }),
             new ImageButton('download-xml-button', {
@@ -312,23 +336,23 @@ function init_editor() {
     };
 
     var picker = new Moopick({
-	palletParentElement: $('color-tools'),
-	palletID: 'colorfoo',
-	styles: { width: '10px', height: '10px' }
+        palletParentElement: $('color-tools'),
+        palletID: 'colorfoo',
+        styles: { width: '10px', height: '10px' }
     });
 
     picker.addEvents({
-	'onColorClick': set_editor_color,
+        'onColorClick': set_editor_color,
     });
 
     // Color picker change callback sets current_color of editor
     var palette = new Palette({
-	palletParentElement: $('colorpalette-tools'),
-	palletID: 'colorpalettefoo',
-	styles: { width: '10px', height: '10px' }
+        palletParentElement: $('colorpalette-tools'),
+        palletID: 'colorpalettefoo',
+        styles: { width: '10px', height: '10px' }
     });
     palette.addEvents({
-	'onColorClick': set_editor_color,
+        'onColorClick': set_editor_color,
     });
 
     // Update slider max on Movie resizing

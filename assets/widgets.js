@@ -109,11 +109,12 @@ var FileButton = new Class({
     },
     
     fileReaderEvent: function(ev) {
+		this.fireEvent("clicked");
 		this.fireEvent("loaded", [ev.target.files[0].getAsBinary()]);
 	},
 	
 	frameEvent: function(button) {
-		var frame = button.el.getFirst();
+		var frame = button.el.getElement('iframe');
 		var frameDocument = frame.contentDocument;
 		var frameHtml = this.$(frameDocument.getElementsByTagName("html")[0]);
 		var frameBody = frameHtml.getElement('body');
@@ -156,9 +157,10 @@ var FileButton = new Class({
 				name: 'file',
 				maxlength: '100000',
 				events: {
-					change: function(uploadForm) {
+					change: function(uploadForm, button) {
+						button.fireEvent("clicked");
 						uploadForm.submit();
-					}.pass(uploadForm)
+					}.pass([uploadForm, button])
 				}
 			});
 			uploadFile.setStyles(defaultStyle);
@@ -214,10 +216,10 @@ var Tooltip = new Class({
             text: this.options.text,
         });
 
-        document.body.grab(this.el);
+        this.target.grab(this.el);
 
-        this.target.addEvent('mouseover', this.show.bind(this));
-        this.target.addEvent('mouseout', this.hide.bind(this));
+        this.target.addEvent('mouseenter', this.show.bind(this));
+        this.target.addEvent('mouseleave', this.hide.bind(this));
     },
 
     show: function() {
