@@ -67,8 +67,8 @@ class Animation(models.Model):
 class AnimationInstance(models.Model):
     playlist = models.ForeignKey('Playlist')
     animation = models.ForeignKey('Animation')
-    order = models.IntegerField()
-    playing = models.BooleanField()
+    order = models.IntegerField(default=0)
+    playing = models.BooleanField(default=False)
 
 class Playlist(models.Model):
     title = models.CharField(max_length=128)

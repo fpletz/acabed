@@ -25,6 +25,7 @@ from dajaxice.core import dajaxice_functions as dajaxice
 from dajax.core import Dajax
 import json
 
+from models import Playlist, User, AnimationInstance
 from forms import AnimationForm
 
 def login_widget(request):
@@ -101,7 +102,19 @@ def add(request, animation):
     form = AnimationForm(animation)
 
     if form.is_valid():
-        print form.save()
+        a = form.save()
+
+        p = Playlist(
+            title = 'stub \'%s\' playlist' % form.cleaned_data['title'],
+            user = User.objects.all()[0]
+        )
+        p.save()
+        
+        ai = AnimationInstance(
+            playlist = p,
+            animation = a
+        )
+        ai.save()
     else:
         dajax.remove_css_class('#movie-inspector label', 'error')
         for error in form.errors:
