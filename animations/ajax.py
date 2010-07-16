@@ -23,6 +23,9 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from dajaxice.core import dajaxice_functions as dajaxice
 from dajax.core import Dajax
+import json
+
+from forms import AnimationForm
 
 def login_widget(request):
     r = render_to_string('login_bar.html', {
@@ -87,3 +90,19 @@ def load_start(request):
     return dajax.json()
 dajaxice.register(load_start)
 
+def add(request, animation):
+    dajax = Dajax()
+
+    animation = json.loads(animation)
+    animation['type'] = 'm'
+    form = AnimationForm(animation)
+
+    if form.is_valid():
+        print form.save()
+    else:
+        dajax.remove_css_class('#movie-inspector label', 'error')
+        for error in form.errors:
+            dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')
+
+    return dajax.json()
+dajaxice.register(add)

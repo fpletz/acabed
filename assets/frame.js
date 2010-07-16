@@ -69,15 +69,16 @@ var Frame = new Class({
     },
 
     to_json: function() {
-        var frame = [];
+        var frame = new Object();
+        frame.duration = this.duration;
+        frame.rows = [];
         for (var row = 0; row < this.height; ++row) {
             var line = '';
-            frame.push(new Array());
             for (var col = 0; col < this.width; ++col) {
                 var color = this.data[row][col].to_string();
                 line += color.substr(1, color.length-1);
             }
-            frame[row] = line;
+            frame.rows.push(line);
         }
 
         return frame;

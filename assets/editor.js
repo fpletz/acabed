@@ -272,7 +272,9 @@ function init_editor() {
                 tooltip: 'wtf? xD',
                 events: {
                     click: function() {
-                        console.log(mp.movie.to_json());
+                        Dajaxice.animations.add('Dajax.process', {
+                            'animation': mp.movie.to_json()
+                        });
                     },
                 },
             }),

@@ -46,14 +46,14 @@ class Animation(models.Model):
     author = models.CharField(max_length=512)
     email = models.CharField(max_length=512)
     creator = models.CharField(max_length=64)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=True)
     height = models.IntegerField()
     width = models.IntegerField()
     depth = models.IntegerField()
     channels = models.IntegerField()
     max_duration = models.IntegerField()
     data = models.TextField()
-    playlists = models.ManyToManyField('Playlist', through='AnimationInstance')
+    playlists = models.ManyToManyField('Playlist', through='AnimationInstance', blank=True)
 
     def __unicode__(self):
         return '%s(%i,%i,%i)' % (self.title, self.height, self.width, self.depth)

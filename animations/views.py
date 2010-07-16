@@ -29,16 +29,13 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def list(request, fmt='json'):
-    #if request.is_ajax():
+    if request.is_ajax():
         if fmt == 'xml':
             mimetype = 'application/xml'
         if fmt == 'json':
             mimetype = 'application/javascript'
         data = serializers.serialize(fmt, Animation.objects.all())
         return HttpResponse(data,mimetype)
-
-def add(request, animation):
-    pass
 
 def detail(request, animation_id):
     try:
