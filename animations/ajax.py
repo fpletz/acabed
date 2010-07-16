@@ -94,7 +94,10 @@ def add(request, animation):
     dajax = Dajax()
 
     animation = json.loads(animation)
-    animation['type'] = 'm'
+    animation.update({
+        'type': 'm',
+        'user': request.user is None and '' or request.user.id,
+    })
     form = AnimationForm(animation)
 
     if form.is_valid():
