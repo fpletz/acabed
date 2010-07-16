@@ -65,7 +65,10 @@ function init_editor() {
                 image: '/assets/icons/pencil.png',
                 tooltip: 'Farben malen',
                 events: {
-                    click: function() {alert("test");},
+                    click: function() {
+                        MessageWidget.msg('lorem ipsum sit dolor' +
+                            ' dak dads kas j as j klkjads klajs dlksd ');
+                    },
                 },
             }),
             new ImageButton('select-button', {

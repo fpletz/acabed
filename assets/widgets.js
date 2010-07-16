@@ -159,3 +159,71 @@ var Tooltip = new Class({
     },
 
 });
+
+var MessageWidget = new Class({
+    Extends: Widget,
+
+    options: {
+        tooltip: 'Wichtige Meldungen',
+        class: 'message-widget',
+        styles: {
+            opacity: 0,
+        },
+    },
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        this.el.set('reveal', {
+            duration: 'normal',
+            transition: 'bounce:out'
+        });
+
+        this.el.dissolve();
+
+        this.mouselander = new Element('div', {
+            class: 'message-widget',
+        });
+
+        this.el.setProperty('text', '')
+
+        this.mouselander.addEvent('mouseenter', (function() {
+            if(this.el.getProperty('text') !== '') {
+                this.el.get('reveal').cancel();
+                clearInterval(this.timeout);
+                this.el.reveal();
+            }
+        }).bind(this));
+        this.mouselander.addEvent('mouseleave', (function() {
+            if(this.el.getProperty('text') !== '') {
+                this.el.get('reveal').cancel();
+                clearInterval(this.timeout);
+                this.el.dissolve();
+            }
+        }).bind(this));
+
+        document.body.grab(this.el);
+        document.body.grab(this.mouselander);
+    },
+
+    show: function() {
+        this.el.get('reveal').cancel();
+        clearTimeout(this.timeout);
+        
+        this.el.reveal();
+
+        this.timeout = setTimeout((function() {
+            this.el.dissolve();
+        }).bind(this), 5000);
+    },
+});
+
+MessageWidget.create = function() {
+    this.instance = new MessageWidget('message-widget');
+};
+
+MessageWidget.msg = function(msg) {
+    this.instance.el.setProperty('text', msg);
+    this.instance.show();
+};
+

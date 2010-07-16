@@ -72,6 +72,8 @@ function init() {
         mask.show();
     }
 
+    MessageWidget.create();
+
     Dajaxice.animations.login_widget('Dajax.process');
     Dajaxice.animations.load_editor('Dajax.process');
     //Dajaxice.animations.load_start('Dajax.process');

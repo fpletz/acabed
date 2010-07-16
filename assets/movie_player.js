@@ -43,6 +43,7 @@ var MoviePlayer = new Class({
 
             this.update();
             this.fireEvent('file_change', [this.movie]);
+            MessageWidget.msg('Animation aus Datei geladen!');
         }).bind(this);
     },
 
