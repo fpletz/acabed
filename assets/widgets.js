@@ -139,7 +139,7 @@ var Tooltip = new Class({
             text: this.options.text,
         });
 
-        this.target.grab(this.el);
+        $('tooltips').grab(this.el);
 
         this.target.addEvent('mouseenter', this.show.bind(this));
         this.target.addEvent('mouseleave', this.hide.bind(this));
@@ -157,14 +157,12 @@ var Tooltip = new Class({
     hide: function() {
         this.el.setStyle('display', 'none');
     },
-
 });
 
 var MessageWidget = new Class({
     Extends: Widget,
 
     options: {
-        tooltip: 'Wichtige Meldungen',
         class: 'message-widget',
         styles: {
             opacity: 0,
@@ -173,7 +171,6 @@ var MessageWidget = new Class({
 
     initialize: function(id, options) {
         this.parent(id, options);
-
 
         this.el.dissolve();
 
