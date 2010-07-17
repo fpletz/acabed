@@ -168,17 +168,46 @@ function init_editor() {
         widgets: [
             new ImageButton('new-movie-button', {
                 image: '/assets/icons/film.png',
-                tooltip: 'Neuer Film',
+                tooltip: 'Neuer Film erstellen',
                 events: {
                     click: function() {
                         mp.stop();
-                        Dajaxice.animations.load_editor('Dajax.process');
+
+                        var d = new ModalDialog('really-new-movie',
+                            new Widget('question', {
+                                text: 'Wollen sie wirklich einen neuen Film anfangen? Dies verwirft den aktuellen Film!'
+                            }),
+                            {
+                                title: 'Achtung',
+                                buttons: [
+                                    new Button('open-button', {
+                                        text: 'Neuer Film',
+                                        events: {
+                                            click: function() {
+                                                Dajaxice.animations.load_editor('Dajax.process');
+                                                MessageWidget.msg('Ein neuer Film wurde erstellt');
+                                                ModalDialog.destroy();
+                                            },
+                                        }
+                                    }),
+                                     new Button('cancel-button', {
+                                        text: 'Abbrechen',
+                                        events: {
+                                            click: function() {
+                                                ModalDialog.destroy();
+                                            },
+                                        }
+                                    }),
+                               ],
+                            }
+                        );
+                        d.show();
                     },
                 },
             }),
             new ImageButton('load-movie-button', {
                 image: '/assets/icons/folder-open-film.png',
-                tooltip: 'Animation vom Server öffnen',
+                tooltip: 'Film vom Server öffnen',
                 events: {
                     click: function() {
                         var d = new ModalDialog('movie-list',
@@ -212,9 +241,11 @@ function init_editor() {
             }),
             new ImageButton('save-movie-button', {
                 image: '/assets/icons/disk.png',
-                tooltip: 'Animation auf dem Server speichern',
+                tooltip: 'Film abschicken',
                 events: {
                     click: function() {
+                        Dajaxice.animations.add('Dajax.process', {
+                            'animation': mp.movie.to_json()});
                     },
                 },
             }),
@@ -225,7 +256,7 @@ function init_editor() {
         widgets: [
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
-                tooltip: 'Animation hochladen',
+                tooltip: 'Film vom Rechner öffnen',
                 events: {
                     change: function() {
                         var d = new ModalDialog('loading-dialog',
@@ -248,7 +279,7 @@ function init_editor() {
             }),
             new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
-                tooltip: 'Animation herunterladen',
+                tooltip: 'Film auf Rechner speichern',
                 events: {
                     click: function() {
                         var uri = 'data:text/xml;charset=utf-8,';
@@ -257,17 +288,17 @@ function init_editor() {
                     },
                 },
             }),
-            new ImageButton('send-json-button', {
-                image: '/assets/icons/arrow-curve-000-left.png',
-                tooltip: 'wtf? xD',
-                events: {
-                    click: function() {
-                        Dajaxice.animations.add('Dajax.process', {
-                            'animation': mp.movie.to_json()
-                        });
-                    },
-                },
-            }),
+            // new ImageButton('send-json-button', {
+            //     image: '/assets/icons/arrow-curve-000-left.png',
+            //     tooltip: 'wtf? xD',
+            //     events: {
+            //         click: function() {
+            //             Dajaxice.animations.add('Dajax.process', {
+            //                 'animation': mp.movie.to_json()
+            //             });
+            //         },
+            //     },
+            // }),
         ],
     });
 

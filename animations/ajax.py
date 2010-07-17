@@ -119,6 +119,7 @@ def add(request, animation):
         dajax.remove_css_class('#movie-inspector label', 'error')
         for error in form.errors:
             dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')
+        dajax.script('MessageWidget.msg("Bitte fehlende Felder ausfuellen.")')
 
     return dajax.json()
 dajaxice.register(add)
