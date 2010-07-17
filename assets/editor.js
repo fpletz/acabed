@@ -47,8 +47,9 @@ var Editor = new Class({
 
     clipboard_to_current_position: function() {
         if (this.clipboard !== null) {
-            this.movie_player.movie.add_frame_at(this.movie_player.current_frame_no);
-            this.movie_player.movie.set_frame(this.movie_player.current_frame_no, this.clipboard.copy());
+            this.movie_player.movie.add_frame_at(this.movie_player.current_frame_no+1);
+            this.movie_player.movie.set_frame(this.movie_player.current_frame_no+1, this.clipboard.copy());
+            this.movie_player.forward(1);
         }
     },
 });
