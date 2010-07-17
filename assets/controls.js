@@ -47,7 +47,7 @@ var PlayerControls = new Class({
                 },
             }),
             new ImageButton('last-button', {
-                image: '/assets/icons/control-stop-180.png',
+                image: '/assets/icons/control-skip-180.png',
                 tooltip: 'Vorheriger Frame',
                 events: {
                     click: function() {
@@ -57,7 +57,7 @@ var PlayerControls = new Class({
                 },
             }),
             new ImageButton('next-button', {
-                image: '/assets/icons/control-stop.png',
+                image: '/assets/icons/control-skip.png',
                 tooltip: 'Nächster Frame',
                 events: {
                     click: function() {
