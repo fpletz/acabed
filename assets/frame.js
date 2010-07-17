@@ -108,8 +108,8 @@ var XmlFrame = new Class({
     },
 
     load_xml: function(f) {
-	this.duration = parseInt(f.get('duration'));
-	this.rows = f.getElements('row');
+        this.duration = parseInt(f.get('duration'));
+        this.rows = f.getElements('row');
         return this;
     },
 
