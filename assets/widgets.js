@@ -174,10 +174,6 @@ var MessageWidget = new Class({
     initialize: function(id, options) {
         this.parent(id, options);
 
-        this.el.set('reveal', {
-            duration: 'normal',
-            transition: 'bounce:out'
-        });
 
         this.el.dissolve();
 
@@ -189,16 +185,12 @@ var MessageWidget = new Class({
 
         this.mouselander.addEvent('mouseenter', (function() {
             if(this.el.getProperty('text') !== '') {
-                this.el.get('reveal').cancel();
-                clearInterval(this.timeout);
-                this.el.reveal();
+                this.show();
             }
         }).bind(this));
         this.mouselander.addEvent('mouseleave', (function() {
             if(this.el.getProperty('text') !== '') {
-                this.el.get('reveal').cancel();
-                clearInterval(this.timeout);
-                this.el.dissolve();
+                this.hide();
             }
         }).bind(this));
 
@@ -207,14 +199,21 @@ var MessageWidget = new Class({
     },
 
     show: function() {
-        this.el.get('reveal').cancel();
         clearTimeout(this.timeout);
-        
-        this.el.reveal();
+
+        this.el.set('reveal', {
+            duration: 'normal',
+            transition: 'bounce:out'
+        }).reveal();
 
         this.timeout = setTimeout((function() {
-            this.el.dissolve();
+            this.hide();
         }).bind(this), 5000);
+    },
+
+    hide: function() {
+        clearTimeout(this.timeout);
+        this.el.get('reveal').dissolve();
     },
 });
 
