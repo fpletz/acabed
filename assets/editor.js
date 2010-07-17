@@ -167,9 +167,7 @@ function init_editor() {
 
     // Update Frame info
     mp.addEvent('render', (function() {
-        if (!this.playing) {
-            frame_inspector.set_model(mp.current_frame());
-        }
+        frame_inspector.set_model(mp.current_frame());
     }).bind(mp));
 
     var inspectors = new WidgetContainer('right', {
