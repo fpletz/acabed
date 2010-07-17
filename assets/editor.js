@@ -72,12 +72,14 @@ function init_editor() {
                 },
             }),
             new ImageButton('select-button', {
+                image: '/assets/icons/layer-select.png',
                 tooltip: 'Bereich auswählen',
                 events: {
                     click: function() {alert("test");},
                 }
             }),
             new ImageButton('fill-button', {
+                image: '/assets/icons/paint-can.png',
                 tooltip: 'Füllen',
                 events: {
                     click: function() {alert("test");},
