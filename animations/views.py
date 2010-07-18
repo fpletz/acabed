@@ -22,6 +22,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from animations.models import *
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     return render_to_response('index.html',
@@ -36,6 +37,20 @@ def list(request, fmt='json'):
             mimetype = 'application/javascript'
         data = serializers.serialize(fmt, Animation.objects.all())
         return HttpResponse(data,mimetype)
+
+@csrf_exempt
+def filereplay(request):
+	#response = HttpResponse('', 'text/plain')
+	response = HttpResponse('', 'application/javascript')
+	#response = HttpResponse('', 'application/json')
+	#fileReplay = FileReplay()
+	if request.method == 'POST':
+		#fileReplay.content = request.FILES['file'].read()
+		for chunk in request.FILES['file'].chunks():
+			response.write(chunk)
+	
+	#response.write(serializers.serialize('json', [fileReplay]))
+	return response
 
 def detail(request, animation_id):
     try:

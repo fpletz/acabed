@@ -70,6 +70,12 @@ class AnimationInstance(models.Model):
     order = models.IntegerField(default=0)
     playing = models.BooleanField(default=False)
 
+# This is an alternative, but more complex and currently not used. Change
+# views.py and add an decoder in the javerscripts.
+class FileReplay(models.Model):
+    content = models.TextField()
+    code = models.IntegerField()
+	
 class Playlist(models.Model):
     title = models.CharField(max_length=128)
     animations = models.ManyToManyField(Animation, through=AnimationInstance)

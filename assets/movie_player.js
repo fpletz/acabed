@@ -27,24 +27,18 @@ var MoviePlayer = new Class({
         this.matrix_table = matrix_table;
         this.current_frame_no = 0;
         this.playing = false;
-
+		
         return this;
     },
 
-    load_file: function(file) {
+    load_file: function(xmlContent) {
         this.stop();
+        this.movie.load_xml(xmlContent);
+        this.matrix_table.reset(this.movie.height, this.movie.width);
 
-        var reader = new FileReader();
-        reader.readAsText(file);
-
-        reader.onloadend = (function() {
-            this.movie.load_xml(reader.result);
-            this.matrix_table.reset(this.movie.height, this.movie.width);
-
-            this.update();
-            this.fireEvent('file_change', [this.movie]);
-            MessageWidget.msg('Animation aus Datei geladen!');
-        }).bind(this);
+        this.update();
+        this.fireEvent('file_change', [this.movie]);
+        MessageWidget.msg('Animation aus Datei geladen!');
     },
 
     play: function() {

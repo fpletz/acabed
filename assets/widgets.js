@@ -75,27 +75,104 @@ var ImageButton = new Class({
 });
 
 var FileButton = new Class({
-    Extends: ImageButton,
-
-    initialize: function(id, options) {
-        this.parent(id, options);
-
-        var file = new Element('input', {
-            class: 'movie-file',
-            type: 'file',
-        });
-
-        this.el.addEvent('click', function() {
-            if (file.getStyle('display') == 'none')
-                file.setStyle('display', 'block');
-        });
-
-        file.addEvent('change', (function() {
-            file.setStyle('display', 'none');
-        }).bind(this));
-
-        this.el.grab(file);
-    }
+	Extends: ImageButton,
+	
+	initialize: function(id, options) {
+		this.parent(id, options);
+		
+		
+		if(typeof FileReader === 'undefined')
+		{
+			var frame = new IFrame({
+				src: 'about:blank',
+				events: {
+					load: this.frameEvent.pass(this)
+				}
+			});
+			
+			this.el.grab(frame);
+		}
+		else
+		{
+			var fileReaderInput = new Element('input', {
+				type: 'file',
+				name: 'file',
+				maxlength: '100000',
+				class: 'movie-file',
+				events: {
+					change: this.fileReaderEvent.bind(this)
+				}
+			});
+			
+			this.el.grab(fileReaderInput);
+		}
+    },
+    
+    fileReaderEvent: function(ev) {
+		this.fireEvent("clicked");
+		this.fireEvent("loaded", [ev.target.files[0].getAsBinary()]);
+	},
+	
+	frameEvent: function(button) {
+		var frame = button.el.getElement('iframe');
+		var frameDocument = frame.contentDocument;
+		var frameHtml = this.$(frameDocument.getElementsByTagName("html")[0]);
+		var frameBody = frameHtml.getElement('body');
+		
+		
+		/* If we got an empty element, we have are waiting for
+		 * user's input. Thus we have to fill this document with
+		 * an input form.
+		 */
+		if (frameDocument.location.href == 'about:blank') {
+			/* Style the already exising top level elemnts (html/body) */
+			var defaultStyle = {
+				/* Otherwise Opera shows only scrollbars */
+				width: '100px',
+				height: '100px',
+				overflow: 'hidden',
+				
+				border: 'none',
+				padding: 0,
+				margin: 0,
+				cursor: 'default'
+			};
+			
+			frameHtml.setStyles(defaultStyle);
+			frameBody.setStyles(defaultStyle);
+			
+			
+			/* Create and style <form> and inset into body */
+			var uploadForm = new Element('form', {
+				method: 'POST',
+				action: '/acab/filereplay/',
+				enctype: 'multipart/form-data',
+			});
+			uploadForm.setStyles(defaultStyle);
+			uploadForm.injectInside(frameBody);
+			
+			/* Create and style <input> and inset into form */
+			var uploadFile = new Element('input', {
+				type: 'file',
+				name: 'file',
+				maxlength: '100000',
+				events: {
+					change: function(uploadForm, button) {
+						button.fireEvent("clicked");
+						uploadForm.submit();
+					}.pass([uploadForm, button])
+				}
+			});
+			uploadFile.setStyles(defaultStyle);
+			uploadFile.injectInside(uploadForm);
+			uploadFile.click();
+		}
+		else
+		{
+			button.fireEvent("loaded", [frameBody.getFirst().get('text')]);
+			frameDocument.location.href = 'about:blank'
+		}
+	}
 });
 
 var WidgetContainer = new Class({
