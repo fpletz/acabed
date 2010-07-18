@@ -89,10 +89,24 @@ function init_editor() {
     });
 
     var mv = new Movie();
-    var mt = new MatrixTable('matrix-table');
+    var mt = new CanvasTable('matrix-table');
+    //var mt = new MatrixTable('matrix-table');
     var mp = new MoviePlayer(mv, mt);
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
+    
+	var loadingDialog = new ModalDialog(
+		'loading-dialog',
+		
+		new Widget('loading', {
+			text: 'Der Film wird geladen'
+		}),
+		
+		{
+			title: 'Bitte Warten',
+		}
+	);
+
 
     var frame_inspector = new ObjectInspector(mp.current_frame(), {
         id: 'frame-inspector',
@@ -258,23 +272,14 @@ function init_editor() {
                 image: '/assets/icons/arrow-090.png',
                 tooltip: 'Film vom Rechner öffnen',
                 events: {
-                    change: function() {
-                        var d = new ModalDialog('loading-dialog',
-                            new Widget('loading', {
-                                text: 'Der Film wird geladen'
-                            }),
-                            {
-                                title: 'Bitte Warten',
-                            }
-                        );
-                        d.show();
-
-                        mp.movie.addEvent('loaded', function(mv) {
-                            d.hide();
-                        });
-
-                        mp.load_file($$('#load-xml-button input')[0].files[0]);
+                    loaded: function(text) {
+                    	mp.load_file(text);
+                    	loadingDialog.hide();
                     },
+                    
+					clicked: function() {
+						loadingDialog.show();
+					}
                 },
             }),
             new ImageButton('download-xml-button', {
