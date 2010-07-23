@@ -210,6 +210,15 @@ hr {
     padding-bottom: 5px;
 }
 
+#current-color {
+    margin-right: 1px;
+    with: 10px;
+    height: 10px;
+    padding: 0px 3px;
+    padding-bottom: 5px;
+    border: solid 1px white;
+}
+
 #pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
     overflow: hidden;
 }
