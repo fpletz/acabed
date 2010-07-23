@@ -22,13 +22,15 @@
 var Editor = new Class({
     initialize: function(movie_player) {
         this.movie_player = movie_player;
-        this.current_color = new Color(255, 0, 255);
+        this.set_color(new Color(0, 0, 0));
+        this.current_tool = new PenTool();
         this.clipboard = null;
 
         // initialize matrix click handler
         this.movie_player.matrix_table.addEvent('click', (function(row, col) {
             var current_frame = this.movie_player.current_frame();
-            current_frame.set_color(row, col, this.current_color);
+            this.current_tool.apply_to(current_frame, row, col, this.current_color);
+            // current_frame.set_color(row, col, this.current_color);
             this.movie_player.render(current_frame);
 
             console.info('set color to %s', this.current_color.to_string());
@@ -38,6 +40,7 @@ var Editor = new Class({
     },
 
     set_color: function(c) {
+        $('current-color').setStyle('background-color', c.to_string());
         this.current_color = c;
     },
 
@@ -60,34 +63,6 @@ function fix_frame(xml) {
 }
 
 function init_editor() {
-    var actions = new WidgetContainer('pixel-tools', {
-        widgets: [
-            new ImageButton('draw-button', {
-                image: '/assets/icons/pencil.png',
-                tooltip: 'Farben malen',
-                events: {
-                    click: function() {
-                        MessageWidget.msg('lorem ipsum sit dolor' +
-                            ' dak dads kas j as j klkjads klajs dlksd ');
-                    },
-                },
-            }),
-            new ImageButton('select-button', {
-                image: '/assets/icons/layer-select.png',
-                tooltip: 'Bereich auswählen',
-                events: {
-                    click: function() {alert("test");},
-                }
-            }),
-            new ImageButton('fill-button', {
-                image: '/assets/icons/paint-can.png',
-                tooltip: 'Füllen',
-                events: {
-                    click: function() {alert("test");},
-                }
-            }),
-        ],
-    });
 
     var mv = new Movie();
     var mt = new CanvasTable('matrix-table');
@@ -95,18 +70,63 @@ function init_editor() {
     var mp = new MoviePlayer(mv, mt);
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
+
+    var actions = new WidgetContainer('pixel-tools', {
+        widgets: [
+            new ImageButton('draw-button', {
+                image: '/assets/icons/pencil.png',
+                tooltip: 'Farben malen',
+                events: {
+                    click: function() {
+                        ed.current_tool = new PenTool();
+                        MessageWidget.msg('Click auf ein Fenster um ein mit der aktuellen Farbe zu färben');
+                    },
+                },
+            }),
+            // new ImageButton('select-button', {
+            //     image: '/assets/icons/layer-select.png',
+            //     tooltip: 'Bereich auswählen',
+            //     events: {
+            //         click: function() {alert("test");},
+            //     }
+            // }),
+            new ImageButton('fill-button', {
+                image: '/assets/icons/paint-can.png',
+                tooltip: 'Füllen',
+                events: {
+                    click: function() {
+                        ed.current_tool = new FillTool();
+                        MessageWidget.msg('Click auf ein Fenster um das aktuelle Bild mit der aktuellen Farbe zu füllen');
+                    },
+                }
+            }),
+
+            new ImageButton('move-button', {
+                image: '/assets/icons/arrow-move.png',
+                tooltip: 'Bewegen',
+                events: {
+                    click: function() {
+                        ed.current_tool = new MoveTool(ed.movie_player.movie.height, ed.movie_player.movie.width);
+                        MessageWidget.msg('Click auf ein Fenster um den Bildinhalt in Richtung Fenster zu bewegen');
+                    },
+                }
+            }),
+
+        ],
+    });
+
     
-	var loadingDialog = new ModalDialog(
-		'loading-dialog',
-		
-		new Widget('loading', {
-			text: 'Der Film wird geladen'
-		}),
-		
-		{
-			title: 'Bitte Warten',
-		}
-	);
+    var loadingDialog = new ModalDialog(
+	'loading-dialog',
+	
+	new Widget('loading', {
+	    text: 'Der Film wird geladen'
+	}),
+	
+	{
+	    title: 'Bitte Warten',
+	}
+    );
 
 
     var frame_inspector = new ObjectInspector(mp.current_frame(), {
@@ -379,6 +399,8 @@ function init_editor() {
         styles: { width: '10px', height: '10px' }
     });
 
+    var current_color_field = new Widget('current-color');
+    
     picker.addEvents({
         'onColorClick': set_editor_color,
     });
