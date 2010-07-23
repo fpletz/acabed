@@ -27,6 +27,7 @@ from dajaxice.core import dajaxice_autodiscover
 dajaxice_autodiscover()
 
 urlpatterns = patterns('',
+    (r'^$', 'django.views.generic.simple.redirect_to', {'url': '/acab/'}),
     (r'^acab/', include('animations.urls')),
     (r'^assets/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.MEDIA_ROOT}),
