@@ -51,12 +51,31 @@ var Button = new Class({
     Extends: Widget,
 
     options: {
-        class: 'button textbutton'
+        class: 'button textbutton',
+        active_class: 'button-active',
+        inactive_class: 'button-inactive',
+        active: true,
     },
 
     initialize: function(id, options) {
         this.parent(id, options);
-    }
+        this.set_active(this.options.active);
+    },
+
+    set_active: function(active) {
+        this.options.active = active;
+        if (active) {
+            this.el.addClass(this.options.active_class);
+            this.el.removeClass(this.options.inactive_class);
+        } else {
+            this.el.addClass(this.options.inactive_class);
+            this.el.removeClass(this.options.active_class);
+        }
+    },
+
+    get_active: function() {
+        return this.options.active;
+    },
 });
 
 var ImageButton = new Class({
@@ -196,6 +215,22 @@ var WidgetContainer = new Class({
     }
 });
 
+var RadioContainer = new Class({
+    Extends: WidgetContainer,
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        this.options.widgets.each(function(button) {
+            button.el.addEvent('click', (function(ev) {
+                this.options.widgets.each(function(widget) {
+                    widget.set_active(false);
+                });
+                button.set_active(true);
+            }).bind(this));
+        }, this);
+    }
+});
 
 var Tooltip = new Class({
     Implements: [Options, Events],

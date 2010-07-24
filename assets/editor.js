@@ -71,11 +71,12 @@ function init_editor() {
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});
 
-    var actions = new WidgetContainer('pixel-tools', {
+    var actions = new RadioContainer('pixel-tools', {
         widgets: [
             new ImageButton('draw-button', {
                 image: '/assets/icons/pencil.png',
                 tooltip: 'Farben malen',
+                active: true,
                 events: {
                     click: function() {
                         ed.current_tool = new PenTool();
@@ -93,6 +94,7 @@ function init_editor() {
             new ImageButton('fill-button', {
                 image: '/assets/icons/paint-can.png',
                 tooltip: 'Füllen',
+                active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new FillTool();
@@ -104,6 +106,7 @@ function init_editor() {
             new ImageButton('move-button', {
                 image: '/assets/icons/arrow-move.png',
                 tooltip: 'Bewegen',
+                active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new MoveTool(ed.movie_player.movie.height, ed.movie_player.movie.width);

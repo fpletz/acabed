@@ -74,6 +74,14 @@ a:visited {
     background-color: #222;
 }
 
+.button-active {
+}
+
+.button-inactive {
+    background-color: #111;
+    border: solid 1px #222;
+}
+
 .textbutton {
     padding: 5px;
     background-color: #444;
