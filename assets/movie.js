@@ -166,4 +166,29 @@ var Movie = new Class({
         
         return JSON.encode(movie);
     },
+
+    from_json: function(json) {
+        var obj = JSON.decode(json);
+        
+        this.title = obj.title;
+        this.description = obj.description;
+        this.author = obj.author;
+        this.creator = obj.creator;
+        this.email = obj.email;
+        this.url = obj.url;
+        this.loop = obj.loop;
+        this.max_duration = obj.max_duration;
+        
+        this.height = obj.height;
+        this.width = obj.width;
+        this.depth = obj.depth;
+        this.channels = obj.channels;
+        this.frames = obj.frames;
+
+        obj.data.each(function(frame_json) {
+            var frame = new Frame();
+            frame.from_json(frame_json);
+            this.data.push(frame);
+        }, this);
+    },
 });

@@ -84,6 +84,16 @@ var Frame = new Class({
         return frame;
     },
 
+    from_json: function(frame_json) {
+        var obj = JSON.decode(frame_json);
+
+        this.duration = obj.duration;
+
+        obj.rows.each(function(row_json) {
+            this.rows.push(row_json);
+        });
+    },
+
     copy: function() {
         var f = new Frame(this.height, this.width, this.duration);
         for (var row = 0; row < this.height; ++row) {
