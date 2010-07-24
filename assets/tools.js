@@ -25,6 +25,7 @@ var MoveTool = new Class({
     initialize: function(height, width) {
         this.options.height = height;
         this.options.width = width;
+        this.initialized = false;
     },
     
     get_direction: function(row, col) {
@@ -58,7 +59,19 @@ var MoveTool = new Class({
     },
 
     apply_to: function(frame, row, col, color) {
-        var direction = this.get_direction(row, col);
+        if (!this.initialized) {
+            this.old_row = row;
+            this.old_col = col;
+            this.initialized = true
+        };
+        // var direction = this.get_direction(row, col);
+        var direction = [row-this.old_row,
+                         col-this.old_col];
+
+        console.log(row, col, this.old_row, this.old_col);
+        this.old_row = row;
+        this.old_col = col;
+        
         var frame_copy = frame.copy();
 
         for (var row = 0; row < frame.height; ++row) {
@@ -78,6 +91,10 @@ var MoveTool = new Class({
                                 frame_copy.color(row_from, col_from));
             }
         }
+    },
+
+    reset: function() {
+        this.initialized = false;
     }
 
 });

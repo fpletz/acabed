@@ -159,6 +159,7 @@ var CanvasTable = new Class({
         
         document.body.addEvent('mouseup', (function(e) {
             this.clicked = false;
+            this.fireEvent('mouseup');
         }).bind(this));
         
         

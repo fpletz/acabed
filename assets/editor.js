@@ -30,10 +30,13 @@ var Editor = new Class({
         this.movie_player.matrix_table.addEvent('click', (function(row, col) {
             var current_frame = this.movie_player.current_frame();
             this.current_tool.apply_to(current_frame, row, col, this.current_color);
-            // current_frame.set_color(row, col, this.current_color);
             this.movie_player.render(current_frame);
 
             console.info('set color to %s', this.current_color.to_string());
+        }).bind(this));
+
+        this.movie_player.matrix_table.addEvent('mouseup', (function() {
+            this.current_tool.reset();
         }).bind(this));
 
         return this;
@@ -301,9 +304,9 @@ function init_editor() {
                     	loadingDialog.hide();
                     },
                     
-					clicked: function() {
-						loadingDialog.show();
-					}
+		    clicked: function() {
+			loadingDialog.show();
+		    }
                 },
             }),
             new ImageButton('download-xml-button', {
