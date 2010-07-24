@@ -115,6 +115,7 @@ def add(request, animation):
             animation = a
         )
         ai.save()
+        dajax.script('MessageWidget.msg("Great success! Animootion gespeichert!")')
     else:
         dajax.remove_css_class('#movie-inspector label', 'error')
         for error in form.errors:
