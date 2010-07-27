@@ -54,7 +54,7 @@ def login(request, username, password):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            dajax.script('Dajaxice.animations.login_widget("Dajax.process");')
+            dajax.script('Dajaxice.acab.login_widget("Dajax.process");')
         else:
             # TODO
             pass
@@ -69,7 +69,7 @@ def logout(request):
     auth_logout(request)
 
     dajax = Dajax()
-    dajax.script('Dajaxice.animations.login_widget("Dajax.process");')
+    dajax.script('Dajaxice.acab.login_widget("Dajax.process");')
     return dajax.json()
 dajaxice.register(logout)
 

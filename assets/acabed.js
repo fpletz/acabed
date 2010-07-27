@@ -70,9 +70,9 @@ function init() {
 
     MessageWidget.create();
 
-    Dajaxice.animations.login_widget('Dajax.process');
-    Dajaxice.animations.load_editor('Dajax.process');
-    //Dajaxice.animations.load_start('Dajax.process');
+    Dajaxice.acab.login_widget('Dajax.process');
+    Dajaxice.acab.load_editor('Dajax.process');
+    //Dajaxice.acab.load_start('Dajax.process');
 };
 
 window.addEvent('domready', init);

@@ -91,7 +91,7 @@ INSTALLED_APPS = (
     'dajaxice',
     'dajax',
     'compressor',
-    'animations'
+    'acab'
 )
 
 DAJAXICE_MEDIA_PREFIX = "dajaxice"

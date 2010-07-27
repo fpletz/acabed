@@ -224,7 +224,7 @@ function init_editor() {
                                         text: 'Neuer Film',
                                         events: {
                                             click: function() {
-                                                Dajaxice.animations.load_editor('Dajax.process');
+                                                Dajaxice.acab.load_editor('Dajax.process');
                                                 MessageWidget.msg('Ein neuer Film wurde erstellt');
                                                 ModalDialog.destroy();
                                             },
@@ -284,7 +284,7 @@ function init_editor() {
                 tooltip: 'Film abschicken',
                 events: {
                     click: function() {
-                        Dajaxice.animations.add('Dajax.process', {
+                        Dajaxice.acab.add('Dajax.process', {
                             'animation': mp.movie.to_json()});
                     },
                 },
@@ -324,7 +324,7 @@ function init_editor() {
             //     tooltip: 'wtf? xD',
             //     events: {
             //         click: function() {
-            //             Dajaxice.animations.add('Dajax.process', {
+            //             Dajaxice.acab.add('Dajax.process', {
             //                 'animation': mp.movie.to_json()
             //             });
             //         },

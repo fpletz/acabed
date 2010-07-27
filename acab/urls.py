@@ -17,20 +17,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from animations.models import Animation, AnimationInstance, Playlist, SpoolJob
-from django.contrib import admin
+from django.conf.urls.defaults import *
 
-class AnimationInstanceInline(admin.TabularInline):
-    model = AnimationInstance
-    extra = 1
-
-class AnimationAdmin(admin.ModelAdmin):
-    inlines = (AnimationInstanceInline,)
-
-class PlaylistAdmin(admin.ModelAdmin):
-    inlines = (AnimationInstanceInline,)
-
-admin.site.register(Animation, AnimationAdmin)
-admin.site.register(Playlist, PlaylistAdmin)
-admin.site.register(SpoolJob)
-
+urlpatterns = patterns('acab.views',
+    (r'^$', 'index'),
+    (r'^filereplay/$', 'filereplay'),
+    (r'^animation/list/$', 'list'),
+    (r'^animation/(?P<animation_id>\d+)/$', 'detail'),
+)
