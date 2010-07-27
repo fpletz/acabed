@@ -31,8 +31,6 @@ var Editor = new Class({
             var current_frame = this.movie_player.current_frame();
             this.current_tool.apply_to(current_frame, row, col, this.current_color);
             this.movie_player.render(current_frame);
-
-            console.info('set color to %s', this.current_color.to_string());
         }).bind(this));
 
         this.movie_player.matrix_table.addEvent('mouseup', (function() {

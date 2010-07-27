@@ -1,10 +1,40 @@
+/*
+ *  acabed - webeditor for blinkenlights xml files
+ *  Copyright (C) 2010 Raffael Mancini <raffael.mancini@hcl-club.lu>
+ *                     Franz Pletz <fpletz@fnordicwalking.de>
+ *
+ *  This file is part of acabed.
+ *
+ *  acabed is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  acabed is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+var Tool = new Class({
+    reset: function() {},
+});
+
+
 var PenTool = new Class({
+    Extends: Tool,
+
     apply_to: function(frame, row, col, color) {
         frame.set_color(row, col, color);
     }
 });
 
 var FillTool = new Class({
+    Extends: Tool,
+
     apply_to: function(frame, row, col, color) {
         for (var row = 0; row < frame.height; ++row) {
             for (var col = 0; col < frame.width; ++col) {
@@ -15,6 +45,7 @@ var FillTool = new Class({
 });
 
 var MoveTool = new Class({
+    Extends: Tool,
     Implements: Options,
 
     options: {
@@ -96,5 +127,5 @@ var MoveTool = new Class({
     reset: function() {
         this.initialized = false;
     }
-
 });
+
