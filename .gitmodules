@@ -3,7 +3,7 @@
 	url = git://github.com/mintchaos/django_compressor.git
 [submodule "externals/django-dajaxice"]
 	path = externals/django-dajaxice
-	url = git://github.com/jorgebastida/django-dajaxice.git
+	url = git@gitorious.org:acab/django-dajaxice.git
 [submodule "externals/django-dajax"]
 	path = externals/django-dajax
 	url = git://github.com/jorgebastida/django-dajax.git
