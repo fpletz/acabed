@@ -66,7 +66,6 @@ function fix_frame(xml) {
 }
 
 function init_editor() {
-
     var mv = new Movie();
     var mt = new CanvasTable('matrix-table');
     //var mt = new MatrixTable('matrix-table');
@@ -427,6 +426,12 @@ function init_editor() {
         pc.slider.set(mp.current_frame_no);
     });
     mt.addEvent('reset',function() { });
+
+    // Prevent accidental unloading of page
+    // FIXME: don't always prevent
+    window.addEvent('beforeunload', function() {
+        return false;
+    });
 
     // Set initial State
     mv.add_frame_at(0);
