@@ -19,8 +19,11 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core import exceptions
+from django import forms
 
 import json
+import types
 
 def get_colors(self, height, width, depth, channels):
     def nsplit(l, i):
@@ -39,6 +42,47 @@ def get_colors(self, height, width, depth, channels):
 
     return colors
 
+class JsonFormField(forms.Field):
+    pass
+
+class JsonField(models.Field):
+    description = 'JSON data'
+
+    def __init__(self, *args, **kwargs):
+        kwargs['blank'] = {}
+        if 'default' not in kwargs and not kwargs.get('null'):
+            kwargs['default'] = {}
+        super(JsonField, self).__init__(*args, **kwargs)
+
+    def db_type(self, connection):
+        return 'text'
+
+    def get_internal_type(self):
+        return 'JsonField'
+
+    def to_python(self, value):
+        try:
+            print type(value), value
+            if type(value) == types.UnicodeType:
+                return json.loads(value)
+            return value
+        except ValueError:
+            raise exceptions.ValidationError('No JSON')
+
+    def get_prep_value(self, value):
+        try:
+            return json.dumps(value)
+        except ValueError:
+            raise exceptions.ValidationError('No JSON')
+
+    def value_to_string(self, obj):
+        value = self._get_val_from_obj(obj)
+        return self.to_python(value)
+
+    def formfield(self, **kwargs):
+        kwargs.update({'form_class': JsonFormField})
+        return super(JsonField, self).formfield(**kwargs)
+
 class Animation(models.Model):
     type = models.CharField(max_length=1, choices=(('m', 'MOVIE'),('e', 'EXTERNAL')))
     title = models.CharField(max_length=128)
@@ -52,17 +96,11 @@ class Animation(models.Model):
     depth = models.IntegerField()
     channels = models.IntegerField()
     max_duration = models.IntegerField()
-    data = models.TextField()
+    data = JsonField()
     playlists = models.ManyToManyField('Playlist', through='AnimationInstance', blank=True)
 
     def __unicode__(self):
         return '%s(%i,%i,%i)' % (self.title, self.height, self.width, self.depth)
-
-    def get_data(self):
-        return json.loads(self.data)
-
-    def set_data(self, data):
-        self.data = json.dumps(data)
 
 class AnimationInstance(models.Model):
     playlist = models.ForeignKey('Playlist')
