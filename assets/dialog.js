@@ -57,14 +57,16 @@ var ModalDialog = new Class({
 
     initialize: function(id, content, options) {
         this.parent(id, content, options);
+        this.overlay_id = 'overlay-' + id;
 
         this.mask = document.body.get('mask', {
-            id: 'overlay',
+            id: this.overlay_id,
+            class: 'overlay',
             hideOnClick: true,
             destroyOnHide: true,
         });
 
-        var overlay = $('overlay');
+        var overlay = $(this.overlay_id);
         var container = this.container.el;
 
         overlay.grab(container);
@@ -77,7 +79,7 @@ var ModalDialog = new Class({
     show: function() {
         this.mask.show();
 
-        var overlay_size = $('overlay').getSize();
+        var overlay_size = $(this.overlay_id).getSize();
         var container = this.container.el;
         var container_size = container.getSize();
 

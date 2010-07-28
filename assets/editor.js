@@ -118,20 +118,6 @@ function init_editor() {
         ],
     });
 
-    
-    var loadingDialog = new ModalDialog(
-	'loading-dialog',
-	
-	new Widget('loading', {
-	    text: 'Der Film wird geladen'
-	}),
-	
-	{
-	    title: 'Bitte Warten',
-	}
-    );
-
-
     var frame_inspector = new ObjectInspector(mp.current_frame(), {
         id: 'frame-inspector',
         items: [
@@ -297,13 +283,21 @@ function init_editor() {
                 tooltip: 'Film vom Rechner öffnen',
                 events: {
                     loaded: function(text) {
-                    	mp.load_file(text);
-                    	loadingDialog.hide();
+                        mp.load_file(text);
+                        ModalDialog.destroy();
                     },
                     
-		    clicked: function() {
-			loadingDialog.show();
-		    }
+                    clicked: function() {
+                        (new ModalDialog(
+                            'loading-dialog',
+                            new Widget('loading', {
+                                text: 'Der Film wird geladen'
+                            }),
+                            {
+                                title: 'Bitte Warten',
+                            }
+                        )).show();
+                    },
                 },
             }),
             new ImageButton('download-xml-button', {
