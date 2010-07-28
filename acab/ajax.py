@@ -23,9 +23,11 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from dajaxice.core import dajaxice_functions as dajaxice
 from dajax.core import Dajax
+from django.core import serializers
+
 import json
 
-from models import Playlist, User, AnimationInstance
+from models import Playlist, User, AnimationInstance, Animation
 from forms import AnimationForm
 
 def login_widget(request):
@@ -73,12 +75,18 @@ def logout(request):
     return dajax.json()
 dajaxice.register(logout)
 
-def load_editor(request):
+def load_editor(request, pk=None):
     r = render_to_string('editor.html')
 
     dajax = Dajax()
     dajax.assign('#content', 'innerHTML', r)
-    dajax.script('init_editor();')
+
+    if pk is not None:
+        a = Animation.objects.get(pk=pk)
+        dajax.add_data(serializers.serialize('json', [a]), 'init_editor')
+    else:
+        dajax.script('init_editor();')
+
     return dajax.json()
 dajaxice.register(load_editor)
 
@@ -90,6 +98,20 @@ def load_start(request):
     dajax.script('init_start();')
     return dajax.json()
 dajaxice.register(load_start)
+
+def list(request):
+    animations = Animation.objects.filter(type='m')
+
+    return json.dumps([
+        {
+            'pk': a.pk,
+            'title': a.title,
+            'author': a.author,
+            'max_duration': a.max_duration,
+        }
+        for a in animations
+    ])
+dajaxice.register(list)
 
 def add(request, animation):
     dajax = Dajax()

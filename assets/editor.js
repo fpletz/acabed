@@ -63,7 +63,7 @@ function fix_frame(xml) {
     return xml.innerHTML.replace(/__frame/g, 'frame');
 }
 
-function init_editor() {
+function init_editor(animation) {
     var mv = new Movie();
     var mt = new CanvasTable('matrix-table');
     //var mt = new MatrixTable('matrix-table');
@@ -234,32 +234,32 @@ function init_editor() {
                 tooltip: 'Film vom Server öffnen',
                 events: {
                     click: function() {
-                        var d = new ModalDialog('movie-list',
-                            new Widget('movie-list', {
-                                text: 'lorem ipsum'
-                            }),
-                            {
-                                title: 'Animation öffnen',
-                                buttons: [
-                                    new Button('open-button', {
-                                        text: 'Öffnen',
-                                        events: {
-                                            click: function() {
-                                            },
-                                        }
-                                    }),
-                                     new Button('cancel-button', {
-                                        text: 'Abbrechen',
-                                        events: {
-                                            click: function() {
-                                                ModalDialog.destroy();
-                                            },
-                                        }
-                                    }),
-                               ],
-                            }
-                        );
-                        d.show();
+                        Dajaxice.acab.list((function(animations) {
+                            var d = new ModalDialog('movie-list',
+                                new TableWidget('movie-list', {
+                                    data: animations,
+                                    columns: [
+                                        ['title', 'Name'],
+                                        ['author', 'Autor'],
+                                        ['max_duration', 'Dauer'],
+                                    ],
+                                }),
+                                {
+                                    title: 'Animation öffnen',
+                                    buttons: [
+                                         new Button('cancel-button', {
+                                            text: 'Abbrechen',
+                                            events: {
+                                                click: function() {
+                                                    ModalDialog.destroy();
+                                                },
+                                            }
+                                        }),
+                                   ],
+                                }
+                            );
+                            d.show();
+                        }));
                     },
                 },
             }),
@@ -283,7 +283,7 @@ function init_editor() {
                 tooltip: 'Film vom Rechner öffnen',
                 events: {
                     loaded: function(text) {
-                        mp.load_file(text);
+                        mp.load(text);
                         ModalDialog.destroy();
                     },
                     
@@ -426,7 +426,11 @@ function init_editor() {
     });
 
     // Set initial State
-    mv.add_frame_at(0);
-    mt.reset(4, 24);
+    if(animation === undefined) {
+        mv.add_frame_at(0);
+        mt.reset(4, 24);
+    } else {
+        mp.load(undefined, animation);
+    }
 };
 

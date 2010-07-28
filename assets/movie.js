@@ -168,27 +168,32 @@ var Movie = new Class({
     },
 
     from_json: function(json) {
-        var obj = JSON.decode(json);
+        var obj = JSON.decode(json)[0].fields;
         
-        this.title = obj.title;
-        this.description = obj.description;
-        this.author = obj.author;
-        this.creator = obj.creator;
-        this.email = obj.email;
-        this.url = obj.url;
-        this.loop = obj.loop;
-        this.max_duration = obj.max_duration;
+        this.set('title', obj.title);
+        this.set('description', obj.description);
+        this.set('author', obj.author);
+        this.set('creator', obj.creator);
+        this.set('email', obj.email);
+        this.set('url', obj.url);
+        this.set('loop', 'yes');
+        this.set('max_duration', obj.max_duration);
         
-        this.height = obj.height;
-        this.width = obj.width;
-        this.depth = obj.depth;
-        this.channels = obj.channels;
-        this.frames = obj.frames;
+        this.set('height', obj.height);
+        this.set('width', obj.width);
+        this.set('depth', obj.depth);
+        this.set('channels', obj.channels);
+        this.set('data', []);
 
         obj.data.each(function(frame_json) {
-            var frame = new Frame();
-            frame.from_json(frame_json);
-            this.data.push(frame);
+            var frame = new XmlFrame(this.height, this.width, this.depth, this.channels);
+            frame.rows = frame_json.rows;
+            frame.duration = frame_json.duration;
+            this.data.push(frame.to_frame());
         }, this);
+
+        this.set('frames', this.data.length);
+
+        this.fireEvent('loaded');
     },
 });

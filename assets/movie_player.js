@@ -31,14 +31,20 @@ var MoviePlayer = new Class({
         return this;
     },
 
-    load_file: function(xmlContent) {
+    // FIXME: arguments WTF?!
+    load: function(xmlContent, json) {
         this.stop();
-        this.movie.load_xml(xmlContent);
-        this.matrix_table.reset(this.movie.height, this.movie.width);
 
-        this.update();
-        this.fireEvent('file_change', [this.movie]);
-        MessageWidget.msg('Animation aus Datei geladen!');
+        if(json === undefined)
+            this.movie.load_xml(xmlContent);
+        else
+            this.movie.from_json(json);
+
+        this.matrix_table.reset(this.movie.height, this.movie.width);
+        setTimeout(function() {
+            this.update();
+            MessageWidget.msg('Animation aus Datei geladen!');
+        }.bind(this), 0); // FIXME: HACK
     },
 
     play: function() {

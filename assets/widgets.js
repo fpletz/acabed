@@ -215,6 +215,44 @@ var WidgetContainer = new Class({
     }
 });
 
+var TableWidget = new Class({
+    Extends: Widget,
+
+    options: {
+        columns: [],
+        data: [],
+    },
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        var table = new Element('table');
+        this.el.grab(table);
+
+        var tr = new Element('tr');
+        table.grab(tr);
+        this.options.columns.each(function(h) {
+            tr.grab(new Element('th', { 'text': h[1] }));
+        });
+
+        this.options.data.each(function(row) {
+            tr = new Element('tr');
+            table.grab(tr);
+
+            tr.addEvent('click', function() {
+                ModalDialog.destroy();
+                Dajaxice.acab.load_editor('Dajax.process', {
+                    pk: row.pk
+                });
+            });
+
+            this.options.columns.each(function(col) {
+                tr.grab(new Element('td', { 'text': row[col[0]] }));
+            });
+        }, this);
+    },
+});
+
 var RadioContainer = new Class({
     Extends: WidgetContainer,
 

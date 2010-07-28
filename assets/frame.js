@@ -84,14 +84,17 @@ var Frame = new Class({
         return frame;
     },
 
-    from_json: function(frame_json) {
-        var obj = JSON.decode(frame_json);
+    from_json: function(frame) {
+        this.set('duration', frame.duration);
+        this.data = [];
 
-        this.duration = obj.duration;
-
-        obj.rows.each(function(row_json) {
-            this.rows.push(row_json);
-        });
+        frame.rows.each(function(row) {
+            var t = [];
+            for(var col = 0; col < this.width; ++col) {
+                t.push(colorFromString(row, col));
+            }
+            this.data.push(t);
+        }, this);
     },
 
     copy: function() {
@@ -105,6 +108,7 @@ var Frame = new Class({
         return f; 
     }
 });
+
 
 // Concrete xml based frame implementation
 var XmlFrame = new Class({
@@ -123,9 +127,9 @@ var XmlFrame = new Class({
         return this;
     },
 
-    colorFromString: function(row_str, col) {
+    color_from_string: function (row_str, col) {
         var c = new Color(0, 0, 0);
-        c.set_from_string('#'+row_str.textContent.substr(this.depth*this.channels/4*col, this.depth*this.channels/4));
+        c.set_from_string('#'+row_str.substr(this.depth*this.channels/4*col, this.depth*this.channels/4));
         return c;
     },
 
@@ -136,7 +140,8 @@ var XmlFrame = new Class({
         this.rows.each((function(o) {
             var t = [];
             for(var col = 0; col < this.width; ++col) {
-                t.push(this.colorFromString(o, col));
+                // FIXME: textContent for o, XML is fucked
+                t.push(this.color_from_string(o, col));
             }
             frame.data.push(t);
         }).bind(this));

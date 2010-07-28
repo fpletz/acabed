@@ -100,6 +100,7 @@ var PlayerControls = new Class({
                 onChange: function(pos) {
                     // not portable to matrix without canvas
                     //if (mp.matrix_table.pixel_rects.length !== 0)
+                    if(pos != mp.current_frame_no)
                         mp.set_frame(pos);
                 }
             });
