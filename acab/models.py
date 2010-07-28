@@ -62,7 +62,6 @@ class JsonField(models.Field):
 
     def to_python(self, value):
         try:
-            print type(value), value
             if type(value) == types.UnicodeType:
                 return json.loads(value)
             return value
