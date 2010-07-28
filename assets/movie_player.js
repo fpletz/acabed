@@ -41,10 +41,8 @@ var MoviePlayer = new Class({
             this.movie.from_json(json);
 
         this.matrix_table.reset(this.movie.height, this.movie.width);
-        setTimeout(function() {
-            this.update();
-            MessageWidget.msg('Animation aus Datei geladen!');
-        }.bind(this), 0); // FIXME: HACK
+        this.update();
+        MessageWidget.msg('Animation aus Datei geladen!');
     },
 
     play: function() {

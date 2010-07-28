@@ -123,6 +123,7 @@ var CanvasTable = new Class({
         };
         
         this.maskImgLoaded = false;
+        this.deferred_update = null;
         
         this.maskImg = new Image();
         this.maskImg.onload = (function() {
@@ -132,6 +133,9 @@ var CanvasTable = new Class({
             );
             
             this.maskImgLoaded = true;
+
+            if(this.deferred_update != null)
+                this.deferred_update();
         }).bind(this);
         this.maskImg.src = '/assets/images/matrix-background.png';
         
@@ -218,6 +222,10 @@ var CanvasTable = new Class({
             this.context.drawImage(
                 this.maskImg, 0, 0, this.maskImg.width, this.maskImg.height
             );
+        } else {
+            this.deferred_update = function() {
+                this.update(data, width, height);
+            }.bind(this);
         }
         
         return true;
