@@ -70,7 +70,9 @@ class JsonField(models.Field):
 
     def get_prep_value(self, value):
         try:
-            return json.dumps(value)
+            if type(value) != types.UnicodeType:
+                return json.dumps(value)
+            return value
         except ValueError:
             raise exceptions.ValidationError('No JSON')
 
