@@ -92,13 +92,25 @@ function init_editor(animation) {
             //     }
             // }),
             new ImageButton('fill-button', {
-                image: '/assets/icons/paint-can.png',
-                tooltip: 'Füllen',
+                image: '/assets/icons/paint-can--exclamation.png',
+                tooltip: 'Alles füllen',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new FillTool();
-                        MessageWidget.msg('Click auf ein Fenster um das aktuelle Bild mit der aktuellen Farbe zu füllen');
+                        MessageWidget.msg('Click auf ein Fenster um das gesamte Bild mit der aktuellen Farbe zu füllen');
+                    },
+                }
+            }),
+
+            new ImageButton('floodfill-button', {
+                image: '/assets/icons/paint-can.png',
+                tooltip: 'Bereich füllen',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new FloodfillTool();
+                        MessageWidget.msg('Click auf ein Fenster um den aktuellen Bereich mit der aktuellen Farbe zu füllen');
                     },
                 }
             }),

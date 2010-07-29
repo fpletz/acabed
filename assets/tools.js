@@ -80,6 +80,28 @@ var ColorpickerTool = new Class({
     }
 });
 
+var FloodfillTool = new Class({
+    Extends: Tool,
+
+    flood_fill: function(frame, row, col, target_color, replacement_color) {
+        if(row < 0 || col < 0 || row === frame.height || col === frame.width
+            || frame.color(row, col).r !== target_color.r
+            || frame.color(row, col).g !== target_color.g
+            || frame.color(row, col).b !== target_color.b) {
+            return;
+        }
+        frame.set_color(row, col, replacement_color);
+        arguments.callee(frame, row-1, col, target_color, replacement_color);
+        arguments.callee(frame, 1+parseInt(row), col, target_color, replacement_color);
+        arguments.callee(frame, row, col-1, target_color, replacement_color);
+        arguments.callee(frame, row, 1+parseInt(col), target_color, replacement_color);
+    },
+
+    apply_to: function(frame, row, col, color) {
+        this.flood_fill(frame, row, col, frame.color(row, col), color);
+    }
+});
+
 var MoveTool = new Class({
     Extends: Tool,
     Implements: Options,
