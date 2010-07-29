@@ -102,6 +102,18 @@ function init_editor(animation) {
                     },
                 }
             }),
+            new ImageButton('replacecolor-button', {
+                image: '/assets/icons/paint-can-color.png',
+                tooltip: 'Farbe ersetzen',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new ReplacecolorTool();
+                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin auf dem ganzen Bild mit der aktuellen Farbe zu ersetzen');
+                    },
+                }
+            }),
+
 
             new ImageButton('move-button', {
                 image: '/assets/icons/arrow-move.png',

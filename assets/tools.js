@@ -44,6 +44,23 @@ var FillTool = new Class({
     }
 });
 
+var ReplacecolorTool = new Class({
+    Extends: Tool,
+
+    apply_to: function(frame, row, col, color) {
+        var replaced_color = frame.color(row, col);
+        for (var rowi = 0; rowi < frame.height; ++rowi) {
+            for (var coli = 0; coli < frame.width; ++coli) {
+                if(frame.color(rowi, coli).b === replaced_color.b
+                    && frame.color(rowi, coli).r === replaced_color.r
+                    && frame.color(rowi, coli).g === replaced_color.g) {
+                    frame.set_color(rowi, coli, color);
+                }
+            }
+        }
+    }
+});
+
 var MoveTool = new Class({
     Extends: Tool,
     Implements: Options,
