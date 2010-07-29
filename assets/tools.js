@@ -44,6 +44,38 @@ var FillTool = new Class({
     }
 });
 
+var FliphorizTool = new Class({
+    Extends: Tool,
+
+    apply_to: function(frame, row, col, color) {
+        var height = frame.height/2;
+        var row_max = frame.height-1;
+        for (var row = 0; row < height; ++row) {
+            for (var col = 0; col < frame.width; ++col) {
+                var tmpcolor = frame.color(row, col);
+                frame.set_color(row, col, frame.color(row_max-row, col));
+                frame.set_color(row_max-row, col, tmpcolor);
+            }
+        }
+    }
+});
+
+var FlipvertTool = new Class({
+    Extends: Tool,
+
+    apply_to: function(frame, row, col, color) {
+        var width = frame.width/2;
+        var col_max = frame.width-1;
+        for (var row = 0; row < frame.height; ++row) {
+            for (var col = 0; col < width; ++col) {
+                var tmpcolor = frame.color(row, col);
+                frame.set_color(row, col, frame.color(row, col_max-col));
+                frame.set_color(row, col_max-col, tmpcolor);
+            }
+        }
+    }
+});
+
 var ReplacecolorTool = new Class({
     Extends: Tool,
 

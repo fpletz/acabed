@@ -151,6 +151,30 @@ function init_editor(animation) {
                 }
             }),
 
+            new ImageButton('fliph-button', {
+                image: '/assets/icons/arrow-resize-090.png',
+                tooltip: 'Flip horizontal',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new FliphorizTool();
+                        MessageWidget.msg('Click auf ein Fenster um den Bildinhalt horizontal zu vertauschen');
+                    },
+                }
+            }),
+
+            new ImageButton('flipv-button', {
+                image: '/assets/icons/arrow-resize.png',
+                tooltip: 'Flip vertikal',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new FlipvertTool();
+                        MessageWidget.msg('Click auf ein Fenster um den Bildinhalt vertikal zu vertauschen');
+                    },
+                }
+            }),
+
         ],
     });
 
