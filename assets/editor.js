@@ -102,6 +102,7 @@ function init_editor(animation) {
                     },
                 }
             }),
+
             new ImageButton('replacecolor-button', {
                 image: '/assets/icons/paint-can-color.png',
                 tooltip: 'Farbe ersetzen',
@@ -114,6 +115,17 @@ function init_editor(animation) {
                 }
             }),
 
+            new ImageButton('colorpicker-button', {
+                image: '/assets/icons/pipette-color.png',
+                tooltip: 'Farbpipette',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new ColorpickerTool(ed);
+                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin auszuwaehlen');
+                    },
+                }
+            }),
 
             new ImageButton('move-button', {
                 image: '/assets/icons/arrow-move.png',

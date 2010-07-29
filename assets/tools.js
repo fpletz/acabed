@@ -61,6 +61,25 @@ var ReplacecolorTool = new Class({
     }
 });
 
+var ColorpickerTool = new Class({
+    Extends: Tool,
+    Implements: Options,
+
+    options: {
+        editor: null,
+    },
+
+    initialize: function(editor) {
+        // TODO: Select last selected tool after selecting color
+        //       (Remember to check if old tool is already Colorpicker don't set old tool)
+        this.options.editor = editor;
+    },
+
+    apply_to: function(frame, row, col, color) {
+        this.options.editor.set_color(frame.color(row,col));
+    }
+});
+
 var MoveTool = new Class({
     Extends: Tool,
     Implements: Options,
