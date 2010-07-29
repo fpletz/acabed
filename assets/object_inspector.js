@@ -69,6 +69,7 @@ var ObjectInspector = new Class({
         if (this.model === null || ! $defined(this.model) ) {
             this.el.set('html', 'Empty object');
         } else {
+            var form = new Element('form');
             var list = new Element('dl');
             
             this.options.items.each(function(item) {
@@ -128,7 +129,8 @@ var ObjectInspector = new Class({
                 list.grab(nameContainer);
                 list.grab(valueContainer);
             }, this);
-            this.el.grab(list);
+            form.grab(list)
+            this.el.grab(form);
         }
     }
 });
