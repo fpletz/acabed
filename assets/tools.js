@@ -44,17 +44,24 @@ var FillTool = new Class({
     }
 });
 
+var Helpers = new Class({
+    swap_pixels: function(frame, row_a, col_a, row_b, col_b) {
+        var tmpcolor = frame.color(row_a, col_a);
+        frame.set_color(row_a, col_a, frame.color(row_b, col_b));
+        frame.set_color(row_b, col_b, tmpcolor);
+    }
+});
+
 var FliphorizTool = new Class({
     Extends: Tool,
+    Implements: Helpers,
 
     apply_to: function(frame, row, col, color) {
         var height = frame.height/2;
         var row_max = frame.height-1;
         for (var row = 0; row < height; ++row) {
             for (var col = 0; col < frame.width; ++col) {
-                var tmpcolor = frame.color(row, col);
-                frame.set_color(row, col, frame.color(row_max-row, col));
-                frame.set_color(row_max-row, col, tmpcolor);
+                this.swap_pixels(frame, row, col, row_max-row, col);
             }
         }
     }
@@ -62,15 +69,14 @@ var FliphorizTool = new Class({
 
 var FlipvertTool = new Class({
     Extends: Tool,
+    Implements: Helpers,
 
     apply_to: function(frame, row, col, color) {
         var width = frame.width/2;
         var col_max = frame.width-1;
         for (var row = 0; row < frame.height; ++row) {
             for (var col = 0; col < width; ++col) {
-                var tmpcolor = frame.color(row, col);
-                frame.set_color(row, col, frame.color(row, col_max-col));
-                frame.set_color(row, col_max-col, tmpcolor);
+                this.swap_pixels(frame, row, col, row, col_max-col);
             }
         }
     }
@@ -218,4 +224,65 @@ var MoveTool = new Class({
         this.initialized = false;
     }
 });
+
+var MirrorTool = new Class({
+    Extends: Tool,
+    Implements: [Options, Helpers],
+
+    options: {
+        from: null,
+        vert: null
+    },
+
+    initialize: function(vert) {
+        this.initialized = false;
+        this.options.vert = vert;
+    },
+
+    vert: function(frame, pointa, pointb) {
+console.log("vert %d %d",pointa, pointb);
+        if(pointa > pointb) {
+            pointa^=pointb;
+            pointb^=pointa;
+            pointa^=pointb;
+        }
+        var width_max = Math.min(parseInt(pointa)+1, frame.width-pointb);
+        for (var row = 0; row < frame.height; ++row) {
+           for (var i = 0; i < width_max; ++i) {
+               this.swap_pixels(frame, row, pointa-i, row, (parseInt(pointb)+i));
+           }
+        }           
+    },
+
+    horiz: function(frame, pointa, pointb) {
+console.log("horiz %d %d",pointa, pointb);
+        if(pointa > pointb) {
+            pointa^=pointb;
+            pointb^=pointa;
+            pointa^=pointb;
+        }
+        var height_max = Math.min(parseInt(pointa)+1, frame.height-pointb);
+        for (var col = 0; col < frame.width; ++col) {
+           for (var i = 0; i < height_max; ++i) {
+               this.swap_pixels(frame, pointa-i, col, (parseInt(pointb)+i), col);
+           }
+        }           
+    },
+
+    apply_to: function(frame, row, col, color) {
+        if (!this.initialized) {
+            this.options.from=this.options.vert?col:row;
+            this.initialized = true
+        };
+
+    },
+
+    reset: function(frame, row, col, color) {
+        this.options.vert?this.vert(frame,this.options.from,col):this.horiz(frame,this.options.from,row);
+        this.initialized = false;
+    },
+
+
+});
+
 

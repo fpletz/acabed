@@ -33,8 +33,12 @@ var Editor = new Class({
             this.movie_player.render(current_frame);
         }).bind(this));
 
-        this.movie_player.matrix_table.addEvent('mouseup', (function() {
-            this.current_tool.reset();
+        this.movie_player.matrix_table.addEvent('mouseup', (function(row, col) {
+            var current_frame = this.movie_player.current_frame();
+            if(!(isNaN(row) || isNaN(col))) {
+                this.current_tool.reset(current_frame, row, col, this.current_color);
+            }
+            this.movie_player.render(current_frame);
         }).bind(this));
 
         return this;
@@ -171,6 +175,30 @@ function init_editor(animation) {
                     click: function() {
                         ed.current_tool = new FlipvertTool();
                         MessageWidget.msg('Click auf ein Fenster um den Bildinhalt vertikal zu vertauschen');
+                    },
+                }
+            }),
+
+            new ImageButton('reflect-button-vert', {
+                image: '/assets/icons/arrow-resize.png',
+                tooltip: 'Vertikal spiegeln',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new MirrorTool(true);
+                        MessageWidget.msg('Ziehe eine vertikale Achse auf, um die gespiegelt wird');
+                    },
+                }
+            }),
+
+            new ImageButton('reflect-button-horiz', {
+                image: '/assets/icons/arrow-resize-090.png',
+                tooltip: 'Horizontal spiegeln',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new MirrorTool(false);
+                        MessageWidget.msg('Ziehe eine vertikale Achse auf, um die gespiegelt wird');
                     },
                 }
             }),

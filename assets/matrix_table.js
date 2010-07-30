@@ -160,13 +160,12 @@ var CanvasTable = new Class({
             }
         }).bind(this);
         
-        
         document.body.addEvent('mouseup', (function(e) {
             this.clicked = false;
-            this.fireEvent('mouseup');
+            var colrow = $(e.target).id.split('-');
+            this.fireEvent('mouseup', [colrow[2], colrow[1]]);
         }).bind(this));
-        
-        
+
         for (var row = 3; row >= 0; --row) {
             for (var col = 23; col >= 0; --col) {
                 eventLayer = $('cell-'+col+'-'+row);
