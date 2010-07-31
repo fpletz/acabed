@@ -240,7 +240,6 @@ var MirrorTool = new Class({
     },
 
     vert: function(frame, pointa, pointb) {
-console.log("vert %d %d",pointa, pointb);
         if(pointa > pointb) {
             pointa^=pointb;
             pointb^=pointa;
@@ -255,7 +254,6 @@ console.log("vert %d %d",pointa, pointb);
     },
 
     horiz: function(frame, pointa, pointb) {
-console.log("horiz %d %d",pointa, pointb);
         if(pointa > pointb) {
             pointa^=pointb;
             pointb^=pointa;
@@ -280,6 +278,73 @@ console.log("horiz %d %d",pointa, pointb);
     reset: function(frame, row, col, color) {
         this.options.vert?this.vert(frame,this.options.from,col):this.horiz(frame,this.options.from,row);
         this.initialized = false;
+    },
+
+
+});
+
+var GradientTool = new Class({
+    Extends: Tool,
+    Implements: [Options, Helpers],
+
+    options: {
+        from_col: null,
+        from_row: null,
+    },
+
+    initialize: function() {
+        this.initialized = false;
+    },
+
+    apply_to: function(frame, row, col, color) {
+        if (!this.initialized) {
+            this.options.from_row=row;
+            this.options.from_col=col;
+            this.initialized = true
+        };
+
+    },
+
+    reset: function(frame, row, col, color) {
+        var row_min=Math.min(row,this.options.from_row);
+        var row_max=Math.max(row,this.options.from_row);
+
+        this.gradient_vert(frame,parseInt(col),row,this.options.from_row);
+        this.gradient_vert(frame,parseInt(this.options.from_col),row,this.options.from_row);
+        for(var i=Math.abs(row-this.options.from_row); i>=0; --i) {
+            this.gradient_horiz(frame,parseInt(row_min)+i,this.options.from_col,col);
+        }
+        this.initialized = false;
+    },
+
+    gradient_horiz: function(frame, row, pixacol, pixbcol) {
+        if(parseInt(pixacol) > parseInt(pixbcol)) {
+            pixacol^=pixbcol;
+            pixbcol^=pixacol;
+            pixacol^=pixbcol;
+        }
+        var steps=Math.abs(pixacol-pixbcol);
+        for(var i=1;i<steps;i++) {
+            frame.set_color(row,parseInt(pixacol)+i,new Color
+                (parseInt(frame.color(row,pixacol).r+(i/steps)*(frame.color(row,pixbcol).r-frame.color(row,pixacol).r))
+                ,parseInt(frame.color(row,pixacol).g+(i/steps)*(frame.color(row,pixbcol).g-frame.color(row,pixacol).g))
+                ,parseInt(frame.color(row,pixacol).b+(i/steps)*(frame.color(row,pixbcol).b-frame.color(row,pixacol).b))));
+        }
+    },
+
+    gradient_vert: function(frame, col, pixarow, pixbrow) {
+        if(parseInt(pixarow) > parseInt(pixbrow)) {
+            pixarow^=pixbrow;
+            pixbrow^=pixarow;
+            pixarow^=pixbrow;
+        }
+        var steps=Math.abs(pixarow-pixbrow);
+        for(var i=1;i<steps;i++) {
+            frame.set_color(parseInt(pixarow)+i,col,new Color
+                (parseInt(frame.color(pixarow,col).r+(i/steps)*(frame.color(pixbrow,col).r-frame.color(pixarow,col).r))
+                ,parseInt(frame.color(pixarow,col).g+(i/steps)*(frame.color(pixbrow,col).g-frame.color(pixarow,col).g))
+                ,parseInt(frame.color(pixarow,col).b+(i/steps)*(frame.color(pixbrow,col).b-frame.color(pixarow,col).b))));
+        }
     },
 
 

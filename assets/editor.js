@@ -203,6 +203,18 @@ function init_editor(animation) {
                 }
             }),
 
+            new ImageButton('gradient-button', {
+                image: '/assets/icons/rainbow.png',
+                tooltip: 'Farbverlauf',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new GradientTool();
+                        MessageWidget.msg('Ziehe eine Linie zwischen zwei oder 4 Pixel, um dazwischen einen Farbverlauf zu machen');
+                    },
+                }
+            }),
+
         ],
     });
 
