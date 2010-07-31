@@ -32,6 +32,21 @@ var PenTool = new Class({
     }
 });
 
+var InvertTool = new Class({
+    Extends: Tool,
+
+    apply_to: function(frame, row, col, color) {
+        frame.invert_color(row, col);
+    }
+});
+
+var AlphaTool = new Class({
+    Extends: Tool,
+    apply_to: function(frame, row, col, color) {
+        frame.set_color_alpha(0.5, row, col, color);
+    }
+});
+
 var FillTool = new Class({
     Extends: Tool,
 

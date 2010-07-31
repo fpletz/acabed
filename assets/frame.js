@@ -50,6 +50,17 @@ var Frame = new Class({
         this.data[row][col] = color;
     },
 
+    invert_color: function(row, col) {                                                                                                      
+        this.set_color(row, col, new Color(255-this.color(row, col).r, 255-this.color(row, col).b, 255-this.color(row, col).g));
+    },
+
+    set_color_alpha: function(alpha, row, col, color) {
+        this.set_color(row, col, new Color
+            (parseInt(color.r*alpha+((1-alpha)*this.color(row, col).r))
+            ,parseInt(color.g*alpha+((1-alpha)*this.color(row, col).g))
+            ,parseInt(color.b*alpha+((1-alpha)*this.color(row, col).b))));
+    },
+
     // TODO: Handle non 3 color values
     to_xml: function() {
         var frame = new Element('__frame');

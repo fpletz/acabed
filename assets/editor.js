@@ -215,6 +215,30 @@ function init_editor(animation) {
                 }
             }),
 
+            new ImageButton('invert-button', {
+                image: '/assets/icons/contrast.png',
+                tooltip: 'Farben invertieren',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new InvertTool();
+                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin zu invertieren');
+                    },
+                },
+            }),
+
+            new ImageButton('alpha-button', {
+                image: '/assets/icons/contrast.png',
+                tooltip: 'Alphafarbe zeichnen',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new AlphaTool();
+                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin mit der aktuellen mit Alpha-Kanal zu übermalen');
+                    },
+                },
+            }),
+
         ],
     });
 
