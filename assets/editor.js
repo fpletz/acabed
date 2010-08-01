@@ -25,6 +25,10 @@ var Editor = new Class({
         this.set_color(new Color(0, 0, 0));
         this.current_tool = new PenTool();
         this.clipboard = null;
+        this.options = {
+            use_alpha: false,
+            alpha: 0.5,
+        };
 
         // initialize matrix click handler
         this.movie_player.matrix_table.addEvent('click', (function(row, col) {
@@ -446,6 +450,24 @@ function init_editor(animation) {
             //         },
             //     },
             // }),
+        ],
+    });
+
+    var tooloptions = new WidgetContainer('tool-options', {
+        widgets: [
+            new ImageButton('activate-alpha', {
+                image: '/assets/icons/arrow-curve-000-left.png',
+                tooltip: 'Deckkraft einstellen',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.options.use_alpha = !ed.options.use_alpha;
+                        // jomat: TODO: Naja, den Button da togglebar machen
+                        //        + daneben einen Slider und ein Eingabefeld von 0-100 machen
+                        //this.set_active(ed.options.use_alpha);
+                    },
+                },
+            }),
         ],
     });
 

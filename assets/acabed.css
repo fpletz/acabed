@@ -227,7 +227,7 @@ hr {
     border: solid 1px white;
 }
 
-#pixel-tools, #frame-tools, #color-tools, #colorpalette-tools {
+#pixel-tools, #frame-tools, #tool-options, #color-tools, #colorpalette-tools {
     overflow: hidden;
 }
 
