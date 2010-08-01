@@ -67,10 +67,10 @@ var PlayerControls = new Class({
                 },
             }),
             new Widget('slider', {
-                class: 'button',
+                'class': 'button',
             }),
             new Widget('frame-counter', {
-                class: '',
+                'class': '',
                 tooltip: 'Aktueller Frame / Anzahl Frames',
             }),
         ];

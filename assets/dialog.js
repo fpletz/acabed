@@ -23,7 +23,7 @@ var Dialog = new Class({
     Extends: Widget,
 
     options: {
-        class: 'dialog',
+        'class': 'dialog',
         title: 'new dialog',
         buttons: [],
     },
@@ -61,7 +61,7 @@ var ModalDialog = new Class({
 
         this.mask = document.body.get('mask', {
             id: this.overlay_id,
-            class: 'overlay',
+            'class': 'overlay',
             hideOnClick: true,
             destroyOnHide: true,
         });

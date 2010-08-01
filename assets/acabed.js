@@ -54,7 +54,7 @@ function init() {
 
         var apimg = new Element('img', {
             src: '/assets/images/ipad1984.png',
-            class: 'applefail',
+            'class': 'applefail',
             styles: {
                 width: apimgw,
                 height: apimgh,

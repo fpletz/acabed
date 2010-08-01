@@ -24,7 +24,7 @@ var Widget = new Class({
 
     options: {
         events: {},
-        class: '',
+        'class': '',
         text: '',
         tooltip: null,
     },
@@ -35,7 +35,7 @@ var Widget = new Class({
         
         this.el = new Element('div', {
             id: id,
-            class: this.options.class,
+            'class': this.options['class'],
             text: this.options.text,
         });
 
@@ -51,7 +51,7 @@ var Button = new Class({
     Extends: Widget,
 
     options: {
-        class: 'button textbutton',
+        'class': 'button textbutton',
         active_class: 'button-active',
         inactive_class: 'button-inactive',
         active: true,
@@ -82,7 +82,7 @@ var ImageButton = new Class({
     Extends: Button,
 
     options: {
-        class: 'button imagebutton',
+        'class': 'button imagebutton',
         image: undefined,
     },
 
@@ -117,7 +117,7 @@ var FileButton = new Class({
 				type: 'file',
 				name: 'file',
 				maxlength: '100000',
-				class: 'movie-file',
+				'class': 'movie-file',
 				events: {
 					change: this.fileReaderEvent.bind(this)
 				}
@@ -274,7 +274,7 @@ var Tooltip = new Class({
     Implements: [Options, Events],
 
     options: {
-        class: 'tooltip',
+        'class': 'tooltip',
         text: 'empty tooltip',
         styles: [],
     },
@@ -284,7 +284,7 @@ var Tooltip = new Class({
         this.target = target;
 
         this.el = new Element('div', {
-            class: this.options.class,
+            'class': this.options['class'],
             styles: this.options.styles,
             text: this.options.text,
         });
@@ -313,7 +313,7 @@ var MessageWidget = new Class({
     Extends: Widget,
 
     options: {
-        class: 'message-widget',
+        'class': 'message-widget',
         styles: {
             opacity: 0,
         },
@@ -325,7 +325,7 @@ var MessageWidget = new Class({
         this.el.dissolve();
 
         this.mouselander = new Element('div', {
-            class: 'message-widget',
+            'class': 'message-widget',
         });
 
         this.el.setProperty('text', '')

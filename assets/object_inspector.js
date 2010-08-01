@@ -26,7 +26,7 @@ var ObjectInspector = new Class({
 
     options: {
         properties: [],
-        class: 'object-inspector',
+        'class': 'object-inspector',
     },
 
     model: null,
