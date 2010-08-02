@@ -5,3 +5,5 @@ settings.py
 .*.swp
 assets/CACHE/*
 *~
+Django-1.2.1
+django
