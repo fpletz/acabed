@@ -414,6 +414,34 @@ function init_editor(animation) {
 
     var port_toolbar = new WidgetContainer('port-toolbar', {
         widgets: [
+            // new ImageButton('load-xml-button', {
+            //     image: '/assets/icons/arrow-090.png',
+            //     tooltip: 'Film aus Zwischenablage öffnen',
+            //     events: {
+            //         click: function() {
+            //             var ta = new Textarea('movie-xml');
+            //             var md = new ModalDialog('loading-dialog',
+            //                                      ta,
+            //                                      {title: 'Bml text ins Textfeld kopieren',
+            //                                       buttons: [new Button('load-button',
+            //                                                            {text: 'Laden',
+            //                                                             events: {
+            //                                                                 click: function() {
+            //                                                                     mp.load(ta.content());
+            //                                                                     ModalDialog.destroy();
+            //                                                                 }
+            //                                                             }}),
+            //                                                 new Button('close-button',
+            //                                                            {text: 'Schließen',
+            //                                                             events: {
+            //                                                                 click: function() {
+            //                                                                     ModalDialog.destroy();
+            //                                                                 },
+            //                                                             }})]})
+            //             md.show();
+            //         },
+            //     },
+            // }),
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
                 tooltip: 'Film vom Rechner öffnen',
@@ -436,6 +464,33 @@ function init_editor(animation) {
                     },
                 },
             }),
+            // new ImageButton('download-xml-button', {
+            //     image: '/assets/icons/arrow-270.png',
+            //     tooltip: 'Film in Zwischenablage kopieren',
+            //     events: {
+            //         click: function() {
+            //             var d = new ModalDialog('movie-xml-dialog',
+            //                 new Textarea('movie-xml', {
+            //                     content: fix_frame(ed.movie_player.movie.to_xml())
+            //                 }),
+            //                 {
+            //                     title: 'Diesen text kopieren und als movie.bml speichern',
+            //                     buttons: [
+            //                          new Button('close-button', {
+            //                             text: 'Schließen',
+            //                             events: {
+            //                                 click: function() {
+            //                                     ModalDialog.destroy();
+            //                                 },
+            //                             }
+            //                         }),
+            //                    ],
+            //                 }
+            //             );
+            //             d.show();
+            //         },
+            //     },
+            // }),
             new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
                 tooltip: 'Film auf Rechner speichern',
@@ -447,17 +502,6 @@ function init_editor(animation) {
                     },
                 },
             }),
-            // new ImageButton('send-json-button', {
-            //     image: '/assets/icons/arrow-curve-000-left.png',
-            //     tooltip: 'wtf? xD',
-            //     events: {
-            //         click: function() {
-            //             Dajaxice.acab.add('Dajax.process', {
-            //                 'animation': mp.movie.to_json()
-            //             });
-            //         },
-            //     },
-            // }),
         ],
     });
 
