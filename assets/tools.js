@@ -27,8 +27,8 @@ var Tool = new Class({
 var PenTool = new Class({
     Extends: Tool,
 
-    apply_to: function(frame, row, col, color) {
-        frame.set_color(row, col, color);
+    apply_to: function(frame, row, col, color, options) {
+            frame.set_color_alpha(row, col, color, options.alpha());
     }
 });
 
@@ -40,20 +40,13 @@ var InvertTool = new Class({
     }
 });
 
-var AlphaTool = new Class({
-    Extends: Tool,
-    apply_to: function(frame, row, col, color) {
-        frame.set_color_alpha(0.5, row, col, color);
-    }
-});
-
 var FillTool = new Class({
     Extends: Tool,
 
-    apply_to: function(frame, row, col, color) {
+    apply_to: function(frame, row, col, color, options) {
         for (var row = 0; row < frame.height; ++row) {
             for (var col = 0; col < frame.width; ++col) {
-                frame.set_color(row, col, color);
+                frame.set_color_alpha(row, col, color, options.alpha());
             }
         }
     }
@@ -320,19 +313,19 @@ var GradientTool = new Class({
 
     },
 
-    reset: function(frame, row, col, color) {
+    reset: function(frame, row, col, color, options) {
         var row_min=Math.min(row,this.options.from_row);
         var row_max=Math.max(row,this.options.from_row);
 
-        this.gradient_vert(frame,parseInt(col),row,this.options.from_row);
-        this.gradient_vert(frame,parseInt(this.options.from_col),row,this.options.from_row);
+        this.gradient_vert(frame, parseInt(col), row, this.options.from_row, options);
+        this.gradient_vert(frame, parseInt(this.options.from_col), row, this.options.from_row, options);
         for(var i=Math.abs(row-this.options.from_row); i>=0; --i) {
-            this.gradient_horiz(frame,parseInt(row_min)+i,this.options.from_col,col);
+            this.gradient_horiz(frame, parseInt(row_min)+i, this.options.from_col, col, options);
         }
         this.initialized = false;
     },
 
-    gradient_horiz: function(frame, row, pixacol, pixbcol) {
+    gradient_horiz: function(frame, row, pixacol, pixbcol, options) {
         if(parseInt(pixacol) > parseInt(pixbcol)) {
             pixacol^=pixbcol;
             pixbcol^=pixacol;
@@ -340,14 +333,14 @@ var GradientTool = new Class({
         }
         var steps=Math.abs(pixacol-pixbcol);
         for(var i=1;i<steps;i++) {
-            frame.set_color(row,parseInt(pixacol)+i,new Color
+            frame.set_color_alpha(row,parseInt(pixacol)+i,new Color
                 (parseInt(frame.color(row,pixacol).r+(i/steps)*(frame.color(row,pixbcol).r-frame.color(row,pixacol).r))
                 ,parseInt(frame.color(row,pixacol).g+(i/steps)*(frame.color(row,pixbcol).g-frame.color(row,pixacol).g))
-                ,parseInt(frame.color(row,pixacol).b+(i/steps)*(frame.color(row,pixbcol).b-frame.color(row,pixacol).b))));
+                ,parseInt(frame.color(row,pixacol).b+(i/steps)*(frame.color(row,pixbcol).b-frame.color(row,pixacol).b))),options.alpha());
         }
     },
 
-    gradient_vert: function(frame, col, pixarow, pixbrow) {
+    gradient_vert: function(frame, col, pixarow, pixbrow, options) {
         if(parseInt(pixarow) > parseInt(pixbrow)) {
             pixarow^=pixbrow;
             pixbrow^=pixarow;
@@ -355,10 +348,10 @@ var GradientTool = new Class({
         }
         var steps=Math.abs(pixarow-pixbrow);
         for(var i=1;i<steps;i++) {
-            frame.set_color(parseInt(pixarow)+i,col,new Color
+            frame.set_color_alpha(parseInt(pixarow)+i,col,new Color
                 (parseInt(frame.color(pixarow,col).r+(i/steps)*(frame.color(pixbrow,col).r-frame.color(pixarow,col).r))
                 ,parseInt(frame.color(pixarow,col).g+(i/steps)*(frame.color(pixbrow,col).g-frame.color(pixarow,col).g))
-                ,parseInt(frame.color(pixarow,col).b+(i/steps)*(frame.color(pixbrow,col).b-frame.color(pixarow,col).b))));
+                ,parseInt(frame.color(pixarow,col).b+(i/steps)*(frame.color(pixbrow,col).b-frame.color(pixarow,col).b))),options.alpha());
         }
     },
 

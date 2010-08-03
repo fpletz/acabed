@@ -270,6 +270,20 @@ var RadioContainer = new Class({
     }
 });
 
+var OptionsContainer = new Class({
+    Extends: WidgetContainer,
+
+    initialize: function(id, options) {
+        this.parent(id, options);
+
+        this.options.widgets.each(function(button) {
+            button.el.addEvent('click', (function(ev) {
+                button.set_active(!button.get_active());
+            }).bind(this));
+        }, this);
+    }
+});
+
 var Tooltip = new Class({
     Implements: [Options, Events],
 
