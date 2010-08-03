@@ -47,6 +47,30 @@ var Widget = new Class({
     },
 });
 
+var Textarea = new Class({
+    Extends: Widget,
+
+    options: {
+        content: '',
+        cols: 100,
+        rows: 20,
+    },
+    
+    initialize: function(id, options) {
+        this.parent(id, options);
+        
+        this.textarea = new Element('textarea');
+        this.textarea.set('value', this.options.content);
+        this.textarea.setProperty('cols', this.options.cols);
+        this.textarea.setProperty('rows', this.options.rows);
+        this.el.grab(this.textarea);
+    },
+    
+    content: function() {
+        return this.textarea.get('value');
+    }
+});
+
 var Button = new Class({
     Extends: Widget,
 
