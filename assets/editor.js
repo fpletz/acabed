@@ -550,8 +550,13 @@ function init_editor(animation) {
                 events: {
                     click: function() {
                         console.info('remove frame');
-                        if (mv.frames > 1) {
+                        if (mv.frames != 1) {
                             mv.remove_frame_at(mp.current_frame_no);
+                            mp.update();
+                        } else {
+                            console.info('removing last frame');
+                            mv.add_frame_at(mp.current_frame_no+1);
+                            mv.remove_frame_at(mp.current_frame_no)
                             mp.update();
                         }
                     },
