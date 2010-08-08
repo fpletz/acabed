@@ -18,10 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.forms import ModelForm
-from models import Animation
+from models import Animation, Pixeldonor
 
 class AnimationForm(ModelForm):
     class Meta:
         model = Animation
         exclude = ('playlists',)
+        
+class PixeldonorForm(ModelForm):
+    class Meta:
+        model = Pixeldonor
+        exclude = ('pixel', 'donor')
+        
 

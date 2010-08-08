@@ -22,7 +22,9 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from models import *
+from forms import *
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import permission_required
 
 def index(request):
     return render_to_response('index.html',
@@ -59,3 +61,61 @@ def detail(request, animation_id):
         raise Http404
 
     return render_to_response('detail.html', {'animation': a})
+
+def pixel(request, action, pixel):
+    if request.method == 'POST':
+        p = Pixeldonor.objects.get(pixel=pixel)
+        
+        if not request.user == p.donor:
+            raise Http403
+        else:
+            form = PixeldonorForm(request.POST, request.FILES, instance=p)
+            
+            if form.is_valid():
+                form.save()
+                return render_to_response('pixel_edit.html', {
+                    'pixel': p,
+                    'form': form,
+                    },
+                    context_instance=RequestContext(request)
+                )
+
+    if action == 'edit':
+        p = Pixeldonor.objects.get(pixel=pixel)
+        
+        if not request.user == p.donor:
+            raise Http403
+        else:
+            form = PixeldonorForm(instance=p)
+            
+            return render_to_response('pixel_edit.html', {
+                'pixel': p,
+                'form': form,
+                },
+                context_instance=RequestContext(request)
+            )
+    
+    if action == 'list':
+        return render_to_response('pixel_list.html', {
+            'pixel': Pixeldonor.objects.filter(donor=request.user),
+            },
+            context_instance=RequestContext(request)
+        )
+        
+    if action == 'show':
+        p = Pixeldonor.objects.get(pixel=pixel)
+        if p.anon == True:
+            if not request.user == p.donor:
+                raise Http403
+            else:
+                return render_to_response('pixel_show.html', {
+                    'pixel': p,
+                    },
+                    context_instance=RequestContext(request)
+                )
+        else:
+            return render_to_response('pixel_show.html', {
+                'pixel': p,
+                },
+                context_instance=RequestContext(request)
+            )

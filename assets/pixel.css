@@ -1,0 +1,93 @@
+
+
+#color, #showcolor {
+    height: 400px;
+    width: 400px;
+    background: none;
+    background-color: black;
+    border: none;
+    color: #ffffff;
+    font-size: 42pt;
+    text-align: center;
+    font-weight: bold;
+}
+
+.container {
+    margin-left: 5px;
+    padding: 5px;
+    float: center;
+    overflow: hidden;
+}
+
+#left {
+    width: auto;
+}
+
+.fieldWrapper input, input:focus {
+    background:none;
+}
+
+.fieldWrapper input:focus, input:active {
+    background:none;
+}
+
+.fieldWrapper input {
+    color: #ccc;
+    padding: 2px 2px;
+    margin: 2px 2px;
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    background-color: #222;
+}
+
+#id_message, #id_url, #id_name, #id_color {
+    width: 180px;
+}
+
+#container-message {
+    background-image: url(/assets/icons/balloon-quotation.png) repeat-none;
+}
+
+fieldset {
+    border: solid 1px #666;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    margin: 5px;
+}
+
+#container-uploader {
+    opacity: 0;
+    position: relative;
+    height: 100%;
+    width: auto;
+    visibility: hidden;
+}
+
+
+
+#uploader {
+    width: 100px;
+    height: 100px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-width: initial;
+    border-color: initial;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    cursor: default; 
+}
+
+.pixelbuttons {
+    width: 80px;
+}

@@ -24,4 +24,6 @@ urlpatterns = patterns('acab.views',
     (r'^filereplay/$', 'filereplay'),
     (r'^animation/list/$', 'list'),
     (r'^animation/(?P<animation_id>\d+)/$', 'detail'),
+    (r'^pixel/list', 'pixel', {'action':'list', 'pixel':''}),
+    (r'^pixel/(?P<pixel>.+)/(?P<action>(edit|show|list))$', 'pixel'),    
 )

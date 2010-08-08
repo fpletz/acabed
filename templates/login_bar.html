@@ -1,5 +1,5 @@
 {% if authed %}
-    Hallo {{ login }} | <a href="#" onClick="Dajaxice.acab.logout('Dajax.process');">Logout</a>
+    Hallo, {{ login }} {% if pixel %}| <a href="/acab/pixel/list">Pixel konfigurieren</a>{% endif %} | <a href="#" onClick="Dajaxice.acab.logout('Dajax.process');">Logout</a>
 {% else %}
     Nicht eingeloggt | <a href="#" onClick="Dajaxice.acab.login_form('Dajax.process');">Einloggen</a>
 {% endif %}

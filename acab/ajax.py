@@ -27,14 +27,21 @@ from django.core import serializers
 
 import json
 
-from models import Playlist, User, AnimationInstance, Animation
+from models import Playlist, User, AnimationInstance, Animation, Pixeldonor
 from forms import AnimationForm
 
 def login_widget(request):
-    r = render_to_string('login_bar.html', {
-        'authed': request.user.is_authenticated(),
-        'login': request.user.username,
-    })
+    if request.user.has_perm('acab.edit_pixel'):
+        r = render_to_string('login_bar.html', {
+            'authed': request.user.is_authenticated(),
+            'login': request.user.username,
+            'pixel': True,
+        })
+    else:
+        r = render_to_string('login_bar.html', {
+            'authed': request.user.is_authenticated(),
+            'login': request.user.username,
+        })
 
     dajax = Dajax()
     dajax.assign('#login-widget','innerHTML', r)

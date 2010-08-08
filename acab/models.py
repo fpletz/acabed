@@ -114,7 +114,7 @@ class AnimationInstance(models.Model):
 class FileReplay(models.Model):
     content = models.TextField()
     code = models.IntegerField()
-	
+
 class Playlist(models.Model):
     title = models.CharField(max_length=128)
     animations = models.ManyToManyField(Animation, through=AnimationInstance)
@@ -138,3 +138,24 @@ class SpoolJob(models.Model):
         except IndexError:
             return None
 
+class Pixeldonor(models.Model):
+    donor = models.ForeignKey(User)
+    pixel = models.CharField('Pixel', max_length=3, unique=True)
+    color = models.CharField('Farbe', max_length=6)
+    name = models.CharField('Name', max_length=256)
+    url = models.URLField('Website', verify_exists=True, max_length=256, null=True, blank=True)
+    message = models.CharField('Nachricht', max_length=42, null=True, blank=True)
+    picture = models.ImageField('Bild', upload_to='donors', null=True, blank=True)
+    anon = models.BooleanField('Anonym')
+    last_update = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+    def get_picture_url(self):
+        return "%s%s" % (MEDIA_ROOT, self.picture)
+
+    def __unicode__(self):
+      return "%s (%s, %s)" % (self.donor, self.pixel, self.name)
+    
+    class Meta:
+        permissions = (
+            ("edit_pixel", "Edit pixel"),
+        )

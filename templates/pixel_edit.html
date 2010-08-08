@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>acabed</title>
+
+    {% load compress %}
+    {% compress css %}
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}acabed.css" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}pixel.css" />
+    {% endcompress %}
+
+    {% load dajaxice_templatetags %}
+    {% dajaxice_js_import %}
+
+    <script type="text/javascript" src="{{ MEDIA_URL }}mootools.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}mootools-more.js"></script>
+    
+    {% compress js %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}mootools.dajax.core.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}login.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}pixel.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}jscolor.js"></script>
+    {% endcompress %}
+  </head>
+  <body>
+    <img src="{{ MEDIA_URL }}/icons/acabed-logo.png">
+
+    <div id="login-widget"></div>
+    <div id="content">
+      <div id="left" class="container">
+        <div id="donorform">
+          <form enctype="multipart/form-data" method="post">
+            {% for field in form %}
+              <fieldset class="fieldWrapper" id="container-{{ field.name }}">
+              <legend>{{ field.label_tag }}</legend>
+              {% if field.errors %}{{ field.errors }}<br />{% endif %}
+              {{ field }}
+              </fieldset>
+            {% endfor %}
+            <input type="submit" value="Submit" />
+            {% csrf_token %}
+          </form>
+        </div>
+      </div>
+      <div id="middle" class="container">
+        <div id="colorpicker-container" class="container">
+          <input type="input" class="color {valueElement:'id_color'}" id="color" background-color="{{ pixel.color }}" readonly value="">
+        </div>
+        <div id="help-container" class="container">
+          W&auml;hle bitte Farbe, Name und Nachricht<br /> deines Pixels. Die Felder Website und<br />Bild sind optional. W&auml;hlst Du das<br /> H&auml;ckchen bei "Anonym" werden wir<br />keine Daten &uuml;ber deinen Pixel<br />bekannt geben.
+        </div>
+      </div>
+      <div id="right" class="container">
+        {% if pixel.picture %}
+        <fieldset>
+        <legend>Bild</legend>
+        <span><img id="donorpic" src="{{ pixel.picture.url }}" class="pixelpic"></span>
+        </fieldset>
+        {% else %}
+        <span><img id="donorpic" src="{{ MEDIA_URL }}/images/anon.jpg" class="pixelpic"></span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div style="clear: both;"></div>
+    <div id="footer">
+        <a href="http://acab.muc.ccc.de">Projekt AllColorsAreBeautiful</a> |
+        <a href="http://muc.ccc.de">CCC M&uuml;nchen</a> |
+        Icons: <a href="http://p.yusukekamiyamane.com">Fugue by Yusuke Kamiyamane</a>
+    </div>
+
+    <div id="tooltips"></div>
+  </body>
+</html>
