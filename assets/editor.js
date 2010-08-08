@@ -26,21 +26,28 @@ var Editor = new Class({
         this.current_tool = new PenTool();
         this.clipboard = null;
         this.options = {
-            use_alpha: false,
-            alpha: 0.5,
+            alpha_use: false,
+            alpha_val: 0.5,
+            alpha: function() {
+                return this.alpha_use?this.alpha_val:1.0;
+            },
+            alpha_toggle: function() {
+                this.alpha_use = !this.alpha_use;
+                console.log("toggle alpha %x",this.alpha_use);
+            },
         };
 
         // initialize matrix click handler
         this.movie_player.matrix_table.addEvent('click', (function(row, col) {
             var current_frame = this.movie_player.current_frame();
-            this.current_tool.apply_to(current_frame, row, col, this.current_color);
+            this.current_tool.apply_to(current_frame, row, col, this.current_color, this.options);
             this.movie_player.render(current_frame);
         }).bind(this));
 
         this.movie_player.matrix_table.addEvent('mouseup', (function(row, col) {
             var current_frame = this.movie_player.current_frame();
             if(!(isNaN(row) || isNaN(col))) {
-                this.current_tool.reset(current_frame, row, col, this.current_color);
+                this.current_tool.reset(current_frame, row, col, this.current_color, this.options);
             }
             this.movie_player.render(current_frame);
         }).bind(this));
@@ -87,7 +94,7 @@ function init_editor(animation) {
                 active: true,
                 events: {
                     click: function() {
-                        ed.current_tool = new PenTool();
+                        ed.current_tool = new PenTool(ed);
                         MessageWidget.msg('Click auf ein Fenster um ein mit der aktuellen Farbe zu färben');
                     },
                 },
@@ -230,7 +237,7 @@ function init_editor(animation) {
                     },
                 },
             }),
-
+/*
             new ImageButton('alpha-button', {
                 image: '/assets/icons/contrast.png',
                 tooltip: 'Alphafarbe zeichnen',
@@ -242,6 +249,7 @@ function init_editor(animation) {
                     },
                 },
             }),
+*/
 
         ],
     });
@@ -406,6 +414,34 @@ function init_editor(animation) {
 
     var port_toolbar = new WidgetContainer('port-toolbar', {
         widgets: [
+            // new ImageButton('load-xml-button', {
+            //     image: '/assets/icons/arrow-090.png',
+            //     tooltip: 'Film aus Zwischenablage öffnen',
+            //     events: {
+            //         click: function() {
+            //             var ta = new Textarea('movie-xml');
+            //             var md = new ModalDialog('loading-dialog',
+            //                                      ta,
+            //                                      {title: 'Bml text ins Textfeld kopieren',
+            //                                       buttons: [new Button('load-button',
+            //                                                            {text: 'Laden',
+            //                                                             events: {
+            //                                                                 click: function() {
+            //                                                                     mp.load(ta.content());
+            //                                                                     ModalDialog.destroy();
+            //                                                                 }
+            //                                                             }}),
+            //                                                 new Button('close-button',
+            //                                                            {text: 'Schließen',
+            //                                                             events: {
+            //                                                                 click: function() {
+            //                                                                     ModalDialog.destroy();
+            //                                                                 },
+            //                                                             }})]})
+            //             md.show();
+            //         },
+            //     },
+            // }),
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
                 tooltip: 'Film vom Rechner öffnen',
@@ -428,6 +464,33 @@ function init_editor(animation) {
                     },
                 },
             }),
+            // new ImageButton('download-xml-button', {
+            //     image: '/assets/icons/arrow-270.png',
+            //     tooltip: 'Film in Zwischenablage kopieren',
+            //     events: {
+            //         click: function() {
+            //             var d = new ModalDialog('movie-xml-dialog',
+            //                 new Textarea('movie-xml', {
+            //                     content: fix_frame(ed.movie_player.movie.to_xml())
+            //                 }),
+            //                 {
+            //                     title: 'Diesen text kopieren und als movie.bml speichern',
+            //                     buttons: [
+            //                          new Button('close-button', {
+            //                             text: 'Schließen',
+            //                             events: {
+            //                                 click: function() {
+            //                                     ModalDialog.destroy();
+            //                                 },
+            //                             }
+            //                         }),
+            //                    ],
+            //                 }
+            //             );
+            //             d.show();
+            //         },
+            //     },
+            // }),
             new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
                 tooltip: 'Film auf Rechner speichern',
@@ -439,32 +502,18 @@ function init_editor(animation) {
                     },
                 },
             }),
-            // new ImageButton('send-json-button', {
-            //     image: '/assets/icons/arrow-curve-000-left.png',
-            //     tooltip: 'wtf? xD',
-            //     events: {
-            //         click: function() {
-            //             Dajaxice.acab.add('Dajax.process', {
-            //                 'animation': mp.movie.to_json()
-            //             });
-            //         },
-            //     },
-            // }),
         ],
     });
 
-    var tooloptions = new WidgetContainer('tool-options', {
+    var tooloptions = new OptionsContainer('tool-options', {
         widgets: [
             new ImageButton('activate-alpha', {
-                image: '/assets/icons/arrow-curve-000-left.png',
+                image: '/assets/icons/alpha.png',
                 tooltip: 'Deckkraft einstellen',
                 active: false,
                 events: {
-                    click: function() {
-                        ed.options.use_alpha = !ed.options.use_alpha;
-                        // jomat: TODO: Naja, den Button da togglebar machen
-                        //        + daneben einen Slider und ein Eingabefeld von 0-100 machen
-                        //this.set_active(ed.options.use_alpha);
+                    click: function(ev) {
+                        ed.options.alpha_toggle();
                     },
                 },
             }),
@@ -501,8 +550,13 @@ function init_editor(animation) {
                 events: {
                     click: function() {
                         console.info('remove frame');
-                        if (mv.frames > 1) {
+                        if (mv.frames != 1) {
                             mv.remove_frame_at(mp.current_frame_no);
+                            mp.update();
+                        } else {
+                            console.info('removing last frame');
+                            mv.add_frame_at(mp.current_frame_no+1);
+                            mv.remove_frame_at(mp.current_frame_no)
                             mp.update();
                         }
                     },

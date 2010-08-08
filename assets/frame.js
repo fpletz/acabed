@@ -54,7 +54,7 @@ var Frame = new Class({
         this.set_color(row, col, new Color(255-this.color(row, col).r, 255-this.color(row, col).b, 255-this.color(row, col).g));
     },
 
-    set_color_alpha: function(alpha, row, col, color) {
+    set_color_alpha: function(row, col, color, alpha) {
         this.set_color(row, col, new Color
             (parseInt(color.r*alpha+((1-alpha)*this.color(row, col).r))
             ,parseInt(color.g*alpha+((1-alpha)*this.color(row, col).g))
