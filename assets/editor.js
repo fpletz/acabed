@@ -259,8 +259,8 @@ function init_editor(animation) {
         items: [
             {
                 id: 'duration',
-                title: 'Duration [ms]',
-                description: 'Display time of the current frame.',
+                title: 'Frameanzeigedauer [ms]',
+                description: 'Zeit in Millisekunden (1000ms = 1s) die der aktuelle Frame angezeigt werden soll',
                 type: 'number',
                 max: '50'
             }
@@ -272,15 +272,15 @@ function init_editor(animation) {
         items: [
             {
                 id: 'title',
-                title: 'Title',
-                description: 'The name of the animation.',
+                title: 'Titel',
+                description: 'Name der Animation',
                 type: 'text',
                 max: '50'
             },
             {
                 id: 'description',
-                title: 'Description',
-                description: 'An optional description that describes the work.',
+                title: 'Beschreibung',
+                description: 'Beschreibung der Animation',
                 type: 'multiline',
                 max: '1500',
                 height: '5'
@@ -288,27 +288,21 @@ function init_editor(animation) {
             {
                 id: 'author',
                 title: 'Author',
-                description: 'Name of the author',
+                description: 'Name des Autors',
                 type: 'text',
                 max: '50'
             },
             {
                 id: 'email',
                 title: 'E-Mail',
-                description: 'Author E-Mail address',
+                description: 'Email-Adresse des Autors',
                 type: 'text',
                 max: '50'
             },
             {
-                id: 'loop',
-                title: 'Loop video',
-                description: 'Should this animation be played more than once.',
-                type: 'bool',
-            },
-            {
                 id: 'max_duration',
-                title: 'Maximal duration [s]',
-                description: 'Maximal play time',
+                title: 'Anzeigedauer [s]',
+                description: 'Dauer in Sekunden, die die Animation durchgeloopt werden soll',
                 type: 'number'
             },
         ]
@@ -505,6 +499,8 @@ function init_editor(animation) {
         ],
     });
 
+    // disabled for now
+    /*
     var tooloptions = new OptionsContainer('tool-options', {
         widgets: [
             new ImageButton('activate-alpha', {
@@ -519,6 +515,7 @@ function init_editor(animation) {
             }),
         ],
     });
+    */
 
     var frametools = new WidgetContainer('frame-tools', {
         widgets: [
