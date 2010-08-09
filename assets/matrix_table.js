@@ -161,6 +161,9 @@ var CanvasTable = new Class({
         }).bind(this);
         
         document.body.addEvent('mouseup', (function(e) {
+            if(!this.clicked)
+                return;
+
             this.clicked = false;
             var colrow = $(e.target).id.split('-');
             this.fireEvent('mouseup', [colrow[2], colrow[1]]);
