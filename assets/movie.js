@@ -31,7 +31,7 @@ var Movie = new Class({
         this.set('creator', 'acabed');
         this.set('email', '');
         this.set('url', '');
-        this.set('loop', 'no');
+        this.set('loop', 'yes');
 
         this.set('height', 4);
         this.set('width', 24);
