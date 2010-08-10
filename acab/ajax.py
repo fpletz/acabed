@@ -129,8 +129,8 @@ def add(request, animation):
         'user': request.user is None and '' or request.user.id,
     })
 
-    if int(animation.duration) > 60:
-        animation.duration = 60
+    if int(animation['duration']) > 60:
+        animation['duration'] = 60
     
     form = AnimationForm(animation)
 
