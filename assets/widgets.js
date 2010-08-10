@@ -156,7 +156,7 @@ var FileButton = new Class({
                 try {
 		    this.fireEvent("loaded", [ev.target.files[0].getAsBinary()]);
                 } catch(e) {
-                    alert("Dateiupload funktioniert derzeit leider nicht mit deinem Browser! Bald fixen wir's! ;)");
+                    alert("Dateiupload funktioniert derzeit leider nicht mit deinem Browser! Bald fixen wir's! Bis dahin funktionierts mit Firefox ;)");
                     ModalDialog.destroy();
                     Dajaxice.acab.load_editor('Dajax.process');
                 }
