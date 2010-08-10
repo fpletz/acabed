@@ -128,6 +128,10 @@ def add(request, animation):
         'type': 'm',
         'user': request.user is None and '' or request.user.id,
     })
+
+    if int(animation.duration) > 60:
+        animation.duration = 60
+    
     form = AnimationForm(animation)
 
     if form.is_valid():

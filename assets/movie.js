@@ -38,7 +38,7 @@ var Movie = new Class({
         this.set('depth', 8);
         this.set('channels', 3);
         this.set('frames', 0);
-        this.set('max_duration', 120);
+        this.set('max_duration', 10);
     },
 
     load_xml: function(movie_string) {
