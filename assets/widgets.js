@@ -153,7 +153,13 @@ var FileButton = new Class({
     
     fileReaderEvent: function(ev) {
 		this.fireEvent("clicked");
-		this.fireEvent("loaded", [ev.target.files[0].getAsBinary()]);
+                try {
+		    this.fireEvent("loaded", [ev.target.files[0].getAsBinary()]);
+                } catch(e) {
+                    alert("Dateiupload funktioniert derzeit leider nicht mit deinem Browser! Bald fixen wir's! ;)");
+                    ModalDialog.destroy();
+                    Dajaxice.acab.load_editor('Dajax.process');
+                }
 	},
 	
 	frameEvent: function(button) {

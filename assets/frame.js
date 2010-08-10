@@ -152,7 +152,11 @@ var XmlFrame = new Class({
             var t = [];
             for(var col = 0; col < this.width; ++col) {
                 // FIXME: textContent for o, XML is fucked
-                t.push(this.color_from_string(o, col));
+                var x = o;
+                if(o.textContent !== undefined)
+                    x = o.textContent;
+
+                t.push(this.color_from_string(x, col));
             }
             frame.data.push(t);
         }).bind(this));
