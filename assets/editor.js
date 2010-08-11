@@ -338,6 +338,7 @@ function init_editor(animation) {
                                         text: 'Neuer Film',
                                         events: {
                                             click: function() {
+                                                mp.stop(); 
                                                 Dajaxice.acab.load_editor('Dajax.process');
                                                 MessageWidget.msg('Ein neuer Film wurde erstellt');
                                                 ModalDialog.destroy();
