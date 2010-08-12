@@ -237,6 +237,30 @@ function init_editor(animation) {
                     },
                 },
             }),
+
+	    new ImageButton('life-button', {
+                image: '/assets/icons/life.png',
+                tooltip: 'Life',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new LifeTool();
+                        MessageWidget.msg('Conway\'s Game of Life auf 4x24. Klicke auf ein Fenster für eine weitere Generation.');
+                    },
+                },
+            }),
+	    
+	    new ImageButton('random-button', {
+                image: '/assets/icons/random.png',
+                tooltip: 'Zufall',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new RandomTool();
+                        MessageWidget.msg('Zufällige Pixel einfärben');
+                    },
+                },
+            }),
 /*
             new ImageButton('alpha-button', {
                 image: '/assets/icons/contrast.png',
