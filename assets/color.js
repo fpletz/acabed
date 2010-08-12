@@ -63,6 +63,10 @@ var Color = new Class({
         return '#'+rs+gs+bs;
     },
 
+    get_brightness: function() {
+        return Math.round([this.r,this.g,this.b].average())
+    },
+
     copy: function() {
         return new Color(this.r, this.g, this.b);
     }

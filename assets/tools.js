@@ -358,4 +358,54 @@ var GradientTool = new Class({
 
 });
 
+var LifeTool = new Class({
+    Extends: Tool,
 
+    nextGeneration: function(frame, color) {
+        var oldgen = frame.data.map(
+            function (row) {
+                return row.map(function(col) {
+                    return col.get_brightness() > 64 ? true : false
+                })
+            });
+        function neighbors(row, col) {
+            function torus(rowoffset, coloffset) {
+                return oldgen
+                            [(row+rowoffset+frame.height)%frame.height]
+                            [(col+coloffset+frame.width)%frame.width]
+            }
+            return  torus(-1,-1) + torus(-1,0) + torus(-1,1)
+                    + torus(0,-1) + 0          + torus(0,1)
+                    + torus(1,-1) + torus(1,0) + torus(1,1);
+        } 
+
+        return oldgen.map(function (row, rownum) {
+               return row.map(function(alive, colnum) {// col = alive
+                    n = neighbors(rownum, colnum);
+                    // these are hardcoded rules. make them an option?
+                    // a normal life tends to become boring rather fast on 4x24
+                    return alive && (n == 2 || n == 3) || !alive && n == 3
+                })
+            });
+    },
+
+    apply_to: function(frame, row, col, color) {
+        nextGen = this.nextGeneration(frame, color);
+        nextGen.forEach(function(row, rownum) {
+            row.forEach(function(col, colnum) {
+                frame.set_color(rownum, colnum, col ? color : new Color(0,0,0))
+            })
+        })
+    }
+});
+
+var RandomTool = new Class({
+    Extends: Tool,
+
+    apply_to: function(frame, row, col, color) {
+        for (var i = 0; i < frame.height; i++)
+            for (var j = 0; j < frame.width; j++)
+                if (Math.random() < 0.04)
+                    frame.set_color(i, j, color);
+    }
+});
