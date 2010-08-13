@@ -120,6 +120,18 @@ var ObjectInspector = new Class({
                         type: 'text'});
                     
                     valueInput.addEvent('change', (function(el) {
+                        value = el.target.getProperty('value');
+                        if(item.range !== undefined) {
+                            val = parseInt(value);
+
+                            if(val < item.range[0])
+                                val = item.range[0];
+                            else if(val > item.range[1])
+                                val = item.range[1];
+
+                            el.target.setProperty('value', val.toString());
+                        }
+
                         this.model.set(item.id, el.target.getProperty('value'));
                     }).bind(this));
                 }

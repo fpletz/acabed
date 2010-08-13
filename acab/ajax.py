@@ -133,6 +133,10 @@ def add(request, animation):
 
     if int(animation['max_duration']) > 60:
         animation['max_duration'] = 60
+
+    for frame in animation['data']:
+        if int(frame['duration']) > 2000:
+            frame['duration'] = 2000
     
     form = AnimationForm(animation)
 

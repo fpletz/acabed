@@ -286,7 +286,8 @@ function init_editor(animation) {
                 title: 'Frameanzeigedauer [ms]',
                 description: 'Zeit in Millisekunden (1000ms = 1s) die der aktuelle Frame angezeigt werden soll',
                 type: 'number',
-                max: '50'
+                max: '10',
+                range: [0,2000],
             }
         ]
     });
@@ -327,7 +328,8 @@ function init_editor(animation) {
                 id: 'max_duration',
                 title: 'Anzeigedauer [s]',
                 description: 'Dauer in Sekunden, die die Animation durchgeloopt werden soll',
-                type: 'number'
+                type: 'number',
+                range: [0,60],
             },
         ]
     });
