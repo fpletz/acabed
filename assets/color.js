@@ -19,7 +19,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var Color = new Class({
+var AcabColor = new Class({
     initialize: function(r, g, b) {
         this.set_from_rgb(r, g, b);
         
@@ -68,6 +68,6 @@ var Color = new Class({
     },
 
     copy: function() {
-        return new Color(this.r, this.g, this.b);
+        return new AcabColor(this.r, this.g, this.b);
     }
 });

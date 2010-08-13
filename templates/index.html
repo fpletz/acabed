@@ -7,6 +7,7 @@
     {% load compress %}
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}acabed.css" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}ColorRoller.css" />
     {% endcompress %}
 
     {% load dajaxice_templatetags %}
@@ -14,6 +15,7 @@
 
     <script type="text/javascript" src="{{ MEDIA_URL }}mootools.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}mootools-more.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}ColorRoller.js"></script>
 
     {% compress js %}
     <script type="text/javascript" src="{{ MEDIA_URL }}mootools.dajax.core.js"></script>
@@ -34,8 +36,8 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}dialog.js"></script>
 
     <!-- colorpicker -->
-    <script type="text/javascript" src="{{ MEDIA_URL }}moopick.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}palette.js"></script>
+    <!--script type="text/javascript" src="{{ MEDIA_URL }}moopick.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}palette.js"></script-->
     {% endcompress %}
   </head>
   <body>

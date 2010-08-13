@@ -22,7 +22,7 @@
 var Editor = new Class({
     initialize: function(movie_player) {
         this.movie_player = movie_player;
-        this.set_color(new Color(0, 0, 0));
+        this.set_color(new AcabColor(0, 0, 0));
         this.current_tool = new PenTool();
         this.clipboard = null;
         this.options = {
@@ -608,6 +608,18 @@ function init_editor(animation) {
     });
 
     // Color picker change callback sets current_color of editor
+    var picker = new ColorRoller($('color-tools'), {
+        color: '#ffffff',
+        type: 2,
+        space: 'B',
+        onChange: function(color) {
+            c = new AcabColor();
+            c.set_from_string(color);
+            ed.set_color(c);
+        },
+    });
+
+    /* old picker
     var set_editor_color = function (s) {
         c = new Color();
         c.set_from_string(s);
@@ -620,13 +632,16 @@ function init_editor(animation) {
         styles: { width: '10px', height: '10px' }
     });
 
-    var current_color_field = new Widget('current-color');
     
     picker.addEvents({
         'onColorClick': set_editor_color,
     });
+    */
+
+    var current_color_field = new Widget('current-color');
 
     // Color picker change callback sets current_color of editor
+    /*
     var palette = new Palette({
         palletParentElement: $('colorpalette-tools'),
         palletID: 'colorpalettefoo',
@@ -635,6 +650,7 @@ function init_editor(animation) {
     palette.addEvents({
         'onColorClick': set_editor_color,
     });
+    */
 
     // Update slider max on Movie resizing
     mv.addEvent('modify', function() {

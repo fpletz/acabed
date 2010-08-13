@@ -21,6 +21,7 @@
 
 var Tool = new Class({
     reset: function() {},
+    apply_to: function(frame, row, col, color, options) {},
 });
 
 
@@ -333,7 +334,7 @@ var GradientTool = new Class({
         }
         var steps=Math.abs(pixacol-pixbcol);
         for(var i=1;i<steps;i++) {
-            frame.set_color_alpha(row,parseInt(pixacol)+i,new Color
+            frame.set_color_alpha(row,parseInt(pixacol)+i,new AcabColor
                 (parseInt(frame.color(row,pixacol).r+(i/steps)*(frame.color(row,pixbcol).r-frame.color(row,pixacol).r))
                 ,parseInt(frame.color(row,pixacol).g+(i/steps)*(frame.color(row,pixbcol).g-frame.color(row,pixacol).g))
                 ,parseInt(frame.color(row,pixacol).b+(i/steps)*(frame.color(row,pixbcol).b-frame.color(row,pixacol).b))),options.alpha());
@@ -348,7 +349,7 @@ var GradientTool = new Class({
         }
         var steps=Math.abs(pixarow-pixbrow);
         for(var i=1;i<steps;i++) {
-            frame.set_color_alpha(parseInt(pixarow)+i,col,new Color
+            frame.set_color_alpha(parseInt(pixarow)+i,col,new AcabColor
                 (parseInt(frame.color(pixarow,col).r+(i/steps)*(frame.color(pixbrow,col).r-frame.color(pixarow,col).r))
                 ,parseInt(frame.color(pixarow,col).g+(i/steps)*(frame.color(pixbrow,col).g-frame.color(pixarow,col).g))
                 ,parseInt(frame.color(pixarow,col).b+(i/steps)*(frame.color(pixbrow,col).b-frame.color(pixarow,col).b))),options.alpha());
@@ -393,7 +394,7 @@ var LifeTool = new Class({
         nextGen = this.nextGeneration(frame, color);
         nextGen.forEach(function(row, rownum) {
             row.forEach(function(col, colnum) {
-                frame.set_color(rownum, colnum, col ? color : new Color(0,0,0))
+                frame.set_color(rownum, colnum, col ? color : new AcabColor(0,0,0))
             })
         })
     }

@@ -33,7 +33,7 @@ var Frame = new Class({
         for (var row = 0; row < height; ++row) {
             t = new Array();
             for (var col = 0; col < width; ++col) {
-                var color = new Color(0, 0, 0);
+                var color = new AcabColor(0, 0, 0);
                 t.push(color);
             }
             this.data.push(t);
@@ -50,12 +50,12 @@ var Frame = new Class({
         this.data[row][col] = color;
     },
 
-    invert_color: function(row, col) {                                                                                                      
-        this.set_color(row, col, new Color(255-this.color(row, col).r, 255-this.color(row, col).b, 255-this.color(row, col).g));
+    invert_color: function(row, col) {
+        this.set_color(row, col, new AcabColor(255-this.color(row, col).r, 255-this.color(row, col).b, 255-this.color(row, col).g));
     },
 
     set_color_alpha: function(row, col, color, alpha) {
-        this.set_color(row, col, new Color
+        this.set_color(row, col, new AcabColor
             (parseInt(color.r*alpha+((1-alpha)*this.color(row, col).r))
             ,parseInt(color.g*alpha+((1-alpha)*this.color(row, col).g))
             ,parseInt(color.b*alpha+((1-alpha)*this.color(row, col).b))));
@@ -113,7 +113,7 @@ var Frame = new Class({
         for (var row = 0; row < this.height; ++row) {
             for (var col = 0; col < this.width; ++col) {
                 f.set_color(row, col,
-                            this.color(row, col).copy());
+                            this.color(row, col));
             }
         }
         return f; 
@@ -139,7 +139,7 @@ var XmlFrame = new Class({
     },
 
     color_from_string: function (row_str, col) {
-        var c = new Color(0, 0, 0);
+        var c = new AcabColor(0, 0, 0);
         c.set_from_string('#'+row_str.substr(this.depth*this.channels/4*col, this.depth*this.channels/4));
         return c;
     },
