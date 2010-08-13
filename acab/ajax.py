@@ -107,7 +107,7 @@ def load_start(request):
 dajaxice.register(load_start)
 
 def list(request):
-    animations = Animation.objects.filter(type='m')
+    animations = Animation.objects.filter(type='m').order_by('title')
 
     return json.dumps([
         {
