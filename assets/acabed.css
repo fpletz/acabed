@@ -112,6 +112,12 @@ a:visited {
     height: 100%;
 }
 
+#movie-list {
+    overflow: auto;
+    max-height: 600px;
+    max-width: 500px;
+}
+
 #frame-counter {
     padding: 2px 5px;
     margin: 2px 2px;
