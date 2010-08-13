@@ -90,6 +90,8 @@ def load_editor(request, pk=None):
 
     if pk is not None:
         a = Animation.objects.get(pk=pk)
+        a.email = ''
+        a.author = ''
         dajax.add_data(serializers.serialize('json', [a]), 'init_editor')
     else:
         dajax.script('init_editor();')
