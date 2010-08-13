@@ -134,9 +134,16 @@ def add(request, animation):
     if int(animation['max_duration']) > 60:
         animation['max_duration'] = 60
 
+    movie_duration = 0
     for frame in animation['data']:
-        if int(frame['duration']) > 2000:
+        frame['duration'] = int(frame['duration'])
+        if frame['duration'] > 2000:
             frame['duration'] = 2000
+        movie_duration += frame['duration']
+
+    if movie_duration > 60000:
+        dajax.script('MessageWidget.msg("Animation darf insgesamt nicht laenger als 60 Sekunden sein! Bitte Frames loeschen oder kuerzer anzeigen lassen!")')
+        return dajax.json()
     
     form = AnimationForm(animation)
 
