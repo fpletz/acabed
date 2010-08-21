@@ -18,7 +18,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.template.loader import render_to_string
-from django.template import RequestContext
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -39,7 +38,9 @@ def dajaxicyfy(func):
 @dajaxicyfy
 def login_widget(request):
     pixel = False
-    if request.user.has_perm('acab.edit_pixel'):
+    if request.user.is_authenticated() and \
+            request.user.has_perm('acab.edit_pixel') and \
+            len(Pixeldonor.objects.filter(donor=request.user)) > 0:
         pixel = True
 
     r = render_to_string('login_bar.html', {
