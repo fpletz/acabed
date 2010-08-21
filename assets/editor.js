@@ -58,6 +58,8 @@ var Editor = new Class({
     set_color: function(c) {
         $('current-color').setStyle('background-color', c.to_string());
         this.current_color = c;
+        if(this.picker !== undefined)
+            this.picker.setRGB(c.to_array(),1,true);
     },
 
     current_frame_to_clipboard: function() {
@@ -608,7 +610,7 @@ function init_editor(animation) {
     });
 
     // Color picker change callback sets current_color of editor
-    var picker = new ColorRoller($('color-tools'), {
+    ed.picker = new ColorRoller($('color-tools'), {
         color: '#ffffff',
         type: 2,
         space: 'B',

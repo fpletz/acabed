@@ -225,10 +225,11 @@ var ColorRoller = new Class({
         },
 
         // Set Values
-        setRGB: function(val,step){
+        setRGB: function(val,step,noev){
                 //steps - 0:HSV, 1:inputs, 2:Hex, 3:View.
                 var e = this.els, hex = val.rgbToHex().toUpperCase();
-                this.fireEvent('change',hex);
+                if(noev === undefined)
+                    this.fireEvent('change',hex);
                 if (step != 1) this.setValues(['R','G','B'], val);
                 if (step != 2) e.crIHex.set('value', hex);
                 e.crView.setStyle('background-color', 'rgb(' + val + ')');

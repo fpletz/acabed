@@ -63,6 +63,10 @@ var AcabColor = new Class({
         return '#'+rs+gs+bs;
     },
 
+    to_array: function() {
+        return [this.r, this.g, this.b];
+    },
+
     get_brightness: function() {
         return Math.round([this.r,this.g,this.b].average())
     },
