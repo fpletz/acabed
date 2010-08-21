@@ -30,6 +30,11 @@ import json
 from models import Playlist, User, AnimationInstance, Animation, Pixeldonor
 from forms import AnimationForm
 
+def dajaxicyfy(func):
+    dajaxice.register(func)
+    return func
+
+@dajaxicyfy
 def login_widget(request):
     pixel = False
     if request.user.has_perm('acab.edit_pixel'):
@@ -44,16 +49,16 @@ def login_widget(request):
     dajax = Dajax()
     dajax.assign('#login-widget','innerHTML', r)
     return dajax.json()
-dajaxice.register(login_widget)
 
+@dajaxicyfy
 def login_form(request):
     r = render_to_string('login_form.html')
 
     dajax = Dajax()
     dajax.assign('#login-widget', 'innerHTML', r)
     return dajax.json()
-dajaxice.register(login_form)
 
+@dajaxicyfy
 def login(request, username, password):
     dajax = Dajax()
 
@@ -70,16 +75,16 @@ def login(request, username, password):
         dajax.alert('wrooooong');
 
     return dajax.json()
-dajaxice.register(login)
 
+@dajaxicyfy
 def logout(request):
     auth_logout(request)
 
     dajax = Dajax()
     dajax.script('Dajaxice.acab.login_widget("Dajax.process");')
     return dajax.json()
-dajaxice.register(logout)
 
+@dajaxicyfy
 def load_editor(request, pk=None):
     r = render_to_string('editor.html')
 
@@ -95,7 +100,6 @@ def load_editor(request, pk=None):
         dajax.script('init_editor();')
 
     return dajax.json()
-dajaxice.register(load_editor)
 
 def load_start(request):
     r = render_to_string('start.html')
@@ -104,8 +108,8 @@ def load_start(request):
     dajax.assign('#content', 'innerHTML', r)
     dajax.script('init_start();')
     return dajax.json()
-dajaxice.register(load_start)
 
+@dajaxicyfy
 def list(request):
     animations = Animation.objects.filter(type='m').order_by('title')
 
@@ -118,8 +122,8 @@ def list(request):
         }
         for a in animations
     ])
-dajaxice.register(list)
 
+@dajaxicyfy
 def add(request, animation):
     dajax = Dajax()
 
@@ -167,4 +171,3 @@ def add(request, animation):
         dajax.script('MessageWidget.msg("Bitte fehlende Felder ausfuellen.")')
 
     return dajax.json()
-dajaxice.register(add)
