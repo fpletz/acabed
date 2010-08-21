@@ -71,11 +71,9 @@ def login(request, username, password):
             auth_login(request, user)
             dajax.script('Dajaxice.acab.login_widget("Dajax.process");')
         else:
-            # TODO
-            pass
+            dajax.script('MessageWidget.msg("Dein Benutzeraccount wurde deaktiviert! Bitte wende dich an unser Team (pixel@muc.ccc.de)!")')
     else:
-        # TODO
-        dajax.alert('wrooooong');
+        dajax.script('MessageWidget.msg("Falsche Benutzername/Passwort-Kombination! Bitte erneut versuchen!")')
 
     return dajax.json()
 
