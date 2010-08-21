@@ -25,9 +25,10 @@ from dajaxice.core import dajaxice_functions as dajaxice
 from dajax.core import Dajax
 from django.core import serializers
 
+from datetime import datetime
 import json
 
-from models import Playlist, User, AnimationInstance, Animation, Pixeldonor
+from models import Playlist, User, AnimationInstance, Animation, Pixeldonor, SpoolJob
 from forms import AnimationForm
 import views
 
@@ -164,6 +165,15 @@ def add(request, animation):
             animation = a
         )
         ai.save()
+
+        # queue playlist
+        sj = SpoolJob(
+            playlist = p,
+            priority = 2,
+            added = datetime.now()
+        )
+        sj.save()
+
         dajax.script('MessageWidget.msg("Great success! Animootion gespeichert!")')
     else:
         dajax.remove_css_class('#movie-inspector label', 'error')
