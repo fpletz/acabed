@@ -34,6 +34,12 @@ var ObjectInspector = new Class({
     initialize: function(model, properties) {
         this.parent(properties.id, properties);
 
+        // allow selection
+        this.el.addEvent('mousedown', function(e) {
+            e.stopPropagation();
+            return true;
+        });
+
         this.addEvent('propertyChanged', (function(property, value) {
             this.update();
         }).bind(this));

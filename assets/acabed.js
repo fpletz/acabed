@@ -24,6 +24,9 @@ function init_start() {
 }
 
 function init() {
+    // prevent selecting elements
+    document.addEvent('mousedown', $lambda(false));
+
     // Don't use firebug console if not installed
     if (typeof console === 'undefined') {
         console = {
