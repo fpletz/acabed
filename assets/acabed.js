@@ -72,6 +72,11 @@ function init() {
     }
 
     MessageWidget.create();
+
+    $('login-widget').addEvent('mousedown', function(e) {
+        e.stopPropagation();
+    });
+
     Dajaxice.acab.login_widget('Dajax.process');
 
     init_site();

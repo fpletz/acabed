@@ -370,6 +370,12 @@ var MessageWidget = new Class({
     initialize: function(id, options) {
         this.parent(id, options);
 
+        // allow selecting text
+        this.el.addEvent('mousedown', function(e) {
+            e.stopPropagation();
+            return true;
+        });
+
         this.el.dissolve();
 
         this.mouselander = new Element('div', {
