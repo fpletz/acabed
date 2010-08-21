@@ -609,41 +609,46 @@ function init_editor(animation) {
         ],
     });
 
+    var set_editor_color = function (color) {
+        c = new AcabColor();
+        c.set_from_string(color);
+        ed.set_color(c);
+    };
+
     // Color picker change callback sets current_color of editor
     ed.picker = new ColorRoller($('color-tools'), {
         color: '#ffffff',
         type: 2,
         space: 'B',
-        onChange: function(color) {
-            c = new AcabColor();
-            c.set_from_string(color);
-            ed.set_color(c);
-        },
+        onChange: set_editor_color,
     });
 
     /* old picker
-    var set_editor_color = function (s) {
-        c = new Color();
-        c.set_from_string(s);
-        ed.set_color(c);
-    };
-
     var picker = new Moopick({
         palletParentElement: $('color-tools'),
         palletID: 'colorfoo',
         styles: { width: '10px', height: '10px' }
     });
 
-    
     picker.addEvents({
         'onColorClick': set_editor_color,
     });
     */
 
-    var current_color_field = new Widget('current-color');
+    var d = new Drag('current-color', {
+        snap: 0,
+        onComplete: function(el, ev) {
+            if(ev.target.parentNode.parentNode.id == 'colorpalette-tools')
+            {
+                var t = ev.target;
+                t.setStyle('background-color', el.getStyle('background-color'));
+                t.setProperty('html', el.getStyle('background-color'));
+            }
+        },
+    });
+    d.attach();
 
     // Color picker change callback sets current_color of editor
-    /*
     var palette = new Palette({
         palletParentElement: $('colorpalette-tools'),
         palletID: 'colorpalettefoo',
@@ -652,7 +657,6 @@ function init_editor(animation) {
     palette.addEvents({
         'onColorClick': set_editor_color,
     });
-    */
 
     // Update slider max on Movie resizing
     mv.addEvent('modify', function() {
