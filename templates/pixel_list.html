@@ -1,79 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>acabed</title>
-
-    {% load compress %}
-    {% compress css %}
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}acabed.css" />
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}pixel.css" />
-    {% endcompress %}
-
-    {% load dajaxice_templatetags %}
-    {% dajaxice_js_import %}
-
-    <script type="text/javascript" src="{{ MEDIA_URL }}mootools.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}mootools-more.js"></script>
-    
-    {% compress js %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}mootools.dajax.core.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}login.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}pixel.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}jscolor.js"></script>
-    {% endcompress %}
-  </head>
-  <body>
-    <img src="{{ MEDIA_URL }}/icons/acabed-logo.png">
-
-    <div id="login-widget"></div>
-    <div id="content">
-      <div id="left" class="container">
-        <fieldset id="donordetails" class="container">
-          <legend><img src="{{ MEDIA_URL }}icons/heart.png"> Pixelpate</legend>
-          <b>{{ user.username }}</b><br />
-          <a href="mailto:{{ user.email }}">{{ user.email }}</a><br />
-        </fieldset>
-      </div>
-      <div id="middle" class="container" style="float: left;">
-        <div class="container" id="help">
-          <p>Klicke auf das Stift-Symbol um den gew&uuml;nschten Pixel zu bearbeiten.</p>
-        </div>
-        <div id="pixel-container">
-        {% for p in pixel %}
-        <div id="{{ p.id }}-outer-div">
-        <fieldset class="container" id="{{ p.id }}-outer">
-          <legend><b>{{ p.pixel }}</b></legend>
-          <div style="float: right; font-weight: bold; background-color:#{{ p.color }}; " class="container">
-            {{ p.name }}
-          </div>
-          <div class="container pixelbuttons" id="{{ p.id }}-buttons">
-            <a href="/acab/pixel/{{ p.pixel }}/edit" class="button imagebutton" id="{{ p.id }}-edit" style="background-image: url({{ MEDIA_URL }}icons/pencil.png)" alt="Pixel editieren"></a>
-            <a href="/acab/pixel/{{ p.pixel }}/show" class="button imagebutton" id="{{ p.id }}-show" style="background-image: url({{ MEDIA_URL }}icons/magnifier-left.png)"></a>
-            <a href="{{ p.url }}" class="button imagebutton" id="{{ p.id }}-homepage" style="background-image: url({{ MEDIA_URL }}icons/application-home.png)"></a>
-          </div>
-        </fieldset>
-        </div>
-        {% endfor %}
-        </div>
-      </div>
-      <div id="right" class="container">
-        <fieldset class="container">
-          <legend>Legende</legend>
-          <img src="{{ MEDIA_URL }}icons/pencil.png"> <b>Editieren</b><br />
-          <img src="{{ MEDIA_URL }}icons/magnifier-left.png"> <b>Anzeigen</b><br />
-          <img src="{{ MEDIA_URL }}icons/application-home.png"> <b>Website</b><br />
-        </fieldset>
-      </div>
-    </div>
-
-    <div style="clear: both;"></div>
-    <div id="footer">
-        <a href="http://acab.muc.ccc.de">Projekt AllColorsAreBeautiful</a> |
-        <a href="http://muc.ccc.de">CCC M&uuml;nchen</a> |
-        Icons: <a href="http://p.yusukekamiyamane.com">Fugue by Yusuke Kamiyamane</a>
-    </div>
-
-    <div id="tooltips"></div>
-  </body>
-</html>
+<div id="left" class="container">
+<fieldset id="donordetails" class="container">
+  <legend><img src="{{ MEDIA_URL }}icons/heart.png"> Pixelpate</legend>
+  <b>{{ user.username }}</b><br />
+  <a href="mailto:{{ user.email }}">{{ user.email }}</a><br />
+</fieldset>
+</div>
+<div id="middle" class="container" style="float: left;">
+<div class="container" id="help">
+  <p>Klicke auf das Stift-Symbol um den gew&uuml;nschten Pixel zu bearbeiten.</p>
+</div>
+<div id="pixel-container">
+{% for p in pixel %}
+<div id="{{ p.id }}-outer-div">
+<fieldset class="container" id="{{ p.id }}-outer">
+  <legend><b>{{ p.pixel }}</b></legend>
+  <div style="float: right; font-weight: bold; background-color:#{{ p.color }}; " class="container">
+    {{ p.name }}
+  </div>
+  <div class="container pixelbuttons" id="{{ p.id }}-buttons">
+    <a href="/acab/pixel/{{ p.pixel }}/edit" class="button imagebutton" id="{{ p.id }}-edit" style="background-image: url({{ MEDIA_URL }}icons/pencil.png)" alt="Pixel editieren"></a>
+    <a href="#" onClick="Dajaxice.acab.pixel_show('Dajax.process', { pixel: '{{ p.pixel }}' })" class="button imagebutton" id="{{ p.id }}-show" style="background-image: url({{ MEDIA_URL }}icons/magnifier-left.png)"></a>
+    <a href="{{ p.url }}" class="button imagebutton" id="{{ p.id }}-homepage" style="background-image: url({{ MEDIA_URL }}icons/application-home.png)"></a>
+  </div>
+</fieldset>
+</div>
+{% endfor %}
+</div>
+</div>
+<div id="right" class="container">
+<fieldset class="container">
+  <legend>Legende</legend>
+  <img src="{{ MEDIA_URL }}icons/pencil.png"> <b>Editieren</b><br />
+  <img src="{{ MEDIA_URL }}icons/magnifier-left.png"> <b>Anzeigen</b><br />
+  <img src="{{ MEDIA_URL }}icons/application-home.png"> <b>Website</b><br />
+</fieldset>
+</div>

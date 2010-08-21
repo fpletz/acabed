@@ -1,5 +1,5 @@
 # acabed - webeditor for blinkenlights xml files
-# Copyright (C) 2010 Raffael Mancini <raffael.mancini@hcl-club.lu>
+# Copyright (C) 2010 Raffael Mancini <raffael.mancini@hclclub.lu>
 #                    Franz Pletz <fpletz@fnordicwalking.de>
 #
 # This file is part of acabed.
@@ -63,7 +63,7 @@ def detail(request, animation_id):
     return render_to_response('detail.html', {'animation': a})
 
 def pixel(request, action, pixel):
-    if request.method == 'POST':
+    if request.method == 'POST' and not request.is_ajax():
         p = Pixeldonor.objects.get(pixel=pixel)
         
         if not request.user == p.donor:

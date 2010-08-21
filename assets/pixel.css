@@ -1,6 +1,25 @@
+/*
+ *  acabed - webeditor for blinkenlights xml files
+ *  Copyright (C) 2010 Raffael Mancini <raffael.mancini@hcl-club.lu>
+ *                     Franz Pletz <fpletz@fnordicwalking.de>
+ *
+ *  This file is part of acabed.
+ *
+ *  acabed is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  acabed is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-
-#color, #showcolor {
+#pixcolor, #showpixcolor {
     height: 400px;
     width: 400px;
     background: none;
@@ -12,26 +31,26 @@
     font-weight: bold;
 }
 
-.container {
+.pixel-edit-container {
     margin-left: 5px;
     padding: 5px;
     float: center;
     overflow: hidden;
 }
 
-#left {
+#left.pixel-edit-container {
     width: auto;
 }
 
-.fieldWrapper input, input:focus {
+#donorform .fieldWrapper input, input:focus {
     background:none;
 }
 
-.fieldWrapper input:focus, input:active {
+#donorform .fieldWrapper input:focus, input:active {
     background:none;
 }
 
-.fieldWrapper input {
+#donorform .fieldWrapper input {
     color: #ccc;
     padding: 2px 2px;
     margin: 2px 2px;
@@ -49,13 +68,14 @@
     background-image: url(/assets/icons/balloon-quotation.png) repeat-none;
 }
 
-fieldset {
+#donorform fieldset {
     border: solid 1px #666;
     border-radius: 4px;
     -moz-border-radius: 4px;
     margin: 5px;
 }
 
+/* FIXME: not used?
 #container-uploader {
     opacity: 0;
     position: relative;
@@ -91,3 +111,4 @@ fieldset {
 .pixelbuttons {
     width: 80px;
 }
+*/

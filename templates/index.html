@@ -9,6 +9,7 @@
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}acabed.css" />
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}ColorRoller.css" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}pixel.css" />
     {% endcompress %}
 
     {% load dajaxice_templatetags %}
@@ -36,17 +37,32 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}object_inspector.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}dialog.js"></script>
 
+    {% block extrajs %}{% endblock %}
+
     <!-- colorpicker -->
     <!--script type="text/javascript" src="{{ MEDIA_URL }}moopick.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}palette.js"></script-->
     {% endcompress %}
+
+    <script type="text/javascript">
+        function init_site() {
+            {% block startjs %}
+            //Dajaxice.acab.load_start('Dajax.process');
+            Dajaxice.acab.load_editor('Dajax.process');
+            {% endblock %}
+        }
+    </script>
   </head>
   <body>
-    <img src="{{ MEDIA_URL }}/icons/acabed-logo.png">
+    <a href="#" onClick="init_site()">
+        <img src="{{ MEDIA_URL }}icons/acabed-logo.png" alt="AllColoursAreBeautiful Editor">
+    </a>
 
     <div id="login-widget"></div>
 
-    <div id="content"></div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
 
     <div style="clear: both;"></div>
     <div id="footer">

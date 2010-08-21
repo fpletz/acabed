@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.template.loader import render_to_string
+from django.template import RequestContext
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -29,6 +30,7 @@ import json
 
 from models import Playlist, User, AnimationInstance, Animation, Pixeldonor
 from forms import AnimationForm
+import views
 
 def dajaxicyfy(func):
     dajaxice.register(func)
@@ -170,4 +172,20 @@ def add(request, animation):
             dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')
         dajax.script('MessageWidget.msg("Bitte fehlende Felder ausfuellen.")')
 
+    return dajax.json()
+
+@dajaxicyfy
+def pixel_list(request):
+    dajax = Dajax()
+
+    r = views.pixel(request, 'list', None)
+    dajax.assign('#content', 'innerHTML', r)
+    return dajax.json()
+
+@dajaxicyfy
+def pixel_show(request, pixel):
+    dajax = Dajax()
+
+    r = views.pixel(request, 'show', pixel)
+    dajax.assign('#content', 'innerHTML', r)
     return dajax.json()

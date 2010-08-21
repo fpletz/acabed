@@ -69,10 +69,9 @@ function init() {
     }
 
     MessageWidget.create();
-
     Dajaxice.acab.login_widget('Dajax.process');
-    Dajaxice.acab.load_editor('Dajax.process');
-    //Dajaxice.acab.load_start('Dajax.process');
+
+    init_site();
 };
 
 window.addEvent('domready', init);
