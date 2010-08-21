@@ -31,17 +31,15 @@ from models import Playlist, User, AnimationInstance, Animation, Pixeldonor
 from forms import AnimationForm
 
 def login_widget(request):
+    pixel = False
     if request.user.has_perm('acab.edit_pixel'):
-        r = render_to_string('login_bar.html', {
-            'authed': request.user.is_authenticated(),
-            'login': request.user.username,
-            'pixel': True,
-        })
-    else:
-        r = render_to_string('login_bar.html', {
-            'authed': request.user.is_authenticated(),
-            'login': request.user.username,
-        })
+        pixel = True
+
+    r = render_to_string('login_bar.html', {
+        'authed': request.user.is_authenticated(),
+        'login': request.user.username,
+        'pixel': pixel,
+    })
 
     dajax = Dajax()
     dajax.assign('#login-widget','innerHTML', r)
