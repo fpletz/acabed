@@ -26,6 +26,8 @@ from forms import *
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import permission_required
 
+import json
+
 def index(request):
     return render_to_response('index.html',
                               {'animations': Animation.objects.all()},
@@ -119,3 +121,24 @@ def pixel(request, action, pixel):
                 },
                 context_instance=RequestContext(request)
             )
+
+def pixeldonor(request, action):
+    if action == 'list':
+        mimetype = 'application/javascript'
+        data = []
+        for donor in Pixeldonor.objects.all():
+            t = {
+                'pixel': donor.pixel,
+                'anon': donor.anon,
+                'color': donor.color,
+            }
+            if not donor.anon:
+                t.update({
+                    'message': donor.message,
+                    'url': donor.url,
+                    'name': donor.name,
+                    #'picture': donor.picture
+                })
+            data.append(t)
+        
+        return HttpResponse(json.dumps(data),mimetype)
