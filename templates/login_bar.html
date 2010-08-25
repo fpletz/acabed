@@ -1,9 +1,10 @@
 {% if authed %}
     Hallo, {{ login }}
     {% if pixel %}
-    | <a href="#" onClick="Dajaxice.acab.pixel_list('Dajax.process')">Pixel konfigurieren</a>
+    | <a href="#" onClick="Dajaxice.acab.pixel_list('Dajax.process'); return false">Pixel konfigurieren</a>
     {% endif %}
-    | <a href="#" onClick="Dajaxice.acab.logout('Dajax.process');">Logout</a>
+    | <a href="#" onClick="Dajaxice.acab.logout('Dajax.process'); return false">Logout</a>
 {% else %}
-    Nicht eingeloggt | <a href="#" onClick="Dajaxice.acab.login_form('Dajax.process');">Einloggen</a>
+    <a href="#" onClick="Dajaxice.acab.login_form('Dajax.process'); return false">Einloggen</a>
+    | <a href="#" onClick="Dajaxice.acab.signup_form('Dajaxice.process'); return false">Anmelden</a>
 {% endif %}

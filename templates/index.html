@@ -50,11 +50,12 @@
             //Dajaxice.acab.load_start('Dajax.process');
             Dajaxice.acab.load_editor('Dajax.process');
             {% endblock %}
+            return false;
         }
     </script>
   </head>
   <body>
-    <a href="#" onClick="init_site()">
+    <a href="" onClick="return init_site()">
         <img src="{{ MEDIA_URL }}icons/acabed-logo.png" alt="AllColoursAreBeautiful Editor">
     </a>
 
