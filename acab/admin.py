@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from models import Animation, AnimationInstance, Playlist, SpoolJob, Pixeldonor
+from models import * 
 from django.contrib import admin
 
 class AnimationInstanceInline(admin.TabularInline):
@@ -34,3 +34,4 @@ admin.site.register(Animation, AnimationAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(SpoolJob)
 admin.site.register(Pixeldonor)
+admin.site.register(CronJob)
