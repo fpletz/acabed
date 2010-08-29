@@ -175,7 +175,7 @@ def add(request, animation):
         )
         sj.save()
 
-        dajax.script('MessageWidget.msg("Great success! Animootion gespeichert!")')
+        dajax.script('MessageWidget.msg("Great success! Animootion mit ID %s gespeichert!")' % a.id)
     else:
         for error in form.errors:
             dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')
