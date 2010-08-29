@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from django.conf import settings
 from django.template import RequestContext, loader
 from django.core import serializers
 from django.http import HttpResponse
@@ -25,6 +26,7 @@ from models import *
 from forms import *
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import permission_required
+from datetime import *
 
 import json
 
@@ -63,6 +65,26 @@ def detail(request, animation_id):
         raise Http404
 
     return render_to_response('detail.html', {'animation': a})
+
+def queue (request, animation_id, token):
+	if token == settings.QUEUE_TOKEN:
+		try:
+			for p in Playlist.objects.filter(pk=animation_id):
+				SpoolJob.objects.create(
+					playlist=p,
+					priority=0,
+					added=datetime.now(),
+				)
+				
+				return HttpResponse(
+					"Happy, happy joy joy!\n",
+					mimetype="text/plain",
+				)
+		
+		except Playlist.DoesNotExist:
+				raise Http404
+	else:
+		raise Http403
 
 def pixel(request, action, pixel):
     if request.method == 'POST' and not request.is_ajax():

@@ -159,3 +159,13 @@ class Pixeldonor(models.Model):
         permissions = (
             ("edit_pixel", "Edit pixel"),
         )
+
+class CronJob(models.Model):
+    # m h  dom mon dow
+    m = models.CharField('Minute', max_length=64)
+    h = models.CharField('Hour', max_length=64)
+    dom = models.CharField('Day of Month', max_length=64)
+    mon = models.CharField('Month', max_length=64)
+    dow = models.CharField('Day of Week', max_length=64)
+    playlist = models.ForeignKey('Playlist')
+
