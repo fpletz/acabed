@@ -128,6 +128,7 @@ def list(request):
 @dajaxicyfy
 def add(request, animation):
     dajax = Dajax()
+    dajax.remove_css_class('#movie-inspector label', 'error')
 
     animation = json.loads(animation)
     animation.update({
@@ -176,7 +177,6 @@ def add(request, animation):
 
         dajax.script('MessageWidget.msg("Great success! Animootion gespeichert!")')
     else:
-        dajax.remove_css_class('#movie-inspector label', 'error')
         for error in form.errors:
             dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')
         dajax.script('MessageWidget.msg("Bitte fehlende Felder ausfuellen.")')
