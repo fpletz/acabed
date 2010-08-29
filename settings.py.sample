@@ -96,3 +96,7 @@ INSTALLED_APPS = (
 
 DAJAXICE_MEDIA_PREFIX = "dajaxice"
 COMPRESS_PARSER = 'compressor.parser.LxmlParser'
+
+# Token for instant-queue "API"
+QUEUE_TOKEN = "deimuddi" 
+
