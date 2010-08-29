@@ -62,9 +62,10 @@ var ObjectInspector = new Class({
     inject_model_setters: function() {
         var inspector = this;
         if ($defined(this.model) && this.model !== null) {
-            this.model.set = (function(property, value) {
+            this.model.set = (function(property, value, no_update) {
                 this[property] = value;
-                inspector.fireEvent('propertyChanged', [property, value]);
+                if(no_update === undefined)
+                    inspector.fireEvent('propertyChanged', [property, value]);
             }).bind(this.model);
         }
     },
@@ -101,8 +102,8 @@ var ObjectInspector = new Class({
                         maxlength: item.max,
                         rows: item.height});
                     
-                    valueInput.addEvent('change', (function(el) {
-                        this.model.set(item.id, el.target.getProperty('value'));
+                    valueInput.addEvent('keyup', (function(ev) {
+                        this.model.set(item.id, ev.target.getProperty('value'), true);
                     }).bind(this));
                 } else if (item.type == 'bool') {
                     valueInput = new Element('input', {
@@ -112,8 +113,8 @@ var ObjectInspector = new Class({
                         name: item.description,
                         type: 'checkbox'});
 
-                    valueInput.addEvent('click', (function(el) {
-                        var checked = el.target.get('checked')
+                    valueInput.addEvent('click', (function(ev) {
+                        var checked = ev.target.get('checked')
                         var value = checked ? 'yes': 'no';
                         this.model[item.id] = value;
                     }).bind(this));
@@ -125,8 +126,8 @@ var ObjectInspector = new Class({
                         maxlength: item.max,
                         type: 'text'});
                     
-                    valueInput.addEvent('change', (function(el) {
-                        value = el.target.getProperty('value');
+                    valueInput.addEvent('keyup', (function(ev) {
+                        value = ev.target.getProperty('value');
                         if(item.range !== undefined) {
                             val = parseInt(value);
 
@@ -138,7 +139,7 @@ var ObjectInspector = new Class({
                             el.target.setProperty('value', val.toString());
                         }
 
-                        this.model.set(item.id, el.target.getProperty('value'));
+                        this.model.set(item.id, ev.target.getProperty('value'), true);
                     }).bind(this));
                 }
                 
