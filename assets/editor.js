@@ -398,6 +398,7 @@ function init_editor(animation) {
                                 new TableWidget('movie-list', {
                                     data: animations,
                                     columns: [
+										['pk', 'Id'],
                                         ['title', 'Name'],
                                         ['author', 'Autor'],
                                         ['max_duration', 'Dauer'],
