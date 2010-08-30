@@ -27,5 +27,5 @@ urlpatterns = patterns('acab.views',
     (r'^pixel/list', 'pixel', {'action':'list', 'pixel':''}),
     (r'^pixel/(?P<pixel>.+)/(?P<action>(edit|show|list))$', 'pixel'),    
     (r'^pixeldonor/list', 'pixeldonor', {'action':'list'}),
-	(r'^queue/(?P<animation_id>\d+)/(?P<token>.+)$', 'queue'),
+    (r'^queue/(?P<animation_id>\d+)/(?P<token>.+)$', 'queue'),
 )
