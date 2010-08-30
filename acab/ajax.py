@@ -123,7 +123,7 @@ def list(request):
 
     return json.dumps([
         {
-            'id': a.id,
+            'pk': a.pk,
             'playlist_id': get_playlist_id(a),
             'title': a.title,
             'author': a.author,
