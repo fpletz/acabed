@@ -126,7 +126,7 @@ class Playlist(models.Model):
 class SpoolJob(models.Model):
     playlist = models.ForeignKey('Playlist')
     priority = models.IntegerField()
-    added = models.DateTimeField()
+    added = models.DateTimeField(auto_now=True, auto_now_add=True)
 
     def __unicode__(self):
         return '[' + self.playlist.title + '@' + str(self.priority) + '@' + str(self.added) + ']'

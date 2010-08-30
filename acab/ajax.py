@@ -115,9 +115,16 @@ def load_start(request):
 def list(request):
     animations = Animation.objects.filter(type='m').order_by('title')
 
+    def get_playlist_id(a):
+        playlists = a.playlists.all()
+        if len(playlists) == 0:
+            return '-'
+        return playlists[0].id
+
     return json.dumps([
         {
-            'pk': a.pk,
+            'id': a.id,
+            'playlist_id': get_playlist_id(a),
             'title': a.title,
             'author': a.author,
             'max_duration': a.max_duration,
@@ -175,7 +182,7 @@ def add(request, animation):
         )
         sj.save()
 
-        dajax.script('MessageWidget.msg("Great success! Animootion mit ID %s gespeichert!")' % a.id)
+        dajax.script('MessageWidget.msg("Great success! Animootion mit ID %s gespeichert!")' % p.id)
     else:
         for error in form.errors:
             dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')

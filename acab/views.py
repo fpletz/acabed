@@ -66,25 +66,25 @@ def detail(request, animation_id):
 
     return render_to_response('detail.html', {'animation': a})
 
-def queue (request, animation_id, token):
-	if token == settings.QUEUE_TOKEN:
-		try:
-			for p in Playlist.objects.filter(pk=animation_id):
-				SpoolJob.objects.create(
-					playlist=p,
-					priority=0,
-					added=datetime.now(),
-				)
-				
-				return HttpResponse(
-					"Happy, happy joy joy!\n",
-					mimetype="text/plain",
-				)
-		
-		except Playlist.DoesNotExist:
-				raise Http404
-	else:
-		raise Http403
+def queue(request, playlist_id, token):
+    if token == settings.QUEUE_TOKEN:
+        try:
+            for p in Playlist.objects.filter(pk=playlist_id):
+                SpoolJob.objects.create(
+                        playlist=p,
+                        priority=0,
+                        added=datetime.now(),
+                )
+
+                return HttpResponse(
+                        "Happy, happy joy joy!\n",
+                        mimetype="text/plain",
+                )
+
+        except Playlist.DoesNotExist:
+            raise Http404
+    else:
+        raise Http403
 
 def pixel(request, action, pixel):
     if request.method == 'POST' and not request.is_ajax():
