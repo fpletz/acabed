@@ -129,14 +129,16 @@ var ObjectInspector = new Class({
                     valueInput.addEvent('keyup', (function(ev) {
                         value = ev.target.getProperty('value');
                         if(item.range !== undefined) {
-                            val = parseInt(value);
+                            var val = parseInt(value);
+                            var oval = val;
 
                             if(val < item.range[0])
                                 val = item.range[0];
                             else if(val > item.range[1])
                                 val = item.range[1];
 
-                            ev.target.setProperty('value', val.toString());
+                            if(val !== oval)
+                                ev.target.setProperty('value', val.toString());
                         }
 
                         this.model.set(item.id, ev.target.getProperty('value'), true);
