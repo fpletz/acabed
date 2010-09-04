@@ -136,7 +136,7 @@ var ObjectInspector = new Class({
                             else if(val > item.range[1])
                                 val = item.range[1];
 
-                            el.target.setProperty('value', val.toString());
+                            ev.target.setProperty('value', val.toString());
                         }
 
                         this.model.set(item.id, ev.target.getProperty('value'), true);
