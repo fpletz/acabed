@@ -22,8 +22,14 @@ from django.contrib.auth.models import User
 from django.core import exceptions
 from django import forms
 
+import sys
+sys.path.append("externals")
+from stdimage import StdImageField
+
 import json
 import types
+
+THUMB_SIZE = 140, 140
 
 def get_colors(self, height, width, depth, channels):
     def nsplit(l, i):
@@ -145,7 +151,7 @@ class Pixeldonor(models.Model):
     name = models.CharField('Name', max_length=256)
     url = models.URLField('Website', verify_exists=True, max_length=256, null=True, blank=True)
     message = models.CharField('Nachricht', max_length=42, null=True, blank=True)
-    picture = models.ImageField('Bild', upload_to='donors', null=True, blank=True)
+    picture = StdImageField('Bild', upload_to='donors', blank=True,thumbnail_size=THUMB_SIZE )
     anon = models.BooleanField('Anonym')
     last_update = models.DateTimeField(auto_now=True, auto_now_add=True)
 
