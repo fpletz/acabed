@@ -159,8 +159,76 @@ def pixeldonor(request, action):
                     'message': donor.message,
                     'url': donor.url,
                     'name': donor.name,
-                    #'picture': donor.picture
+                    'picture': donor.picture
                 })
             data.append(t)
         
         return HttpResponse(json.dumps(data),mimetype)
+
+    if action == 'show':
+        rows = donor_iter( 4, 24 )
+        return render_to_response('pixel_donors.html', {
+            'rows': rows,
+            },
+            context_instance=RequestContext(request)
+        )
+        
+''' printing the pixeldonor matrix the hard way '''
+''' props goto irc2samus#django '''
+default_data = dict(
+    pixel   ='',
+    color   ='ccc',
+    url     ='',
+    name    ='',
+    message ='',
+    pclass  ='anon',
+)
+
+def _get_next_donor( queryset ):
+    for donor in queryset:
+        yield( donor, ord( donor.pixel[0] ), int( donor.pixel[1:3] ))
+
+def _donor_iter(rows, cols):
+    queryset    = Pixeldonor.objects.order_by('pixel')
+    donors      = _get_next_donor(queryset)
+
+    try:
+        donor, next_row, next_col = donors.next()
+    except StopIteration:
+        donor, next_row, next_col = None, None, None
+    for r in xrange( rows ):
+        for c in xrange( cols ):
+            if r + ord( 'A' ) == next_row and c + 1 == next_col:
+                t = {
+                    'pixel': donor.pixel,
+                    'anon': donor.anon,
+                    'color': donor.color,
+                }
+                if not donor.anon:
+                    t.update({
+                        'message': donor.message,
+                        'url': donor.url,
+                        'name': donor.name,
+                        'picture': donor.picture.thumbnail.url( )
+                    })
+                yield t
+                try:
+                    donor, next_row, next_col = donors.next()
+                except StopIteration:
+                    donor, next_row, next_col = None, None, None
+            else:
+                yield default_data
+
+def donor_iter(rows, cols):
+    iterd = _donor_iter(rows, cols)
+    for r in xrange(rows):
+        yield (iterd.next() for c in xrange(cols))
+
+
+
+
+
+
+
+
+

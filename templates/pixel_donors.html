@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html lang="de"> 
+<head> 
+    <meta charset="utf-8"> 
+    <meta name="author" content="Chaos Computer Club M&uuml;nchen e.V."> 
+    <title>AllColoursAreBeautiful  </title> 
+
+    <link rel="stylesheet" type="text/css" href="/assets/pixelpaten.css" media="screen,projection"> 
+
+<script type='text/javascript'> 
+/*{{{*/
+window.onload = function( ) {
+var pp = document.getElementById( 'ppwrapper' );
+var pix = pp.getElementsByTagName('a');
+for( i=0; i < pix.length ;i++ ) {
+  var pixi = pix[i];
+  rgb = /(.*?)rgb\((\d+), (\d+), (\d+)\)/.exec(pixi.style.backgroundColor);
+  C = 1 - (parseInt(rgb[2])/255);
+  M = 1 - (parseInt(rgb[3])/255);
+  Y = 1 - (parseInt(rgb[4])/255);
+  k = Math.min(C,Math.min(M,Y));
+  if (k > 0.23) { fc = "#fafafa"; }
+  else { fc = "#151515"; }
+  pixi.style.color = fc;
+}
+}/*}}}*/
+</script> 
+</head>
+
+<body>
+<div id="content">
+<div id="ppwrapper">
+{% spaceless %}
+{% for row in rows %}
+  <ul id="row{% cycle 'A' 'B' 'C' 'D' %}" class="row">
+{% for p in row %}
+    <li id="{{ p.pixel }}" class="p_bkd{% if forloop.counter|divisibleby:"2"  %} lmrg{% endif %}{% if forloop.counter > 12 %} rs{% endif %}">
+          <a href="{{ p.url|default:'#h' }}"{% if not p.url %} class='no' onclick="return false"{% endif %} style="background-color:#{{ p.color }}" target="_blank">
+        {% if p.pixel %}
+          <span class="wrapper"><span class="name">{% if p.picture %}<img src="{{ p.picture }}" />{% endif %}{{ p.name }}</span>
+              <span class="message">{{ p.message }}</span></span>
+        {% endif %}
+      </a>
+    </li>
+{% endfor %}
+  </ul>
+{% endfor %}
+{% endspaceless %}
+</div> 
+</div> 
+
+</body>
