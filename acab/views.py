@@ -159,8 +159,60 @@ def pixeldonor(request, action):
                     'message': donor.message,
                     'url': donor.url,
                     'name': donor.name,
-                    #'picture': donor.picture
+                    'picture': donor.picture
                 })
             data.append(t)
         
         return HttpResponse(json.dumps(data),mimetype)
+
+    if action == 'show' or action == 'include':
+
+        queryset = Pixeldonor.objects.order_by( 'pixel' )
+        pixelset = (( d.get_pixel( ), ( ord( d.pixel[0] ) - ord( 'A' )), int( d.pixel[1:3] )) for d in queryset )
+
+        rows = matrix_iter( pixelset, 4, 24 )
+        return render_to_response( 'pixeldonors_'+action+'.html', {
+            'rows': rows,
+            },
+            context_instance=RequestContext(request)
+        )
+        
+''' printing the pixeldonor matrix the hard way '''
+default_pixel = dict(
+    pixel   ='',
+    color   ='ccc',
+    url     ='',
+    name    ='',
+    message ='',
+    pclass  ='anon',
+)
+
+def _matrix_iter( pixelset, rows, cols ):
+    try:
+        pixel, next_row, next_col = pixelset.next()
+    except StopIteration:
+        pixel, next_row, next_col = None, None, None
+    for r in xrange( rows ):
+        for c in xrange( cols ):
+            if r == next_row and c + 1 == next_col:
+                yield pixel 
+                try:
+                    pixel, next_row, next_col = pixelset.next()
+                except StopIteration:
+                    pixel, next_row, next_col = None, None, None
+            else:
+                yield default_pixel
+
+def matrix_iter( pixelset, rows, cols ):
+    iterd = _matrix_iter( pixelset, rows, cols )
+    for r in xrange( rows ):
+        yield ( iterd.next( ) for c in xrange( cols ))
+
+
+
+
+
+
+
+
+
