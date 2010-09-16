@@ -30,8 +30,26 @@ class AnimationAdmin(admin.ModelAdmin):
 class PlaylistAdmin(admin.ModelAdmin):
     inlines = (AnimationInstanceInline,)
 
+
+class PixeldonorAdmin( admin.ModelAdmin ):
+    list_display = ['pixel', 'name', 'anon']
+    ordering = ['pixel']
+    actions = ['recreate_all']
+
+    def recreate_all(self, request, queryset):
+        rows_updated = 0
+        for donor in queryset:
+             test = donor.save( )
+             if test:
+                 rows_updated = rows_update + 1
+        message_bit = "%s donors updated" % rows_updated
+    recreate_all.short_description = "resave and create thumbnails"
+
+
+
+
 admin.site.register(Animation, AnimationAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 admin.site.register(SpoolJob)
-admin.site.register(Pixeldonor)
+admin.site.register(Pixeldonor, PixeldonorAdmin)
 admin.site.register(CronJob)

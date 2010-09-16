@@ -152,6 +152,7 @@ class Pixeldonor(models.Model):
     url = models.URLField('Website', verify_exists=True, max_length=256, null=True, blank=True)
     message = models.CharField('Nachricht', max_length=42, null=True, blank=True)
     picture = StdImageField('Bild', upload_to='donors', blank=True,thumbnail_size=THUMB_SIZE )
+    #picture = models.ImageField( 'Bild', upload_to='donors', blank=True )
     anon = models.BooleanField('Anonym')
     last_update = models.DateTimeField(auto_now=True, auto_now_add=True)
 
