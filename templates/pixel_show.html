@@ -1,6 +1,6 @@
 <div id="left" class="container">
 {% if pixel.picture %}
-<span><img id="donorpic" src="{{ pixel.picture.url }}" class="pixelpic"></span>
+<span><img id="donorpic" src="{{ pixel.picture.thumbnail.url }}" class="pixelpic"></span>
 {% else %}
 <span><img id="donorpic" src="{{ MEDIA_URL }}/images/anon.jpg" class="pixelpic"></span>
 {% endif %}
