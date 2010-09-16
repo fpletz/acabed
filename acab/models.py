@@ -155,12 +155,24 @@ class Pixeldonor(models.Model):
     anon = models.BooleanField('Anonym')
     last_update = models.DateTimeField(auto_now=True, auto_now_add=True)
 
-    def get_picture_url(self):
-        return "%s%s" % (MEDIA_ROOT, self.picture)
-
     def __unicode__(self):
-      return "%s (%s, %s)" % (self.donor, self.pixel, self.name)
-    
+	return "%s (%s, %s)" % (self.donor, self.pixel, self.name)
+
+    def get_pixel(self):
+        pixel = {
+            'pixel': self.pixel,
+            'anon': self.anon,
+            'color': self.color,
+        }
+        if not self.anon:
+            pixel.update({
+                'message': self.message,
+                'url': self.url,
+                'name': self.name,
+                'picture': self.picture.thumbnail.url( )
+            })
+	return pixel
+
     class Meta:
         permissions = (
             ("edit_pixel", "Edit pixel"),

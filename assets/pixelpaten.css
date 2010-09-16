@@ -1,4 +1,4 @@
-#content #ppwrapper {
+#ppcontent #ppwrapper {
     border: 1px solid #282828;
     width: 785px;
     height: 411px;
@@ -7,36 +7,36 @@
     margin: 0;
 }
 
-#content #rowA {
+#ppcontent #rowA {
     top: 77px;
     left: 104px;
 }
 
-#content #rowB {
+#ppcontent #rowB {
     top: 117px;
     left: 104px;
 }
 
-#content #rowC {
+#ppcontent #rowC {
     top: 158px;
     left: 104px;
 }
 
-#content #rowD {
+#ppcontent #rowD {
     top: 197px;
     left: 104px;
 }
 
-#content #rowLegende {
+#ppcontent #rowLegende {
     top: 244px;
     left: 104px;
 }
-#content #rowLegende li {
+#ppcontent #rowLegende li {
   color: black;
   line-height: 2em;
 }
 
-#content #ppwrapper .row {
+#ppcontent #ppwrapper .row {
     position: relative;
     border: 0px solid green;
     height: 31px;
@@ -45,13 +45,13 @@
     margin: 0;
 }
 
-#content #ppwrapper ul,#content  #ppwrapper  li {
+#ppcontent #ppwrapper ul,#ppcontent  #ppwrapper  li {
     list-style-type: none;
     float: left;
     margin: 0;
     padding: 0;
 }
-#content #ppwrapper li a {
+#ppcontent #ppwrapper li a {
     display: block;
     height: 31px;
     width: 17px;
@@ -60,29 +60,29 @@
     background-image:url("http://blinkenlichts.net/~schneider/fenster4.png");
     background-image:url("http://acab.muc.ccc.de/wp-content/uploads/2010/08/fenster4.png");
 }
-#content #ppwrapper li a {
+#ppcontent #ppwrapper li a {
     text-decoration: none;
 }
-#content #ppwrapper .lmrg a {
+#ppcontent #ppwrapper .lmrg a {
     margin-right: 12px;
 }
 
-#content #ppwrapper .p_emp a {
+#ppcontent #ppwrapper .p_emp a {
     border: 0px solid yellow;
 }
 
-#content #ppwrapper .p_res a {
+#ppcontent #ppwrapper .p_res a {
     border: 0px solid orange;
 }
 
-#content #ppwrapper .p_bkd a {
+#ppcontent #ppwrapper .p_bkd a {
     background-color: orange;
 }
 
-#content #ppwrapper li a span {
+#ppcontent #ppwrapper li a span {
     display: none;
 }
-#content #ppwrapper li a:hover span.wrapper {
+#ppcontent #ppwrapper li a:hover span.wrapper {
     background-color: inherit;
     display: block;
     position: relative;
@@ -102,20 +102,20 @@
     -webkit-border-radius: 5px;
 
 }
-#content #ppwrapper li.rs a:hover span {
+#ppcontent #ppwrapper li.rs a:hover span {
     left: -290px;
 }
-#content #ppwrapper li.rs a:hover span span {                                                                                                                                
+#ppcontent #ppwrapper li.rs a:hover span span {                                                                                                                                
     left: 0px;
 }
-#content #ppwrapper li a:hover span span {
+#ppcontent #ppwrapper li a:hover span span {
    display: block;
    margin: 0 10px 10px 10px;
    width: 280px;
    top: 0px;
    left: 0px;
 }
-#content #ppwrapper li a span img {
+#ppcontent #ppwrapper li a span img {
     float: right;
     z-index: 99999;
     margin: 10px 0px;
