@@ -7,7 +7,7 @@
     <li id="{{ p.pixel }}" class="p_bkd{% if forloop.counter|divisibleby:"2"  %} lmrg{% endif %}{% if forloop.counter > 12 %} rs{% endif %}">
           <a href="{{ p.url|default:'#h' }}"{% if not p.url %} class='no' onclick="return false"{% endif %} style="background-color:#{{ p.color }}" target="_blank">
         {% if p.pixel %}
-          <span class="wrapper"><span class="name">{% if p.picture %}<img src="{{ p.picture }}" />{% endif %}{{ p.name }}</span>
+        <span class="wrapper"><span class="name">{% if p.picture %}<img src="{% if request.META.HTTP_HOST %}http://{{request.META.HTTP_HOST }}{% endif %}{{ p.picture }}" />{% endif %}{{ p.name }}</span>
               <span class="message">{{ p.message }}</span></span>
         {% endif %}
       </a>

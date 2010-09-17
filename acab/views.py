@@ -173,6 +173,7 @@ def pixeldonor(request, action):
         rows = matrix_iter( pixelset, 4, 24 )
         return render_to_response( 'pixeldonors_'+action+'.html', {
             'rows': rows,
+            'request': request,
             },
             context_instance=RequestContext(request)
         )
