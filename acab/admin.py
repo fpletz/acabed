@@ -41,7 +41,7 @@ class PixeldonorAdmin( admin.ModelAdmin ):
         for donor in queryset:
              test = donor.save( )
              if test:
-                 rows_updated = rows_update + 1
+                 rows_updated = rows_updated + 1
         message_bit = "%s donors updated" % rows_updated
     recreate_all.short_description = "resave and create thumbnails"
 

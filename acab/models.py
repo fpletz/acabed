@@ -170,8 +170,11 @@ class Pixeldonor(models.Model):
                 'message': self.message,
                 'url': self.url,
                 'name': self.name,
-                'picture': self.picture.thumbnail.url( )
             })
+            if( self.picture ):
+                pixel.update({
+                    'picture': self.picture.thumbnail.url( )
+                })
 	return pixel
 
     class Meta:

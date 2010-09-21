@@ -149,19 +149,7 @@ def pixeldonor(request, action):
         mimetype = 'application/javascript'
         data = []
         for donor in Pixeldonor.objects.all():
-            t = {
-                'pixel': donor.pixel,
-                'anon': donor.anon,
-                'color': donor.color,
-            }
-            if not donor.anon:
-                t.update({
-                    'message': donor.message,
-                    'url': donor.url,
-                    'name': donor.name,
-                    'picture': donor.picture
-                })
-            data.append(t)
+            data.append(donor.get_pixel( ))
         
         return HttpResponse(json.dumps(data),mimetype)
 
