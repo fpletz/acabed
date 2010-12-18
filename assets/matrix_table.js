@@ -246,8 +246,10 @@ var CanvasTable = new Class({
 var MatrixTable = new Class({
     Implements: Events,
 
-    initialize: function(id) {
+    initialize: function(id, height, width) {
         this.id = id;
+        this.height = height;
+        this.width = width;
 
         // register click callback
         color_pixel = (function (ev) {
@@ -276,25 +278,27 @@ var MatrixTable = new Class({
         }).bind(this));
         el.addEvent('mouseover', color_pixel);
 
-        this.reset(4,24);
+        this.reset(height, width);
 
         return this;
     },
 
     reset: function(height, width) {
+        if (height !== undefined && width !== undefined) {
+            this.height = height;
+            this.width = width;
+        }
+        
         console.info('Resetting MatrixTable');
 
         // Reset matrix content
         $(this.id).getChildren().each(function (el) { el.dispose(); });
         
-        this.height = height;
-        this.width = width;
-
         // Init matrix
-        for (var row = 0; row < height; ++row) {
+        for (var row = 0; row < this.height; ++row) {
             var row_element = new Element('tr', {'id': 'row-'+row});
             row_element.inject($(this.id));
-            for (var col = 0; col < width; ++col) {
+            for (var col = 0; col < this.width; ++col) {
                 td = new Element('td');
                 div = new Element('div', {'id': 'oldcell-'+row+'-'+col});
                 td.grab(div).inject(row_element);
