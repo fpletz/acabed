@@ -82,7 +82,7 @@ function fix_frame(xml) {
 
 function init_editor(animation) {
     var mv = new Movie();
-    var mt = new CanvasTable('matrix-table');
+    var mt = new MatrixTable('matrix-table', 6, 16);
     //var mt = new MatrixTable('matrix-table');
     var mp = new MoviePlayer(mv, mt);
     var ed = new Editor(mp);
@@ -247,7 +247,7 @@ function init_editor(animation) {
                 events: {
                     click: function() {
                         ed.current_tool = new LifeTool();
-                        MessageWidget.msg('Conway\'s Game of Life auf 4x24. Klicke auf ein Fenster für eine weitere Generation.');
+                        MessageWidget.msg('Conway\'s Game of Life. Klicke auf ein Fenster für eine weitere Generation.');
                     },
                 },
             }),
@@ -675,7 +675,7 @@ function init_editor(animation) {
     // Set initial State
     if(animation === undefined) {
         mv.add_frame_at(0);
-        mt.reset(4, 24);
+        mt.reset();
     } else {
         mp.load(undefined, animation);
     }
