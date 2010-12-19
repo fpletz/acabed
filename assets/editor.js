@@ -93,12 +93,12 @@ function init_editor(animation) {
         widgets: [
             new ImageButton('draw-button', {
                 image: '/assets/icons/pencil.png',
-                tooltip: 'Farben malen',
+                tooltip: 'Draw selected color',
                 active: true,
                 events: {
                     click: function() {
                         ed.current_tool = new PenTool(ed);
-                        MessageWidget.msg('Click auf ein Fenster um ein mit der aktuellen Farbe zu färben');
+                        MessageWidget.msg('Click on a pixel to color it with the current color');
                     },
                 },
             }),
@@ -111,132 +111,132 @@ function init_editor(animation) {
             // }),
             new ImageButton('fill-button', {
                 image: '/assets/icons/paint-can--exclamation.png',
-                tooltip: 'Alles füllen',
+                tooltip: 'Fill frame',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new FillTool();
-                        MessageWidget.msg('Click auf ein Fenster um das gesamte Bild mit der aktuellen Farbe zu füllen');
+                        MessageWidget.msg('Click on a pixel to color the whole image with selected color');
                     },
                 }
             }),
 
             new ImageButton('floodfill-button', {
                 image: '/assets/icons/paint-can.png',
-                tooltip: 'Bereich füllen',
+                tooltip: 'Fill a connected region',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new FloodfillTool();
-                        MessageWidget.msg('Click auf ein Fenster um den aktuellen Bereich mit der aktuellen Farbe zu füllen');
+                        MessageWidget.msg('Click on a pixel to color the connected region with same color');
                     },
                 }
             }),
 
             new ImageButton('replacecolor-button', {
                 image: '/assets/icons/paint-can-color.png',
-                tooltip: 'Farbe ersetzen',
+                tooltip: 'Substitue color',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new ReplacecolorTool();
-                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin auf dem ganzen Bild mit der aktuellen Farbe zu ersetzen');
+                        MessageWidget.msg('Click on a pixel to substitute all pixels with it\'s color with the selected color');
                     },
                 }
             }),
 
             new ImageButton('colorpicker-button', {
                 image: '/assets/icons/pipette-color.png',
-                tooltip: 'Farbpipette',
+                tooltip: 'Color picker',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new ColorpickerTool(ed);
-                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin auszuwaehlen');
+                        MessageWidget.msg('Click on a pixel to use it\'s color as the current color');
                     },
                 }
             }),
 
             new ImageButton('move-button', {
                 image: '/assets/icons/arrow-move.png',
-                tooltip: 'Bewegen',
+                tooltip: 'Move',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new MoveTool(ed.movie_player.movie.height, ed.movie_player.movie.width);
-                        MessageWidget.msg('Click auf ein Fenster um den Bildinhalt in Richtung Fenster zu bewegen');
+                        MessageWidget.msg('Drag on a pixel to move the whole frame');
                     },
                 }
             }),
 
             new ImageButton('fliph-button', {
                 image: '/assets/icons/arrow-resize-090.png',
-                tooltip: 'Flip horizontal',
+                tooltip: 'Flip horizontally',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new FliphorizTool();
-                        MessageWidget.msg('Click auf ein Fenster um den Bildinhalt horizontal zu vertauschen');
+                        MessageWidget.msg('Click on a pixel to flip the frame horizontally');
                     },
                 }
             }),
 
             new ImageButton('flipv-button', {
                 image: '/assets/icons/arrow-resize.png',
-                tooltip: 'Flip vertikal',
+                tooltip: 'Flip vertically',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new FlipvertTool();
-                        MessageWidget.msg('Click auf ein Fenster um den Bildinhalt vertikal zu vertauschen');
+                        MessageWidget.msg('Click on a pixel to flip the frame vertically');
                     },
                 }
             }),
 
-            new ImageButton('reflect-button-vert', {
-                image: '/assets/icons/arrow-resize.png',
-                tooltip: 'Vertikal spiegeln',
-                active: false,
-                events: {
-                    click: function() {
-                        ed.current_tool = new MirrorTool(true);
-                        MessageWidget.msg('Ziehe eine vertikale Achse auf, um die gespiegelt wird');
-                    },
-                }
-            }),
+            // new ImageButton('reflect-button-vert', {
+            //     image: '/assets/icons/arrow-resize.png',
+            //     tooltip: 'Mirror vertically',
+            //     active: false,
+            //     events: {
+            //         click: function() {
+            //             ed.current_tool = new MirrorTool(true);
+            //             MessageWidget.msg('Drag a vertical axis which will be used as a mirror axis');
+            //         },
+            //     }
+            // }),
 
-            new ImageButton('reflect-button-horiz', {
-                image: '/assets/icons/arrow-resize-090.png',
-                tooltip: 'Horizontal spiegeln',
-                active: false,
-                events: {
-                    click: function() {
-                        ed.current_tool = new MirrorTool(false);
-                        MessageWidget.msg('Ziehe eine vertikale Achse auf, um die gespiegelt wird');
-                    },
-                }
-            }),
+            // new ImageButton('reflect-button-horiz', {
+            //     image: '/assets/icons/arrow-resize-090.png',
+            //     tooltip: 'Mirror horizontally',
+            //     active: false,
+            //     events: {
+            //         click: function() {
+            //             ed.current_tool = new MirrorTool(false);
+            //             MessageWidget.msg('Drag a horizontal axis which will be used as a mirror axis');
+            //         },
+            //     }
+            // }),
 
-            new ImageButton('gradient-button', {
-                image: '/assets/icons/rainbow.png',
-                tooltip: 'Farbverlauf',
-                active: false,
-                events: {
-                    click: function() {
-                        ed.current_tool = new GradientTool();
-                        MessageWidget.msg('Ziehe eine Linie zwischen zwei oder 4 Pixel, um dazwischen einen Farbverlauf zu machen');
-                    },
-                }
-            }),
+            // new ImageButton('gradient-button', {
+            //     image: '/assets/icons/rainbow.png',
+            //     tooltip: 'Gradient',
+            //     active: false,
+            //     events: {
+            //         click: function() {
+            //             ed.current_tool = new GradientTool();
+            //             MessageWidget.msg('Draw a line between 2 or 4 Pixels');
+            //         },
+            //     }
+            // }),
 
             new ImageButton('invert-button', {
                 image: '/assets/icons/contrast.png',
-                tooltip: 'Farben invertieren',
+                tooltip: 'Invert color',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new InvertTool();
-                        MessageWidget.msg('Click auf ein Fenster um die Farbe darin zu invertieren');
+                        MessageWidget.msg('Click on pixel to ivert it¸\'s color');
                     },
                 },
             }),
@@ -255,12 +255,12 @@ function init_editor(animation) {
 	    
 	    new ImageButton('random-button', {
                 image: '/assets/icons/random.png',
-                tooltip: 'Zufall',
+                tooltip: 'Random',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new RandomTool();
-                        MessageWidget.msg('Zufällige Pixel einfärben');
+                        MessageWidget.msg('Randomly add some pixels in the current color');
                     },
                 },
             }),
@@ -286,8 +286,8 @@ function init_editor(animation) {
         items: [
             {
                 id: 'duration',
-                title: 'Frameanzeigedauer [ms]',
-                description: 'Zeit in Millisekunden (1000ms = 1s) die der aktuelle Frame angezeigt werden soll',
+                title: 'Frame duration/ms',
+                description: 'Time in milliseconds (1000ms = 1s) the current frame will be displayed for',
                 type: 'number',
                 max: '10',
                 range: [0,2000],
@@ -301,14 +301,14 @@ function init_editor(animation) {
             {
                 id: 'title',
                 title: 'Titel',
-                description: 'Name der Animation',
+                description: 'Title of your animation',
                 type: 'text',
                 max: '50'
             },
             {
                 id: 'description',
-                title: 'Beschreibung',
-                description: 'Beschreibung der Animation',
+                title: 'Description',
+                description: 'More detailed description of your animation',
                 type: 'multiline',
                 max: '1500',
                 height: '5'
@@ -316,21 +316,21 @@ function init_editor(animation) {
             {
                 id: 'author',
                 title: 'Author',
-                description: 'Name des Autors',
+                description: 'Your name',
                 type: 'text',
                 max: '50'
             },
             {
                 id: 'email',
                 title: 'E-Mail',
-                description: 'Email-Adresse des Autors',
+                description: 'Your email address',
                 type: 'text',
                 max: '50'
             },
             {
                 id: 'max_duration',
-                title: 'Anzeigedauer [s]',
-                description: 'Dauer in Sekunden, die die Animation durchgeloopt werden soll',
+                title: 'Movie duration/s',
+                description: 'Duration in seconds the movie will be played',
                 type: 'number',
                 range: [0,60],
             },
@@ -351,31 +351,31 @@ function init_editor(animation) {
         widgets: [
             new ImageButton('new-movie-button', {
                 image: '/assets/icons/film.png',
-                tooltip: 'Neuer Film erstellen',
+                tooltip: 'Create new movie',
                 events: {
                     click: function() {
                         mp.stop();
 
                         var d = new ModalDialog('really-new-movie',
                             new Widget('question', {
-                                text: 'Wollen sie wirklich einen neuen Film anfangen? Dies verwirft den aktuellen Film!'
+                                text: 'Do you really want to create a new movie? This will discard your current movie without saving it!'
                             }),
                             {
-                                title: 'Achtung',
+                                title: 'Alarm',
                                 buttons: [
                                     new Button('open-button', {
-                                        text: 'Neuer Film',
+                                        text: 'New Movie',
                                         events: {
                                             click: function() {
                                                 mp.stop(); 
                                                 Dajaxice.acab.load_editor('Dajax.process');
-                                                MessageWidget.msg('Ein neuer Film wurde erstellt');
+                                                MessageWidget.msg('Created new movie');
                                                 ModalDialog.destroy();
                                             },
                                         }
                                     }),
                                      new Button('cancel-button', {
-                                        text: 'Abbrechen',
+                                        text: 'Cancel',
                                         events: {
                                             click: function() {
                                                 ModalDialog.destroy();
@@ -391,7 +391,7 @@ function init_editor(animation) {
             }),
             new ImageButton('load-movie-button', {
                 image: '/assets/icons/folder-open-film.png',
-                tooltip: 'Film vom Server öffnen',
+                tooltip: 'Load movie from server',
                 events: {
                     click: function() {
                         Dajaxice.acab.list((function(animations) {
@@ -401,15 +401,15 @@ function init_editor(animation) {
                                     columns: [
                                         ['playlist_id', 'SMS-ID'],
                                         ['title', 'Name'],
-                                        ['author', 'Autor'],
-                                        ['max_duration', 'Dauer'],
+                                        ['author', 'Author'],
+                                        ['max_duration', 'Duration'],
                                     ],
                                 }),
                                 {
-                                    title: 'Animation öffnen',
+                                    title: 'Load movie',
                                     buttons: [
                                          new Button('cancel-button', {
-                                            text: 'Abbrechen',
+                                            text: 'Cancel',
                                             events: {
                                                 click: function() {
                                                     ModalDialog.destroy();
@@ -426,7 +426,7 @@ function init_editor(animation) {
             }),
             new ImageButton('save-movie-button', {
                 image: '/assets/icons/disk.png',
-                tooltip: 'Film abschicken',
+                tooltip: 'Send movie',
                 events: {
                     click: function() {
                         Dajaxice.acab.add('Dajax.process', {
@@ -469,7 +469,7 @@ function init_editor(animation) {
             // }),
             new FileButton('load-xml-button', {
                 image: '/assets/icons/arrow-090.png',
-                tooltip: 'Film vom Rechner öffnen',
+                tooltip: 'Upload movie',
                 events: {
                     loaded: function(text) {
                         mp.load(text);
@@ -480,10 +480,10 @@ function init_editor(animation) {
                         (new ModalDialog(
                             'loading-dialog',
                             new Widget('loading', {
-                                text: 'Der Film wird geladen'
+                                text: 'Movie loading'
                             }),
                             {
-                                title: 'Bitte Warten',
+                                title: 'Please wait',
                             }
                         )).show();
                     },
@@ -518,7 +518,7 @@ function init_editor(animation) {
             // }),
             new ImageButton('download-xml-button', {
                 image: '/assets/icons/arrow-270.png',
-                tooltip: 'Film auf Rechner speichern',
+                tooltip: 'Download movie',
                 events: {
                     click: function() {
                         var uri = 'data:text/xml;charset=utf-8,';
@@ -552,7 +552,7 @@ function init_editor(animation) {
         widgets: [
             new ImageButton('duplicate-frame-button', {
                 image: '/assets/icons/layers-arrange.png',
-                tooltip: 'Aktuellen Frame duplizieren',
+                tooltip: 'Duplicate current frame',
                 events: {
                     click: function() {
                         console.info('duplicate frame: %d', mp.current_frame_no);
@@ -563,7 +563,7 @@ function init_editor(animation) {
             }),
             new ImageButton('add-frame-button', {
                 image: '/assets/icons/layer--plus.png',
-                tooltip: 'Neuen leeren Frame hinzufügen',
+                tooltip: 'Create new empty frame',
                 events: {
                     click: function() {
                         console.info('add frame');
@@ -574,7 +574,7 @@ function init_editor(animation) {
             }),
             new ImageButton('delete-frame-button', {
                 image: '/assets/icons/layer--minus.png',
-                tooltip: 'Aktuellen Frame löschen',
+                tooltip: 'Delete current frame',
                 events: {
                     click: function() {
                         console.info('remove frame');
@@ -592,7 +592,7 @@ function init_editor(animation) {
             }),
             new ImageButton('copy-frame-button', {
                 image: '/assets/icons/document-copy.png',
-                tooltip: 'Frame kopieren',
+                tooltip: 'Copy frame',
                 events: {
                     click: function() {
                         ed.current_frame_to_clipboard();
@@ -601,7 +601,7 @@ function init_editor(animation) {
             }),
             new ImageButton('paste-frame-button', {
                 image: '/assets/icons/clipboard-paste.png',
-                tooltip: 'Frame einfügen',
+                tooltip: 'Paste frame',
                 events: {
                     click: function() {
                         ed.clipboard_to_current_position();
