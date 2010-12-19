@@ -218,12 +218,12 @@ function init_editor(animation) {
 
             new ImageButton('gradient-button', {
                 image: '/assets/icons/rainbow.png',
-                tooltip: 'Farbverlauf',
+                tooltip: 'Gradient',
                 active: false,
                 events: {
                     click: function() {
                         ed.current_tool = new GradientTool();
-                        MessageWidget.msg('Ziehe eine Linie zwischen zwei oder 4 Pixel, um dazwischen einen Farbverlauf zu machen');
+                        MessageWidget.msg('Draw a line between 2 or 4 Pixels');
                     },
                 }
             }),

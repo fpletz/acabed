@@ -20,7 +20,9 @@
  */
 
 var Tool = new Class({
+    // Will be called to reset potential state saved in the tool
     reset: function() {},
+    // Implement this function to do something to the frame passed
     apply_to: function(frame, row, col, color, options) {},
 });
 
