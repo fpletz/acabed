@@ -256,32 +256,37 @@ var MatrixTable = new Class({
             ev.stopPropagation();
             ev.preventDefault();
 
-            var id = $(ev.target).id;
+            var spl = $(ev.target).id.split('-');
 
-            if (id.split('-')[0] == 'oldcell' && this.clicked) {
-                var row = id.split('-')[1];
-                var col = id.split('-')[2];
+            if (spl[0] == 'oldcell' && this.clicked) {
+                var row = spl[1];
+                var col = spl[2];
+
+                this.last_clicked = [row, col];
 
                 // call user provided callback with row and col
-                this.fireEvent('click', [row, col]);
+                this.fireEvent('click', this.last_clicked);
             }
         }).bind(this);
 
         var el = $(this.id);
+        el.addEvent('mouseover', click_callback);
 
         el.addEvent('mousedown', (function(ev) {
             this.clicked = true;
             click_callback(ev);
         }).bind(this));
-        document.body.addEvent('mouseup', (function(ev) {
+
+        var drag_end = (function(ev) {
             if(!this.clicked)
                 return;
 
             this.clicked = false;
-            var colrow = $(ev.target).id.split('-');
-            this.fireEvent('mouseup', [colrow[2], colrow[1]]);
-        }).bind(this));
-        el.addEvent('mouseover', click_callback);
+            this.fireEvent('mouseup', this.last_clicked);
+        }).bind(this);
+
+        document.body.addEvent('mouseup', drag_end);
+        window.addEvent('mouseleave', drag_end);
 
         this.reset(height, width);
 
