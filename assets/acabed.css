@@ -41,6 +41,10 @@ a:visited {
     text-decoration: none;
 }
 
+img {
+    border: 0;
+}
+
 #matrix-table td, #matrix-table tr {
     padding: 0px;
     margin: 0px;
