@@ -145,7 +145,7 @@ var CanvasTable = new Class({
         this.id = id;
 
         // register click callback
-        color_pixel = (function (ev) {
+        click_callback = (function (ev) {
             ev.stopPropagation();
             ev.preventDefault();
             
@@ -175,12 +175,12 @@ var CanvasTable = new Class({
                 
                 eventLayer.addEvent('mousedown', (function(e) {
                     this.clicked = true;
-                    color_pixel(e);
+                    click_callback(e);
                 }).bind(this));
                 
                 eventLayer.addEvent('mouseover', (function(e) {
                     if (this.clicked) {
-                        color_pixel(e);
+                        click_callback(e);
                     }
                 }).bind(this));
             }
@@ -252,7 +252,7 @@ var MatrixTable = new Class({
         this.width = width;
 
         // register click callback
-        color_pixel = (function (ev) {
+        click_callback = (function (ev) {
             ev.stopPropagation();
             ev.preventDefault();
 
@@ -271,12 +271,17 @@ var MatrixTable = new Class({
 
         el.addEvent('mousedown', (function(ev) {
             this.clicked = true;
-            color_pixel(ev);
+            click_callback(ev);
         }).bind(this));
         document.body.addEvent('mouseup', (function(ev) {
+            if(!this.clicked)
+                return;
+
             this.clicked = false;
+            var colrow = $(ev.target).id.split('-');
+            this.fireEvent('mouseup', [colrow[2], colrow[1]]);
         }).bind(this));
-        el.addEvent('mouseover', color_pixel);
+        el.addEvent('mouseover', click_callback);
 
         this.reset(height, width);
 

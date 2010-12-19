@@ -217,17 +217,17 @@ function init_editor(animation) {
             //     }
             // }),
 
-            // new ImageButton('gradient-button', {
-            //     image: '/assets/icons/rainbow.png',
-            //     tooltip: 'Gradient',
-            //     active: false,
-            //     events: {
-            //         click: function() {
-            //             ed.current_tool = new GradientTool();
-            //             MessageWidget.msg('Draw a line between 2 or 4 Pixels');
-            //         },
-            //     }
-            // }),
+            new ImageButton('gradient-button', {
+                image: '/assets/icons/rainbow.png',
+                tooltip: 'Gradient',
+                active: false,
+                events: {
+                    click: function() {
+                        ed.current_tool = new GradientTool();
+                        MessageWidget.msg('Draw a line between 2 or 4 Pixels');
+                    },
+                }
+            }),
 
             new ImageButton('invert-button', {
                 image: '/assets/icons/contrast.png',
