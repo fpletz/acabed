@@ -24,6 +24,7 @@ body {
     background-color: black;
     color: white;
     padding: 0px;
+    font-size: .8em;
 }
 
 a:link {
@@ -51,10 +52,11 @@ img {
 }
 
 #matrix-table div {
-    width: 12px;
-    height: 22px;
+    width: 35px;
+    height: 25px;
     padding: 0px;
-    margin: 5px;
+    margin: 0px;
+    border: 2px #000 solid;
 }
 
 #matrix-table {
@@ -265,6 +267,11 @@ hr {
     color: #666;
 }
 
+input {
+    font-size: .8em;
+    width: 100px;
+}
+
 input[type="text"], input[type="password"], input[type="file"]
 {
     height: 17px;
@@ -282,7 +289,7 @@ input[type="text"], input[type="password"], input[type="file"], textarea, select
 }
 
 textarea {
-    width: 150px;
+    width: 100px;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="file"]:focus, textarea:focus, select:focus
