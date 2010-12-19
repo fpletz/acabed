@@ -300,7 +300,7 @@ function init_editor(animation) {
         items: [
             {
                 id: 'title',
-                title: 'Titel',
+                title: 'Title',
                 description: 'Title of your animation',
                 type: 'text',
                 max: '50'

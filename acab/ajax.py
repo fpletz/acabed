@@ -72,9 +72,9 @@ def login(request, username, password):
             auth_login(request, user)
             dajax.script('Dajaxice.acab.login_widget("Dajax.process");')
         else:
-            dajax.script('MessageWidget.msg("Dein Benutzeraccount wurde deaktiviert! Bitte wende dich an unser Team (pixel@muc.ccc.de)!")')
+            dajax.script('MessageWidget.msg("Your account has been deactivated! Please contact our team (pixel@muc.ccc.de)!")')
     else:
-        dajax.script('MessageWidget.msg("Falsche Benutzername/Passwort-Kombination! Bitte erneut versuchen!")')
+        dajax.script('MessageWidget.msg("Wrong username/password combination! Please try again!")')
 
     return dajax.json()
 
@@ -154,7 +154,7 @@ def add(request, animation):
         movie_duration += frame['duration']
 
     if movie_duration > 60000:
-        dajax.script('MessageWidget.msg("Animation darf insgesamt nicht laenger als 60 Sekunden sein! Bitte Frames loeschen oder kuerzer anzeigen lassen!")')
+        dajax.script('MessageWidget.msg("The maximal duration of 60 seconds has been reached! Either delete frames or shoten the movie duration!")')
         return dajax.json()
     
     form = AnimationForm(animation)
@@ -182,11 +182,11 @@ def add(request, animation):
         )
         sj.save()
 
-        dajax.script('MessageWidget.msg("Great success! Animootion mit ID %s gespeichert!")' % p.id)
+        dajax.script('MessageWidget.msg("Great success! Animootion ID %s saved!")' % p.id)
     else:
         for error in form.errors:
             dajax.add_css_class('#movie-inspector label[for="%s"]' % error, 'error')
-        dajax.script('MessageWidget.msg("Bitte fehlende Felder ausfuellen.")')
+        dajax.script('MessageWidget.msg("Please fill out marked fields.")')
 
     return dajax.json()
 
