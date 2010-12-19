@@ -1,3 +1,4 @@
+
 {% if authed %}
     Hallo, {{ login }}
     {% if pixel %}
@@ -5,6 +6,6 @@
     {% endif %}
     | <a href="#" onClick="Dajaxice.acab.logout('Dajax.process'); return false">Logout</a>
 {% else %}
-    <a href="#" onClick="Dajaxice.acab.login_form('Dajax.process'); return false">Einloggen</a>
-    | <a href="#" onClick="Dajaxice.acab.signup_form('Dajaxice.process'); return false">Anmelden</a>
+    <a href="#" onClick="Dajaxice.acab.login_form('Dajax.process'); return false">Login</a>
+    | <a href="#" onClick="Dajaxice.acab.signup_form('Dajaxice.process'); return false">Sign up</a>
 {% endif %}
