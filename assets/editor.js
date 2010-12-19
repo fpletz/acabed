@@ -81,9 +81,10 @@ function fix_frame(xml) {
 }
 
 function init_editor(animation) {
-    var mv = new Movie();
-    var mt = new MatrixTable('matrix-table', 6, 16);
-    //var mt = new MatrixTable('matrix-table');
+    var DIMENSIONS = [6, 16];
+
+    var mv = new Movie(DIMENSIONS[0], DIMENSIONS[1]);
+    var mt = new MatrixTable('matrix-table', DIMENSIONS[0], DIMENSIONS[1]);
     var mp = new MoviePlayer(mv, mt);
     var ed = new Editor(mp);
     var pc = new PlayerControls('player-controls', {'movie_player': mp});

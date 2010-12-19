@@ -22,7 +22,7 @@
 var Movie = new Class({
     Implements: [Events, Model],
 
-    initialize: function() {
+    initialize: function(height, width) {
         this.data = new Array();
 
         this.set('title', '');
@@ -33,8 +33,8 @@ var Movie = new Class({
         this.set('url', '');
         this.set('loop', 'yes');
 
-        this.set('height', 4);
-        this.set('width', 24);
+        this.set('height', height);
+        this.set('width', width);
         this.set('depth', 8);
         this.set('channels', 3);
         this.set('frames', 0);
