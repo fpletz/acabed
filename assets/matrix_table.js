@@ -286,7 +286,7 @@ var MatrixTable = new Class({
         }).bind(this);
 
         document.body.addEvent('mouseup', drag_end);
-        window.addEvent('mouseleave', drag_end);
+        document.addEvent('mouseleave', drag_end);
 
         this.reset(height, width);
 
