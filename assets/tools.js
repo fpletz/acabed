@@ -167,7 +167,7 @@ var MoveTool = new Class({
     },
     
     get_direction: function(row, col) {
-        console.log("%d %d", col, this.options.width-1);
+        //console.log("%d %d", col, this.options.width-1);
         if (row == 0) {
             if (col == 0) {
                 return [-1, -1];
@@ -206,7 +206,7 @@ var MoveTool = new Class({
         var direction = [row-this.old_row,
                          col-this.old_col];
 
-        console.log(row, col, this.old_row, this.old_col);
+        //console.log(row, col, this.old_row, this.old_col);
         this.old_row = row;
         this.old_col = col;
         
